@@ -17,6 +17,89 @@
   <link rel="stylesheet" href="AdminLTE/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script type="text/javascript">
+    function register(){
+      //Check if all the required fields are filled out
+      if($('#username').val() == ""
+        || $('#email').val() == ""
+        || $('#password').val() == ""
+        || $('#confirm_password').val() == ""
+        || $('#phone_number').val() == ""
+        || $('#first_name').val() == ""
+        || $('#last_name').val() == ""
+        || $('#birthdate').val() == ""
+        || $('#terms_agreed').prop("checked") == false
+        ){
+        $('#statusMsg').html("Make sure to fill out every required field.");
+        return;
+      }
+      //Check the username length
+      if( $('#username').val().length < 5 || $('#username').val().length > 50){
+        $('#statusMsg').html("That username is too short or too long.");
+        return;
+      }
+      //Check the email length
+      if( $('#email').val().length < 5 || $('#email').val().length > 100){
+        $('#statusMsg').html("That email is too short or too long.");
+        return;
+      }
+      //Check the password length
+      if( $('#password').val().length < 5 || $('#password').val().length > 50){
+        $('#statusMsg').html("That password is too short or too long.");
+        return;
+      }
+      //Check if password fields match
+      if($('#password').val() != $('#confirm_password').val()){
+        $('#statusMsg').html("Passwords do not match.");
+        return;
+      }      
+      //Check the first_name length
+      if( $('#first_name').val().length < 5 || $('#first_name').val().length > 100){
+        $('#statusMsg').html("That first name is too short or too long.");
+        return;
+      }
+      //Check the last_name length
+      if( $('#last_name').val().length < 5 || $('#last_name').val().length > 100){
+        $('#statusMsg').html("That last name is too short or too long.");
+        return;
+      }
+      //Check to make sure terms agreed
+      if( !$('#agreeTerms').prop('checked') ){
+        $('#statusMsg').html("You must agree to the terms.");
+        return;
+      }
+
+      //Disable the login button
+      $('#loginBtn').prop('disabled', true);
+
+      //Send the form data
+      $.ajax({
+        type: "POST",
+        dataType: 'text',
+        url: 'api/auth/register.php',
+        data: {
+          username: $('username').val(),
+          email: $('email').val(),
+          password: $('password').val(),
+          confirm_password: $('confirm_password').val(),
+          phone_number: $('phone_number').val(),
+          first_name: $('first_name').val(),
+          last_name: $('last_name').val(),
+          birthdate: $('birthdate').val(),
+          terms_agreed: $('terms_agreed').prop("checked")
+        },
+        success: function(data, status){
+          if(data == "created"){
+            window.location.replace("login.php?register_success");
+          }else{
+            $('#statusMsg').html(data);
+            $('#loginBtn').prop('disabled', false);
+          }
+        }
+      });
+    }
+
+  </script>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -26,7 +109,7 @@
 
   <div class="card">
     <div class="card-body register-card-body">
-      <p class="login-box-msg" id="statusCode">Create a new account.</p>
+      <p class="login-box-msg" id="statusMsg">Create a new account.</p>
 
       <div class="input-group mb-3">
         <input id="username" type="text" class="form-control" placeholder="Username">
@@ -68,7 +151,7 @@
         <input id="phone_number" type="tel" class="form-control" placeholder="Phone Number">
         <div class="input-group-append">
           <div class="input-group-text">
-            <span class="fas fa-lock"></span>
+            <span class="fas fa-phone"></span>
           </div>
         </div>
       </div>
@@ -95,7 +178,7 @@
         <input id="birthdate" type="date" class="form-control" placeholder="Date of Birth">
         <div class="input-group-append">
           <div class="input-group-text">
-            <span class="fas fa-lock"></span>
+            <span class="fas fa-calendar"></span>
           </div>
         </div>
       </div>
@@ -103,15 +186,15 @@
       <div class="row">
         <div class="col-8">
           <div class="icheck-primary">
-            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-            <label for="agreeTerms">
+            <input type="checkbox" id="terms_agreed">
+            <label for="terms_agreed">
              I agree to the <a href="#">terms</a>
             </label>
           </div>
         </div>
         <!-- /.col -->
         <div class="col-4">
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
+          <button id="loginBtn" onclick="register()" class="btn btn-primary btn-block">Register</button>
         </div>
         <!-- /.col -->
       </div>

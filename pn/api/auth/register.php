@@ -10,6 +10,7 @@ if (   !isset($_POST['username'])
 	|| !isset($_POST['birthdate'])
 	|| !isset($_POST['first_name'])
 	|| !isset($_POST['last_name'])
+	|| !isset($_POST['terms_agreed'])
 	 ) {
 	die("Error: Invalid Parameters");
 }
@@ -23,6 +24,7 @@ $phone_number = $_POST['phone_number'];
 $birthdate = $_POST['birthdate'];
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
+$terms_agreed = $_POST['terms_agreed'];
 
 //Make sure 'username' only includes a-z, A-Z, numbers, and dashes.
 if( preg_match("/^[a-zA-Z0-9]*$/u", $username) != 1 ){
@@ -71,6 +73,11 @@ if( preg_match("/^[a-zA-Z ]*$/u", $first_name) != 1 ){
 }
 if( preg_match("/^[a-zA-Z ]*$/u", $last_name) != 1 ){
 	die("Last name can only contain letters.");
+}
+
+//Make sure they agreed to the terms and conditions
+if( $terms_agreed != true ){
+	die("You must agree to the terms and conditions");
 }
 
 try {
