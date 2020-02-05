@@ -14,10 +14,9 @@ if (   !isset($_POST['username'])
 	die("Error: Invalid Parameters");
 }
 
-
 //Sanitize & Validate All Inputs
 $username = $_POST['username'];
-$email = $_POST['email'];
+$email = strtolower($_POST['email']);
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 $phone_number = $_POST['phone_number'];
@@ -46,11 +45,25 @@ if( $password != $confirm_password ){
 	die("Passwords do not match.");
 }
 
-$phone_number
+//Make sure the phone number is 10 digits
+$phone_number = preg_replace('/[^0-9]/', '', $phone_number);
+if(strlen($phone) != 10) {
+	die("Phone number is invalid.");
+}
 
+//Check that the birthday is valid
+function validateDate($date, $format = 'Y-m-d'){
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
+if( !validateDate($birthday) ){
+	die("Birthdate is invalid.");
+}
 
-$birthday
-
+//Check their age requirement
+if (time() < strtotime('+18 years', strtotime($birthday))) {
+   die('Sorry, you are not old enough to sign up.');
+}
 
 //Make sure 'first_name' and 'last_name' only includes a-z, A-Z, and spaces.
 if( preg_match("/^[a-zA-Z ]*$/u", $first_name) != 1 ){
@@ -60,10 +73,8 @@ if( preg_match("/^[a-zA-Z ]*$/u", $last_name) != 1 ){
 	die("Last name can only contain letters.");
 }
 
-
-
-
 try {
+
 	//Create connection
 	$con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
@@ -73,26 +84,19 @@ try {
     if($stmt->fetchColumn()){
     	die("That username or email already exists.");
     }
-    
+
 	//Create the user
-    $stmt = $con->prepare("INSERT INTO users (username, name, email, password, active, joincode, joindate) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-	$success = $stmt->execute([ $username, $name, strtolower($email), $_POST['password'], $active, $_POST['joincode'] ]);
+    $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthday, first_name, last_name, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthday, $first_name, $last_name ]);
 	if(  $success  ){
-		die("created");
+		die("success");
 	}else{
-		die("Error: Something went wrong.");
+		die("Something went wrong. Please try again later.");
 	}
 
 } catch(PDOException $e) {
 	die("Failed: Something went wrong..");
 	// die( "Failed to add break - " . $e->getMessage());
 }
-
-
-
-
-
-
-
 
 ?>
