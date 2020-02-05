@@ -7,7 +7,7 @@ if (   !isset($_POST['username'])
 	|| !isset($_POST['password'])
 	|| !isset($_POST['confirm_password'])
 	|| !isset($_POST['phone_number'])
-	|| !isset($_POST['birthday'])
+	|| !isset($_POST['birthdate'])
 	|| !isset($_POST['first_name'])
 	|| !isset($_POST['last_name'])
 	 ) {
@@ -20,7 +20,7 @@ $email = strtolower($_POST['email']);
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 $phone_number = $_POST['phone_number'];
-$birthday = $_POST['birthday'];
+$birthdate = $_POST['birthdate'];
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
 
@@ -51,17 +51,17 @@ if(strlen($phone) != 10) {
 	die("Phone number is invalid.");
 }
 
-//Check that the birthday is valid
+//Check that the birthdate is valid
 function validateDate($date, $format = 'Y-m-d'){
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
-if( !validateDate($birthday) ){
-	die("Birthdate is invalid.");
+if( !validateDate($birthdate) ){
+	die("Date of birth is invalid.");
 }
 
 //Check their age requirement
-if (time() < strtotime('+18 years', strtotime($birthday))) {
+if (time() < strtotime('+18 years', strtotime($birthdate))) {
    die('Sorry, you are not old enough to sign up.');
 }
 
@@ -74,26 +74,26 @@ if( preg_match("/^[a-zA-Z ]*$/u", $last_name) != 1 ){
 }
 
 try {
-
+	
 	//Create connection
 	$con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
-
+	
 	//Check if that USERNAME exists
 	$stmt = $con->prepare("SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1");
 	$stmt->execute([$username, $email]);
     if($stmt->fetchColumn()){
     	die("That username or email already exists.");
     }
-
+    
 	//Create the user
-    $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthday, first_name, last_name, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
-	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthday, $first_name, $last_name ]);
+    $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthdate, first_name, last_name, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthdate, $first_name, $last_name ]);
 	if(  $success  ){
 		die("success");
 	}else{
 		die("Something went wrong. Please try again later.");
 	}
-
+	
 } catch(PDOException $e) {
 	die("Failed: Something went wrong..");
 	// die( "Failed to add break - " . $e->getMessage());
