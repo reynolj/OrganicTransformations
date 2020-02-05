@@ -28,7 +28,6 @@
         || $('#first_name').val() == ""
         || $('#last_name').val() == ""
         || $('#birthdate').val() == ""
-        || $('#terms_agreed').prop("checked") == false
         ){
         $('#statusMsg').html("Make sure to fill out every required field.");
         return;
@@ -64,7 +63,7 @@
         return;
       }
       //Check to make sure terms agreed
-      if( !$('#agreeTerms').prop('checked') ){
+      if( !$('#terms_agreed').prop('checked') ){
         $('#statusMsg').html("You must agree to the terms.");
         return;
       }
@@ -78,15 +77,15 @@
         dataType: 'text',
         url: 'api/auth/register.php',
         data: {
-          username: $('username').val(),
-          email: $('email').val(),
-          password: $('password').val(),
-          confirm_password: $('confirm_password').val(),
-          phone_number: $('phone_number').val(),
-          first_name: $('first_name').val(),
-          last_name: $('last_name').val(),
-          birthdate: $('birthdate').val(),
-          terms_agreed: $('terms_agreed').prop("checked")
+          username: $('#username').val(),
+          email: $('#email').val(),
+          password: $('#password').val(),
+          confirm_password: $('#confirm_password').val(),
+          phone_number: $('#phone_number').val(),
+          first_name: $('#first_name').val(),
+          last_name: $('#last_name').val(),
+          birthdate: $('#birthdate').val(),
+          terms_agreed: $('#terms_agreed').prop("checked")
         },
         success: function(data, status){
           if(data == "created"){
@@ -186,7 +185,7 @@
       <div class="row">
         <div class="col-8">
           <div class="icheck-primary">
-            <input type="checkbox" id="terms_agreed">
+            <input type="checkbox" id="terms_agreed" value="" required>
             <label for="terms_agreed">
              I agree to the <a href="#">terms</a>
             </label>

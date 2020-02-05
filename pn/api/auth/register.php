@@ -1,6 +1,7 @@
 <?php
 
-require_once('../variables.php');
+require_once('../../../variables.php');
+
 
 if (   !isset($_POST['username'])
 	|| !isset($_POST['email'])
@@ -49,7 +50,7 @@ if( $password != $confirm_password ){
 
 //Make sure the phone number is 10 digits
 $phone_number = preg_replace('/[^0-9]/', '', $phone_number);
-if(strlen($phone) != 10) {
+if(strlen($phone_number) != 10) {
 	die("Phone number is invalid.");
 }
 
