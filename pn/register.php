@@ -111,7 +111,16 @@
       <p class="login-box-msg" id="statusMsg">Create a new account.</p>
 
       <div class="input-group mb-3">
-        <input id="username" type="text" class="form-control" placeholder="Username">
+        <input id="first_name" type="text" class="form-control" placeholder="First Name">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-user"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group mb-3">
+        <input id="last_name" type="text" class="form-control" placeholder="Last Name">
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-user"></span>
@@ -124,6 +133,15 @@
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group mb-3">
+        <input id="username" type="text" class="form-control" placeholder="Username">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-user"></span>
           </div>
         </div>
       </div>
@@ -151,24 +169,6 @@
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-phone"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="input-group mb-3">
-        <input id="first_name" type="text" class="form-control" placeholder="First Name">
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-user"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="input-group mb-3">
-        <input id="last_name" type="text" class="form-control" placeholder="Last Name">
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-user"></span>
           </div>
         </div>
       </div>
