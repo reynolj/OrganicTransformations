@@ -83,16 +83,24 @@
 			<div class="card ml-3 mr-3">
 				<div class="card-body">
 					<!-- Input Row -->
-					<div class="form-group row">
-						<div class="input-group">
-							<!-- Label -->
-							<label class="col-sm-4 col-form-label" for="first_name last_name">First & Last Name</label>
-							<!-- Input box -->
-							<div class="col-sm-4">
-								<input class="form-control" id="first_name" placeholder="First Name"/>
+					<div class="form-group">
+						<div class="row">
+							<div class="input-group">
+								<!-- Label -->
+								<label class="col-sm-8 col-form-label" for="new_password">New Password</label>
+								<!-- Input box -->
+								<div class="col-sm-4">
+									<input class="form-control" type="password" id="new_password" placeholder="New password"/>
+								</div>
 							</div>
-							<div class="col-sm-4">
-								<input class="form-control" id="last_name" placeholder="Last Name"/>
+						</div>
+
+						<div class="row">
+							<div class="input-group">
+								<label class="col-sm-8 col-form-label" for="confirm_password">Confirm New Password</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="password" id="confirm_password" placeholder="Confirm password"/>
+								</div>
 							</div>
 						</div>
 					</div>
