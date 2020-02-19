@@ -55,7 +55,7 @@ if($title == ""){
     <a href="index.php" class="brand-link" style="background-color: #fff;">
       <img src="AdminLTE/dist/img/logo.png" alt="Organic Transformations Logo" class="brand-image img-circle elevation-1"
            style="opacity: .9">
-      <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Oragnic</span>
+      <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Organic</span>
       <span class="brand-text" style="color: #333; font-size: 1.05rem;">Transformations</span>
     </a>
 
@@ -67,7 +67,7 @@ if($title == ""){
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $userData['name']; ?></a>
+          <a href="#" class="d-block"><?php echo 'Jason Henning'; ?></a>
         </div>
       </div>
 
@@ -114,18 +114,18 @@ if($title == ""){
 
           <li class="nav-item">
             <a href="index2.php" class="nav-link">
-              <i class="nav-icon fas fa-question-circle"></i>
+              <i class="nav-icon fas fa-hands-helping"></i>
               <p>
-                Help
+                Private Coaching
               </p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="index2.php" class="nav-link">
-              <i class="nav-icon fas fa-hands-helping"></i>
+              <i class="nav-icon fas fa-question-circle"></i>
               <p>
-                Private Coaching
+                Help
               </p>
             </a>
           </li>

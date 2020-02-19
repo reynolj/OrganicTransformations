@@ -1,3 +1,13 @@
+<?php
+//If already logged in, take them to the home page
+if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) ){
+   header("Location: index.php");
+   exit();
+}
+include_once("variables.php");
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
