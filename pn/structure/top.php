@@ -4,9 +4,6 @@ if($title == ""){
 }
 
 
-//Create connection
-require_once('variables.php');
-
 ?>
 
 
@@ -56,10 +53,10 @@ require_once('variables.php');
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link" style="background-color: #fff;">
-      <img src="AdminLTE/dist/img/logo.png" alt="Empire Unlock Logo" class="brand-image img-circle elevation-1"
+      <img src="AdminLTE/dist/img/logo.png" alt="Organic Transformations Logo" class="brand-image img-circle elevation-1"
            style="opacity: .9">
-      <span class="brand-text font-weight-bold" style="color: #333;">Empire</span>
-      <span class="brand-text font-weight-bold" style="color: #333;">Unlock</span>
+      <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Oragnic</span>
+      <span class="brand-text" style="color: #333; font-size: 1.05rem;">Transformations</span>
     </a>
 
     <!-- Sidebar -->
@@ -77,9 +74,8 @@ require_once('variables.php');
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
           <li class="nav-item">
-
-
             <a href="index.php" class="nav-link active">
               <i class="nav-icon fas fa-home"></i>
               <p>
@@ -87,14 +83,53 @@ require_once('variables.php');
               </p>
             </a>
           </li>
+
+
           <li class="nav-item">
             <a href="index2.php" class="nav-link">
-              <i class="nav-icon fas fa-dollar-sign"></i>
+              <i class="nav-icon fas fa-leaf"></i>
               <p>
-                Balance
+                Nutrition
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="index2.php" class="nav-link">
+              <i class="nav-icon fas fa-dumbbell"></i>
+              <p>
+                Exercises
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="index2.php" class="nav-link">
+              <i class="nav-icon fas fa-th-large"></i>
+              <p>
+                Guides
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="index2.php" class="nav-link">
+              <i class="nav-icon fas fa-question-circle"></i>
+              <p>
+                Help
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="index2.php" class="nav-link">
+              <i class="nav-icon fas fa-hands-helping"></i>
+              <p>
+                Private Coaching
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="logout.php" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -103,6 +138,7 @@ require_once('variables.php');
               </p>
             </a>
           </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
