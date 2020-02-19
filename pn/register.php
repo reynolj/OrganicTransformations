@@ -1,5 +1,6 @@
 <?php
 //If already logged in, take them to the home page
+session_start();
 if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) ){
    header("Location: index.php");
    exit();
