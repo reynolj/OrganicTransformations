@@ -4,6 +4,11 @@ $title = "OT | Home"; //Set the browser title
 $highlight = "index"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
+  
+  <scrip type="text/javascript">
+    <!-- Put Javascript Here -->
+  </scrip>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
