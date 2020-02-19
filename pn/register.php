@@ -99,7 +99,7 @@ include_once("variables.php");
           terms_agreed: $('#terms_agreed').prop("checked")
         },
         success: function(data, status){
-          if(data == "created"){
+          if(data == "success"){
             window.location.replace("login.php?register_success");
           }else{
             $('#statusMsg').html(data);

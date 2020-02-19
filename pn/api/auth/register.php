@@ -38,6 +38,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //Validate email
 	die("Email address is invalid.");
 }
 
+//2nd check for email verification
+if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)){
+    die("Email address is invalid.");
+}
+
 //Make sure the password is the correct length
 if( !(strlen($password) > 9 && strlen($password) < 50) ){
 	die("That password is not long enough.");
@@ -92,11 +97,31 @@ try {
     if($stmt->fetchColumn()){
     	die("That username or email already exists.");
     }
-    
+
 	//Create the user
-    $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthdate, first_name, last_name, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
-	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthdate, $first_name, $last_name ]);
+    $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthdate, first_name, last_name, email_verified, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthdate, $first_name, $last_name, $email_token ]);
+
 	if(  $success  ){
+        $email_token = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
+        $email = strtolower($email);
+
+	    //TODO: send email to confirm email address
+        //send email
+        $to      = $email; // Send email to our user
+        $subject = 'Organic Transformations Signup | Verification'; // Give the email a subject
+        $message = '
+
+        Thanks for signing up!
+        Your account has been created, you can login with your credentials after you have activated your account by clicking the url below.
+
+        Please click this link to activate your account:
+        http://www.organictransformations.com/verify.php?email='.$email.'&email_token='.$email_token.'
+
+        '; // Our message above including the link
+
+        $headers = 'From:noreply@organictransformations.com' . "\r\n"; // Set from headers
+        mail($to, $subject, $message, $headers); // Send our email
 		die("success");
 	}else{
 		die("Something went wrong. Please try again later.");
