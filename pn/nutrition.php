@@ -40,7 +40,7 @@ require("structure/top.php"); //Include the sidebar HTML
               </div>
               <div class="card-body">
                 <!-- Place page content here -->
-                <h3><p>To determine a nutrition plan that will best work for you we need to gather some information about you</p></h3>
+                <h3><p>To determine a nutrition plan that will best work for you we need to gather some information about you.</p></h3>
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -89,14 +89,14 @@ require("structure/top.php"); //Include the sidebar HTML
                         <select class="form-control">
                         <option>No time table</option>
                         <option>Less than 2 months</option>
-                        <option>2-4 months(below 8% body fat)</option>
+                        <option>2-4 months</option>
                         <option>4-6 months</option>
                         </select>
                       </div>
                 </div>
 
                 </div>
-                <h3><p>Please select the body type that most resembles yours based on the graphic and description</p></h3>
+                <h3><p>Please select the body type that most resembles yours based on the graphic and description.</p></h3>
                 <td>
                 <div class="row">
                           <div class="col-sm-4">
@@ -188,16 +188,16 @@ require("structure/top.php"); //Include the sidebar HTML
                           <!-- ./col -->
                         </div>
                          <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label>My body type is:</label>
-                                                <select class="form-control">
-                                                <option> </option>
-                                                <option>Ectomorph</option>
-                                                <option>Mesomorph</option>
-                                                <option>Endomorph</option>
-                                                </select>
-                                              </div>
-                                        </div>
+                            <div class="form-group">
+                               <label>My body type is:</label>
+                               <select class="form-control">
+                               <option> </option>
+                               <option>Ectomorph</option>
+                               <option>Mesomorph</option>
+                               <option>Endomorph</option>
+                               </select>
+                            </div>
+                         </div>
                         <h3><p>Next we have to know your body fat percentage. It is best to go get this tested for a more precise measure, but you can use these pictures to get a rough estimate</p></h3>
                         <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatM.jpg">
                         <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatF.jpg">
