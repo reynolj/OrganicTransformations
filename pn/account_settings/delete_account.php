@@ -90,7 +90,7 @@
 					<div class="form-group row">
 						<div class="input-group">
 							<!-- Label -->
-							<label class="col-sm-4 col-form-label-fluid" for="confirm">You are attempting to
+							<label class="col-sm-0 col-form-label-fluid" for="confirm">You are attempting to
 							delete your account. Your plan and future recurring payments will be cancelled.
 							All data will be deleted immediately and this specific account will be lost. Are you for sure?</label>
 							<!-- Input box -->
@@ -102,6 +102,7 @@
 							<div class="col-sm-4-fluid">
 								<input class="form-control" id="pass_word" placeholder="Current Password"/>
 							</div>
+							<break>
 					    <button type="button" class="btn btn-block btn-danger disabled">Delete</button></button>
 					</div>
 				</div>
