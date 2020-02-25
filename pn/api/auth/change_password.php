@@ -1,9 +1,7 @@
 <?php
-//If already logged in, take them to the home page
+require_once("login_check.php");
+
 session_start();
-if(!isset($_SESSION['user_id']) && empty($_SESSION['user_id']) ){
-  die("You must be logged in to do that.");
-}
 
 require_once("../../variables.php");
 
