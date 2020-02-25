@@ -1,5 +1,5 @@
 <?php
-// require("api/auth/login_check.php"); //Make sure the users is logged in
+require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Nutrition"; //Set the browser title
 $highlight = "Nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
@@ -97,19 +97,20 @@ require("structure/top.php"); //Include the sidebar HTML
 
                 </div>
                 <h3><p>Please select the body type that most resembles yours based on the graphic and description</p></h3>
-                <td>
-                <div class="row">
-                          <div class="col-sm-4">
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title">
 
-                                  Ectomorph
-                                </h3>
-                              </div>
+                <div class="row">
+                   <div class="col-md-4">
+                      <div class="card">
+                         <div class="card-header">
+                              <h3 class="card-title">
+                                 Ectomorph
+                               </h3>
+                         </div>
                               <!-- /.card-header -->
                               <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/ectos.jpg">
+                                <div>
+                                <img style='height: 50%; width: 50%; object-fit: contain' src="images/ectos.jpg">
+                                 </div>
                                 <ul>
                                   <li>Skinny</li>
                                   <li>Small joints/bones</li>
@@ -121,25 +122,25 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Fast metabolism</li>
                                   <li>Difficult to gain weight/muscle (hard gainer)</li>
                                   </ul>
-                                  <td>
-                                  </td>
                               </div>
                               <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                          </div>
-                          <!-- ./col -->
+                      </div>
+                       <!-- /.card -->
+                   </div>
+                     <!-- ./col -->
                           <div class="col-md-4">
                             <div class="card">
                               <div class="card-header">
-                                <h3 class="card-title">
-                                  Mesomorph
-                                </h3>
+                                  <h3 class="card-title">
+                                     Mesomorph
+                                    </h3>
                               </div>
                               <!-- /.card-header -->
                               <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/mesos.jpg">
-                                <ul>
+                                 <div>
+                                 <img style='height: 50%; width: 50%; object-fit: contain' src="images/mesos.jpg">
+                                 </div>
+                                  <ul>
                                   <li>Naturally Lean</li>
                                   <li>Naturally muscular</li>
                                   <li>Naturally strong</li>
@@ -150,8 +151,6 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Gain muscle/lose fat with little effort</li>
                                   <li>Responds quickly to exercise</li>
                                   </ul>
-                                  <td>
-                                  </td>
                               </div>
                               <!-- /.card-body -->
                             </div>
@@ -167,7 +166,9 @@ require("structure/top.php"); //Include the sidebar HTML
                               </div>
                               <!-- /.card-header -->
                               <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/Endos.jpg">
+                                <div>
+                                <img style='height: 50%; width: 50%; object-fit: contain' src="images/Endos.jpg">
+                                </div>
                                 <ul>
                                 <li>Soft, round body</li>
                                 <li>Short, stocky limbs</li>
@@ -183,10 +184,11 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-body -->
                             </div>
 
-                            <!-- /.card -->
-                          </div>
+                      <!-- /.card -->
+                   </div>
                           <!-- ./col -->
-                        </div>
+                </div>
+
                          <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label>My body type is:</label>
@@ -198,27 +200,38 @@ require("structure/top.php"); //Include the sidebar HTML
                                                 </select>
                                               </div>
                                         </div>
-                        <h3><p>Next we have to know your body fat percentage. It is best to go get this tested for a more precise measure, but you can use these pictures to get a rough estimate</p></h3>
-                        <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatM.jpg">
-                        <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatF.jpg">
+                          <div>
+                             <h3>
+                            <p>Next we have to know your body fat percentage. It is best to go get this tested for a
+                            more precise measure, but you can reference these pictures to get a rough estimate</p>
+                             </h3>
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatM.jpg">
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatF.jpg">
+                           </div
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label>My body fat percentage:</label>
+                                <input type="text" class="form-control" placeholder="Enter your body fat % here" required>
+                               </div>
+                             </div>
 
-                 <div class="col-sm-4">
-                     <div class="form-group">
-                         <label>My body fat percentage:</label>
-                         <input type="text" class="form-control" placeholder="Enter your body fat % here" required>
-                         </div>
-                      </div>
-                 <div class="col-sm-4">
-                 <td>
-                 <button type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
-                 </td>
+                              <div class="col-sm-4">
+                                <td>
+                                 <button type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
+                                </td>
+                              </div>
+
+
+
                 </div>
               </div>
             </div>
 
 
 
-      </div><!-- /.container-fluid -->
+
+      </div>
+      <!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
