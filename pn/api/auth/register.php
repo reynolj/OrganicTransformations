@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../variables.php');
+require_once('../../variables.php');
 
 
 if (   !isset($_POST['username'])
