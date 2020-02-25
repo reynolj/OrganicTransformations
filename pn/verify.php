@@ -1,5 +1,5 @@
 <?php
-require("variable.php");
+require("variables.php");
 
 if (!isset($_GET['email_token']) || !isset($_GET['email'])) {
     $status = 'Invalid token or email address';
