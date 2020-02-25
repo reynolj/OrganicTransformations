@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -86,20 +90,23 @@
 					<div class="form-group row">
 						<div class="input-group">
 							<!-- Label -->
-							<label class="col-sm-4 col-form-label" for="first_name last_name">First & Last Name</label>
+							<label class="col-sm-4 col-form-label-fluid" for="confirm">You are attempting to
+							delete your account. Your plan and future recurring payments will be cancelled.
+							All data will be deleted immediately and this specific account will be lost. Are you for sure?</label>
 							<!-- Input box -->
-							<div class="col-sm-4">
+
+							<!--<div class="col-sm-4">
 								<input class="form-control" id="first_name" placeholder="First Name"/>
+							</div>-->
+
+							<div class="col-sm-4-fluid">
+								<input class="form-control" id="pass_word" placeholder="Current Password"/>
 							</div>
-							<div class="col-sm-4">
-								<input class="form-control" id="last_name" placeholder="Last Name"/>
-							</div>
-						</div>
+					    <button type="button" class="btn btn-block btn-danger disabled">Delete</button></button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </body>
 </html>
