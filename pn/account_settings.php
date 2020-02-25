@@ -1,22 +1,27 @@
 <?php
-// require("api/auth/login_check.php"); //Make sure the users is logged in
+require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Home"; //Set the browser title
 $highlight = "index"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 
 <head>
-<style>
-ul {
-  margin: 15px;
-  padding: 0px;
-}
-</style>
+  <script type="text/javascript">
+    <!-- Put Javascript Here -->
+  </script>
+
+  <script src="AdminLTE/plugins/moment/moment.min.js"></script>
+  <script src="AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+  <style>
+    ul {
+      margin: 15px;
+      padding: 0px;
+    }
+  </style>
 </head>
 
-  <scrip type="text/javascript">
-    <!-- Put Javascript Here -->
-  </scrip>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -52,8 +57,10 @@ ul {
                     <div class="card-body">
                       <div class="form-group">
                         <label for="first_name last_name">Name</label>
-                        <input type="first_name" class="form-control" id="first_name" placeholder="First Name">
-                        <input type="last_name" class="form-control" id="last_name" placeholder="Last Name">
+                        <input type="text" class="form-control" id="first_name" placeholder="First Name">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="last_name" placeholder="Last Name">
                       </div>
 
                       <div class="form-group">
@@ -63,7 +70,7 @@ ul {
 
                       <div class="form-group">
                         <label for="phone_number">Phone Number</label>
-                        <input type="phone_number" class="form-control" id="phone_number" placeholder="Enter Phone Number">
+                        <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" im-insert="true" placeholder="(___) ___-____">
                       </div>
 
                       <div class="form-group">
@@ -246,9 +253,13 @@ ul {
                     <div class="card-body">
                       <div class="form-group">
                         <label for="new_password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Old Password"></br>
-                        <input type="new_password" class="form-control" id="new_password" placeholder="New Password">
-                        <input type="new_password" class="form-control" id="new_password" placeholder="Confirm New Password">
+                        <input type="password" class="form-control" id="password" placeholder="Old Password">
+                      </div>
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="new_password" placeholder="New Password">
+                      </div>
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="new_password" placeholder="Confirm New Password">
                       </div>
                     </div> <!-- /.card-body -->
 
@@ -284,6 +295,8 @@ ul {
             <div class="card-body">
               <!-- Place page content here -->
 			  <p>Note: Upgrades will take effect immediately, stopping any future recurring payments under the previous plan. Meanwhile, downgrades will take effect at the end of the billing cycle. Payments cannot be refunded.</p>
+              <hr noshade></hr noshade>
+              <p>If you would like to cancel your current plan, please <a href="#">click here</a> to confirm with email.</p>
               <div class="row">
                 <div class="col-md-2">
                     <div class="card card-primary">
