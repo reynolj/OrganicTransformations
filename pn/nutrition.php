@@ -51,13 +51,13 @@ require("structure/top.php"); //Include the sidebar HTML
                            </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                           <label>My weigth(in pounds):</label>
+                           <label>My weigth(lbs):</label>
                               <input type="text" class="form-control" placeholder="Enter your weight here">
                              </div>
                           </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>My target weigth (in pounds):</label>
+                            <label>Target weigth (lbs):</label>
                             <input type="text" class="form-control" placeholder="Enter your target weight here">
                         </div>
                     </div>
@@ -65,7 +65,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 <div class="row">
                     <div class="col-sm-4">
                        <div class="form-group">
-                         <label>My gender</label>
+                         <label>Sex</label>
                           <select class="form-control">
                           <option>Male</option>
                           <option>Female</option>
@@ -87,9 +87,9 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="form-group">
                         <label>I want to accomplish my goal in:</label>
                         <select class="form-control">
-                        <option>No time table</option>
+                        <option>No time line</option>
                         <option>Less than 2 months</option>
-                        <option>2-4 months(below 8% body fat)</option>
+                        <option>2-4 months</option>
                         <option>4-6 months</option>
                         </select>
                       </div>
@@ -109,7 +109,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-header -->
                               <div class="card-body">
                                 <div>
-                                <img style='height: 50%; width: 50%; object-fit: contain' src="images/ectos.jpg">
+                                <img style='height: 60%; width: 60%; object-fit: contain' src="images/ectos.jpg">
                                  </div>
                                 <ul>
                                   <li>Skinny</li>
@@ -120,7 +120,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Low body fat</li>
                                   <li>Can eat anything without gaining weight</li>
                                   <li>Fast metabolism</li>
-                                  <li>Difficult to gain weight/muscle (hard gainer)</li>
+                                  <li>Difficult to gain weight/muscle</li>
                                   </ul>
                               </div>
                               <!-- /.card-body -->
@@ -138,7 +138,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-header -->
                               <div class="card-body">
                                  <div>
-                                 <img style='height: 50%; width: 50%; object-fit: contain' src="images/mesos.jpg">
+                                 <img style='height: 60%; width: 60%; object-fit: contain' src="images/mesos.jpg">
                                  </div>
                                   <ul>
                                   <li>Naturally Lean</li>
@@ -167,7 +167,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-header -->
                               <div class="card-body">
                                 <div>
-                                <img style='height: 50%; width: 50%; object-fit: contain' src="images/Endos.jpg">
+                                <img style='height: 60%; width: 60%; object-fit: contain' src="images/Endos.jpg">
                                 </div>
                                 <ul>
                                 <li>Soft, round body</li>
