@@ -70,7 +70,7 @@ require("structure/top.php"); //Include the sidebar HTML
 
                       <div class="form-group">
                         <label for="phone_number">Phone Number</label>
-                        <input type="text" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" im-insert="true" placeholder="(___) ___-____">
+                        <input type="text" class="form-control" data-inputmask='mask": "(999) 999-9999"' data-mask="" im-insert="true" placeholder="(___) ___-____">
                       </div>
 
                       <div class="form-group">
