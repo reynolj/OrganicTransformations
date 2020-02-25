@@ -86,7 +86,7 @@ if($title == ""){
 
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="nutrition.php" class="nav-link">
               <i class="nav-icon fas fa-leaf"></i>
               <p>
                 Nutrition
