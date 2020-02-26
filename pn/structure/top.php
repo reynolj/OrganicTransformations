@@ -54,7 +54,7 @@ session_start();
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link" style="background-color: #fff;">
-      <img src="AdminLTE/dist/img/logo.png" alt="Organic Transformations Logo" class="brand-image img-circle elevation-1"
+      <img src="AdminLTE/dist/img/svg/logo.svg" alt="Organic Transformations Logo" class="brand-image" //Removed: img-circle elevation-1
            style="opacity: .9">
       <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Organic</span>
       <span class="brand-text" style="color: #333; font-size: 1.05rem;">Transformations</span>
