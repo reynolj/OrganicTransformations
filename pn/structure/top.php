@@ -80,7 +80,7 @@ session_start();
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
-            <a href="index.php" class="nav-link active">
+            <a href="index.php" class="nav-link <?php if($highlight == "index"){ echo "active";} ?>">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Home
@@ -90,7 +90,7 @@ session_start();
 
 
           <li class="nav-item">
-            <a href="nutrition.php" class="nav-link">
+            <a href="nutrition.php" class="nav-link <?php if($highlight == "nutrition"){ echo "active";} ?>">
               <i class="nav-icon fas fa-leaf"></i>
               <p>
                 Nutrition
@@ -99,7 +99,7 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="exercise.php" class="nav-link">
+            <a href="exercise.php" class="nav-link <?php if($highlight == "exercise"){ echo "active";} ?>">
               <i class="nav-icon fas fa-dumbbell"></i>
               <p>
                 Exercise
@@ -108,7 +108,7 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="guides.php" class="nav-link <?php if($highlight == "guides"){ echo "active";} ?>">
               <i class="nav-icon fas fa-th-large"></i>
               <p>
                 Guides
@@ -117,7 +117,7 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="private_coaching.php" class="nav-link <?php if($highlight == "private_coaching"){ echo "active";} ?>">
               <i class="nav-icon fas fa-hands-helping"></i>
               <p>
                 Private Coaching
@@ -126,7 +126,7 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="help.php" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
               <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 Help

@@ -6,12 +6,7 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
 
 <head>
-  <script type="text/javascript">
-    <!-- Put Javascript Here -->
-  </script>
 
-  <script src="AdminLTE/plugins/moment/moment.min.js"></script>
-  <script src="AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 
   <style>
     ul {
@@ -384,5 +379,22 @@ require("structure/top.php"); //Include the sidebar HTML
       </div> <!-- /.container-fluid -->
     </div> <!-- /.content -->
   </div> <!-- /.content-wrapper -->
+
+
+  <script src="AdminLTE/plugins/moment/moment.min.js"></script>
+  <script src="AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script>
+  $(function () {
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+
+  });
+</script>
 
 <?php include('structure/bottom.php'); ?>
