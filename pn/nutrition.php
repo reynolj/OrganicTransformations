@@ -32,8 +32,6 @@ require("structure/top.php"); //Include the sidebar HTML
     <div class="content">
       <div class="container-fluid">
 
-
-
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h5 class="m-0">Nutrition Planner</h5>
@@ -107,11 +105,11 @@ require("structure/top.php"); //Include the sidebar HTML
                                </h3>
                          </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
+                              <div class="card-body" style="text-align:center;">
                                 <div>
                                 <img style='height: 60%; width: 60%; object-fit: contain' src="images/ectos.jpg">
                                  </div>
-                                <ul>
+                                <ul style="display: inline-block; text-align: left;">
                                   <li>Skinny</li>
                                   <li>Small joints/bones</li>
                                   <li>Small shoulders</li>
@@ -136,11 +134,11 @@ require("structure/top.php"); //Include the sidebar HTML
                                     </h3>
                               </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
+                              <div class="card-body" style="text-align:center;">
                                  <div>
                                  <img style='height: 60%; width: 60%; object-fit: contain' src="images/mesos.jpg">
                                  </div>
-                                  <ul>
+                                  <ul style="display: inline-block; text-align: left;">
                                   <li>Naturally Lean</li>
                                   <li>Naturally muscular</li>
                                   <li>Naturally strong</li>
@@ -165,11 +163,11 @@ require("structure/top.php"); //Include the sidebar HTML
                                 </h3>
                               </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
+                              <div class="card-body" style="text-align:center;">
                                 <div>
                                 <img style='height: 60%; width: 60%; object-fit: contain' src="images/Endos.jpg">
                                 </div>
-                                <ul>
+                                <ul style="display: inline-block; text-align: left;">
                                 <li>Soft, round body</li>
                                 <li>Short, stocky limbs</li>
                                 <li>Big joints/bones</li>

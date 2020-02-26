@@ -17,6 +17,9 @@ session_start();
 
   <title><?php echo $title ?></title>
 
+  <!-- Favicons -->
+  <link href="AdminLTE/dist/img/favicon.png" rel="icon">
+  <link href="AdminLTE/dist/img/apple-touch-icon.png" rel="apple-touch-icon">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="AdminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -96,10 +99,10 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="exercise.php" class="nav-link">
               <i class="nav-icon fas fa-dumbbell"></i>
               <p>
-                Exercises
+                Exercise
               </p>
             </a>
           </li>
