@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../variables.php');
+require_once('../../variables.php');
 
 
 if (   !isset($_POST['username'])
@@ -106,8 +106,6 @@ try {
         $email_token = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
         $email = strtolower($email);
 
-	    //TODO: send email to confirm email address
-        //send email
         $to      = $email; // Send email to our user
         $subject = 'Organic Transformations Signup | Verification'; // Give the email a subject
         $message = '

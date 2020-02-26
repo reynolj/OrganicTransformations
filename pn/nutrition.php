@@ -1,5 +1,5 @@
 <?php
-// require("api/auth/login_check.php"); //Make sure the users is logged in
+require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Nutrition"; //Set the browser title
 $highlight = "Nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
@@ -32,15 +32,13 @@ require("structure/top.php"); //Include the sidebar HTML
     <div class="content">
       <div class="container-fluid">
 
-
-
             <div class="card card-primary card-outline">
               <div class="card-header">
                 <h5 class="m-0">Nutrition Planner</h5>
               </div>
               <div class="card-body">
                 <!-- Place page content here -->
-                <h3><p>To determine a nutrition plan that will best work for you we need to gather some information about you.</p></h3>
+                <h3><p>To determine a nutrition plan that will best work for you we need to gather some information about you</p></h3>
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -51,13 +49,13 @@ require("structure/top.php"); //Include the sidebar HTML
                            </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                           <label>My weigth(in pounds):</label>
+                           <label>My weigth(lbs):</label>
                               <input type="text" class="form-control" placeholder="Enter your weight here">
                              </div>
                           </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>My target weigth (in pounds):</label>
+                            <label>Target weigth (lbs):</label>
                             <input type="text" class="form-control" placeholder="Enter your target weight here">
                         </div>
                     </div>
@@ -65,7 +63,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 <div class="row">
                     <div class="col-sm-4">
                        <div class="form-group">
-                         <label>My gender</label>
+                         <label>Sex</label>
                           <select class="form-control">
                           <option>Male</option>
                           <option>Female</option>
@@ -87,7 +85,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="form-group">
                         <label>I want to accomplish my goal in:</label>
                         <select class="form-control">
-                        <option>No time table</option>
+                        <option>No time line</option>
                         <option>Less than 2 months</option>
                         <option>2-4 months</option>
                         <option>4-6 months</option>
@@ -96,21 +94,22 @@ require("structure/top.php"); //Include the sidebar HTML
                 </div>
 
                 </div>
-                <h3><p>Please select the body type that most resembles yours based on the graphic and description.</p></h3>
-                <td>
-                <div class="row">
-                          <div class="col-sm-4">
-                            <div class="card">
-                              <div class="card-header">
-                                <h3 class="card-title">
+                <h3><p>Please select the body type that most resembles yours based on the graphic and description</p></h3>
 
-                                  Ectomorph
-                                </h3>
-                              </div>
+                <div class="row">
+                   <div class="col-md-4">
+                      <div class="card">
+                         <div class="card-header">
+                              <h3 class="card-title">
+                                 Ectomorph
+                               </h3>
+                         </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/ectos.jpg">
-                                <ul>
+                              <div class="card-body" style="text-align:center;">
+                                <div>
+                                <img style='height: 60%; width: 60%; object-fit: contain' src="images/ectos.jpg">
+                                 </div>
+                                <ul style="display: inline-block; text-align: left;">
                                   <li>Skinny</li>
                                   <li>Small joints/bones</li>
                                   <li>Small shoulders</li>
@@ -119,27 +118,27 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Low body fat</li>
                                   <li>Can eat anything without gaining weight</li>
                                   <li>Fast metabolism</li>
-                                  <li>Difficult to gain weight/muscle (hard gainer)</li>
+                                  <li>Difficult to gain weight/muscle</li>
                                   </ul>
-                                  <td>
-                                  </td>
                               </div>
                               <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                          </div>
-                          <!-- ./col -->
+                      </div>
+                       <!-- /.card -->
+                   </div>
+                     <!-- ./col -->
                           <div class="col-md-4">
                             <div class="card">
                               <div class="card-header">
-                                <h3 class="card-title">
-                                  Mesomorph
-                                </h3>
+                                  <h3 class="card-title">
+                                     Mesomorph
+                                    </h3>
                               </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/mesos.jpg">
-                                <ul>
+                              <div class="card-body" style="text-align:center;">
+                                 <div>
+                                 <img style='height: 60%; width: 60%; object-fit: contain' src="images/mesos.jpg">
+                                 </div>
+                                  <ul style="display: inline-block; text-align: left;">
                                   <li>Naturally Lean</li>
                                   <li>Naturally muscular</li>
                                   <li>Naturally strong</li>
@@ -150,8 +149,6 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Gain muscle/lose fat with little effort</li>
                                   <li>Responds quickly to exercise</li>
                                   </ul>
-                                  <td>
-                                  </td>
                               </div>
                               <!-- /.card-body -->
                             </div>
@@ -166,9 +163,11 @@ require("structure/top.php"); //Include the sidebar HTML
                                 </h3>
                               </div>
                               <!-- /.card-header -->
-                              <div class="card-body">
-                              <img style='height: 100%; width: 100%; object-fit: contain' src="images/Endos.jpg">
-                                <ul>
+                              <div class="card-body" style="text-align:center;">
+                                <div>
+                                <img style='height: 60%; width: 60%; object-fit: contain' src="images/Endos.jpg">
+                                </div>
+                                <ul style="display: inline-block; text-align: left;">
                                 <li>Soft, round body</li>
                                 <li>Short, stocky limbs</li>
                                 <li>Big joints/bones</li>
@@ -183,42 +182,54 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-body -->
                             </div>
 
-                            <!-- /.card -->
-                          </div>
+                      <!-- /.card -->
+                   </div>
                           <!-- ./col -->
-                        </div>
-                         <div class="col-sm-4">
-                            <div class="form-group">
-                               <label>My body type is:</label>
-                               <select class="form-control">
-                               <option> </option>
-                               <option>Ectomorph</option>
-                               <option>Mesomorph</option>
-                               <option>Endomorph</option>
-                               </select>
-                            </div>
-                         </div>
-                        <h3><p>Next we have to know your body fat percentage. It is best to go get this tested for a more precise measure, but you can use these pictures to get a rough estimate</p></h3>
-                        <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatM.jpg">
-                        <img style='height: 100%; width: 100%; object-fit: contain' src="images/fatF.jpg">
+                </div>
 
-                 <div class="col-sm-4">
-                     <div class="form-group">
-                         <label>My body fat percentage:</label>
-                         <input type="text" class="form-control" placeholder="Enter your body fat % here" required>
-                         </div>
-                      </div>
-                 <div class="col-sm-4">
-                 <td>
-                 <button type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
-                 </td>
+                         <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>My body type is:</label>
+                                                <select class="form-control">
+                                                <option> </option>
+                                                <option>Ectomorph</option>
+                                                <option>Mesomorph</option>
+                                                <option>Endomorph</option>
+                                                </select>
+                                              </div>
+                                        </div>
+                          <div>
+                             <h3>
+                            <p>Next we have to know your body fat percentage. It is best to go get this tested for a
+                            more precise measure, but you can reference these pictures to get a rough estimate</p>
+                             </h3>
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatM.jpg">
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatF.jpg">
+                           </div
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label>My body fat percentage:</label>
+                                <input type="text" class="form-control" placeholder="Enter your body fat % here" required>
+                               </div>
+                             </div>
+
+                              <div class="col-sm-4">
+                                <td>
+                                 <button type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
+                                </td>
+                              </div>
+
+
+
                 </div>
               </div>
             </div>
 
 
 
-      </div><!-- /.container-fluid -->
+
+      </div>
+      <!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>

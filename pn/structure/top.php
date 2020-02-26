@@ -3,6 +3,7 @@ if($title == ""){
 	$title = "Organic Transformations";
 }
 
+session_start();
 
 ?>
 
@@ -16,6 +17,9 @@ if($title == ""){
 
   <title><?php echo $title ?></title>
 
+  <!-- Favicons -->
+  <link href="AdminLTE/dist/img/favicon.png" rel="icon">
+  <link href="AdminLTE/dist/img/apple-touch-icon.png" rel="apple-touch-icon">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="AdminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
@@ -53,7 +57,7 @@ if($title == ""){
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link" style="background-color: #fff;">
-      <img src="AdminLTE/dist/img/logo.png" alt="Organic Transformations Logo" class="brand-image img-circle elevation-1"
+      <img src="AdminLTE/dist/img/svg/logo.svg" alt="Organic Transformations Logo" class="brand-image" //Removed: img-circle elevation-1
            style="opacity: .9">
       <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Organic</span>
       <span class="brand-text" style="color: #333; font-size: 1.05rem;">Transformations</span>
@@ -67,7 +71,7 @@ if($title == ""){
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo 'Jason Henning'; ?></a>
+          <a href="#" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
         </div>
       </div>
 
@@ -76,7 +80,7 @@ if($title == ""){
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
-            <a href="index.php" class="nav-link active">
+            <a href="index.php" class="nav-link <?php if($highlight == "index"){ echo "active";} ?>">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Home
@@ -86,7 +90,7 @@ if($title == ""){
 
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="nutrition.php" class="nav-link <?php if($highlight == "nutrition"){ echo "active";} ?>">
               <i class="nav-icon fas fa-leaf"></i>
               <p>
                 Nutrition
@@ -95,16 +99,16 @@ if($title == ""){
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="exercise.php" class="nav-link <?php if($highlight == "exercise"){ echo "active";} ?>">
               <i class="nav-icon fas fa-dumbbell"></i>
               <p>
-                Exercises
+                Exercise
               </p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="guides.php" class="nav-link <?php if($highlight == "guides"){ echo "active";} ?>">
               <i class="nav-icon fas fa-th-large"></i>
               <p>
                 Guides
@@ -113,7 +117,7 @@ if($title == ""){
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="private_coaching.php" class="nav-link <?php if($highlight == "private_coaching"){ echo "active";} ?>">
               <i class="nav-icon fas fa-hands-helping"></i>
               <p>
                 Private Coaching
@@ -122,7 +126,7 @@ if($title == ""){
           </li>
 
           <li class="nav-item">
-            <a href="index2.php" class="nav-link">
+            <a href="help.php" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
               <i class="nav-icon fas fa-question-circle"></i>
               <p>
                 Help
