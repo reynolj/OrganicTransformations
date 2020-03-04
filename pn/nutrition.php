@@ -1,7 +1,7 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Nutrition"; //Set the browser title
-$highlight = "Nutrition"; //Select which tab in the navigation to highlight
+$highlight = "nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 
@@ -213,11 +213,31 @@ require("structure/top.php"); //Include the sidebar HTML
                                </div>
                              </div>
 
+                             <div class="col-sm-4">
+                                 <div class="form-group">
+                                 <label>Finally we need your blood type to help determine which
+                                  foods to eat and which to avoid.</label>
+                                  <select class="form-control">
+                                                                            <option>I don&apos;t know my blood type</option>
+                                                                            <option>A-</option>
+                                                                            <option>A+</option>
+                                                                            <option>B-</option>
+                                                                            <option>B+</option>
+                                                                            <option>AB-</option>
+                                                                            <option>AB+</option>
+                                                                            <option>O-</option>
+                                                                            <option>O+</option>
+                                                                            </select>
+                                                                            </div>
+                                                                        </div>
+
                               <div class="col-sm-4">
                                 <td>
                                  <button type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
                                 </td>
                               </div>
+
+
 
 
 
