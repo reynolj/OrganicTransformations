@@ -8,8 +8,13 @@ try {
     //This is prepared statement takes the arguments AS IS.
     //YOU MUST MAKE THEM THE RELEVANT DATA TYPES BEFORE CALLING.
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
-    $stmt = $con->prepare("SELECT guide_name, thumbnail, subscription_level, date_last_modified FROM guides LIMIT ?");
-    $stmt->execute([$_POST['number']]);
+    $stmt = $con->prepare("
+        SELECT guide_name, thumbnail, subscription_level, date_last_modified 
+        FROM guides 
+        WHERE guide_id IN (SELECT guide_id FROM tags WHERE tag = ?) 
+        ORDER BY date_last_modified
+        LIMIT ?");
+    $stmt->execute([$_POST['tag'], $_POST['number']]);
 
     $result = $stmt->fetchAll();
 

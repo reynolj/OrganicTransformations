@@ -10,19 +10,22 @@ require("structure/top.php"); //Include the sidebar HTML
 <head>
   <script type="text/javascript">
     $( window ).on( "load", function() {
-        get_guides(4, $('#nutrition_favorites'));
+        get_guides(4, $('#nutrition_favorites'), 'nutrition');
+        get_guides(4, $('#exercise_favorites'), 'exercise');
+        get_guides(4, $('#highlighted_guides'), 'nutrition');
     });
 
-    function get_guides(number, container) {
+    function get_guides(number, container, tag) {
         $.ajax({
             type:'POST',
             url: 'api/dashboard/home.php',
             //dataType: 'string',
             data: {
-                number: number
+                number: number,
+                tag: tag
             },
             success: function(data) {
-                $('#nutrition_favorites').html(make_cards(JSON.parse(data), container));
+                container.html(make_cards(JSON.parse(data)));
             },
             error: function() {
                 console.log("ERROR");
@@ -33,19 +36,17 @@ require("structure/top.php"); //Include the sidebar HTML
     function make_cards(data) {
         let str_hold = Array();
         let day_str;
-        for(var key in data) {
+        let ribbon_str;
+        for(let key in data) {
             if(data.hasOwnProperty(key)) {
                 day_str = calc_time_since(data[key]["date_last_modified"]);
+                ribbon_str = get_ribbon(data[key]["subscription_level"]);
                 str_hold.push(
                     '<div class="col-lg-3 col-md-6 col-sm-12">' +
-                      '<div class="ribbon-wrapper ribbon">' +
-                        '<div class="ribbon bg-primary">' +
-                          data[key]["subscription_level"] +
-                        '</div>' +
-                      '</div>' +
+                      ribbon_str +
                       '<div class="small-box">' +
                         '<div class="inner">' +
-                          '<img src="' + data[key]["thumbnail"] + '" alt="" width="100%" height="100%">' +
+                          '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid" style=" width=100%; height= 15vw; object-fit: cover">' +
                         '</div>' +
                         '<a class="small-box-footer">' +
                           '<div class="row pl-1 pr-1">' +
@@ -84,6 +85,23 @@ require("structure/top.php"); //Include the sidebar HTML
             default:
                 return days_since.toString() + ' days ago';
         }
+    }
+
+    function get_ribbon(level) {
+        if(level === "WELCOME") return "";
+        let color_levels = {
+            "BEGINNER" : '<div class="ribbon bg-white">',
+            "INTERMEDIATE" : '<div class="ribbon bg-yellow">',
+            "ADVANCED" : '<div class="ribbon bg-red">',
+            "PERSONAL" : '<div class="ribbon bg-black">'
+        };
+        return (
+          '<div class="ribbon-wrapper ribbon-lg">' +
+            color_levels[level] +
+              level +
+            '</div>' +
+          '</div>'
+        );
     }
   </script>
 </head>
@@ -155,6 +173,11 @@ require("structure/top.php"); //Include the sidebar HTML
         <div class="card-header">
           <h3 class="card-title">Highlighted For You</h3>
         </div>
+        <div class="card-body">
+          <div id="highlighted_guides" class="row">
+            <!-- This is populated by get_guides in the header -->
+          </div>
+        </div>
       </div>
 
       <!-- Nutrition Favorites -->
@@ -173,6 +196,11 @@ require("structure/top.php"); //Include the sidebar HTML
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Exercise Favorites</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="exercise_favorites" class="row">
+          <!-- This is populated by get_guides in the header -->
         </div>
       </div>
     </div><!-- /.container-fluid -->
