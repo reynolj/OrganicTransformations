@@ -50,7 +50,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <!-- /.card-body -->
                                     <div class="card-body" align="center">
                                         <!-- Physique Diagram FRONT -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+                                        <svg id="physique-diagram" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
                                              viewBox="0 0 492.78 1005.01"><title>Front</title>
                                                 <g id="Front_Joined" data-name="Front Joined">
                                                     <path id="Body"
@@ -220,7 +220,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <!-- /.card-body -->
                                     <div class="card-body" align="center">
                                         <!-- Physique Diagram BACK -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+                                        <svg id="physique-diagram" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
                                              viewBox="0 0 478.98 1004.67"><title>Back</title>
                                             <g id="Layer_2" data-name="Layer 2">
                                                 <g id="Rear_Joined" data-name="Rear Joined">
