@@ -10,21 +10,23 @@ require("structure/top.php"); //Include the sidebar HTML
 <head>
   <script type="text/javascript">
     $( window ).on( "load", function() {
-        get_guides(4, $('#nutrition_favorites'), 'nutrition');
-        get_guides(4, $('#exercise_favorites'), 'exercise');
-        get_guides(4, $('#highlighted_guides'), 'nutrition');
+        get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
+        get_guides(4, $('#exercise_favorites'), 'exercise', 1);
+        get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
     });
 
-    function get_guides(number, container, tag) {
+    function get_guides(number, container, tag, favorites) {
         $.ajax({
             type:'POST',
             url: 'api/dashboard/home.php',
             //dataType: 'string',
             data: {
                 number: number,
-                tag: tag
+                tag: tag,
+                favorites: favorites
             },
             success: function(data) {
+                console.log(data);
                 container.html(make_cards(JSON.parse(data)));
             },
             error: function() {
@@ -46,7 +48,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       ribbon_str +
                       '<div class="small-box">' +
                         '<div class="inner">' +
-                          '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid" style=" width=100%; height= 15vw; object-fit: cover">' +
+                          '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid">' +
                         '</div>' +
                         '<a class="small-box-footer">' +
                           '<div class="row pl-1 pr-1">' +
@@ -96,7 +98,7 @@ require("structure/top.php"); //Include the sidebar HTML
             "PERSONAL" : '<div class="ribbon bg-black">'
         };
         return (
-          '<div class="ribbon-wrapper ribbon-lg">' +
+          '<div class="ribbon-wrapper ribbon-lg" style="right:5px">' +
             color_levels[level] +
               level +
             '</div>' +
@@ -197,11 +199,11 @@ require("structure/top.php"); //Include the sidebar HTML
         <div class="card-header">
           <h3 class="card-title">Exercise Favorites</h3>
         </div>
+        <div class="card-body">
+          <div id="exercise_favorites" class="row">
+            <!-- This is populated by get_guides in the header -->
+          </div>
       </div>
-      <div class="card-body">
-        <div id="exercise_favorites" class="row">
-          <!-- This is populated by get_guides in the header -->
-        </div>
       </div>
     </div><!-- /.container-fluid -->
   </div>
