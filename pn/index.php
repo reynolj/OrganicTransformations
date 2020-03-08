@@ -48,6 +48,9 @@ require("structure/top.php"); //Include the sidebar HTML
                       ribbon_str +
                       '<div class="small-box">' +
                         '<div class="inner">' +
+                        '<svg class="overlay-button-wrapper">' +
+                          '<polygon class="overlay-button" onclick="favorite()" points="10,1 4,20 19,8 1,8 16,20"/>' + // points="100,10 40,198 190,78 10,78 160,198"/>' +
+                        '</svg>' +
                           '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid">' +
                         '</div>' +
                         '<a class="small-box-footer">' +
@@ -104,6 +107,10 @@ require("structure/top.php"); //Include the sidebar HTML
             '</div>' +
           '</div>'
         );
+    }
+
+    function favorite() {
+        console.log("CLICK");
     }
   </script>
 </head>
