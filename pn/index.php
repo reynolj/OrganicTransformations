@@ -10,23 +10,130 @@ require("structure/top.php"); //Include the sidebar HTML
 <head>
   <script type="text/javascript">
     $( window ).on( "load", function() {
+        get_goals();
         get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
         get_guides(4, $('#exercise_favorites'), 'exercise', 1);
         get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
     });
 
+    function get_goals() {
+        $.ajax({
+            type:'POST',
+            url: 'api/dashboard/get_goals.php',
+            success: function(data) {
+                console.log(data);
+                let goal_str = Array();
+                const json = JSON.parse(data);
+                console.log(json);
+                for(let key in json) {
+                    if (json.hasOwnProperty(key))
+                        goal_str.push(
+                            '<li>' +
+                              json[key]['goal'] +
+                              '<button type="button" ' +
+                              'class="close text-right" ' +
+                              'id="goal' + parent.length + '" onclick="delete_goal(this)">' +
+                              '×' +
+                              '</button>' +
+                            '</li>');
+                }
+                goal_str.push(
+                    '<li class="text-right" id="last_goal_line">' +
+                      '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
+                        'style="background-color: green; border-color:green; height:100%">' +
+                        'Add Goal' +
+                      '</button>' +
+                    '</li>'
+                );
+                $('#goals').html(goal_str);
+            },
+            error: function() {
+                console.log("Get_Goals ERROR");
+            }
+        });
+    }
+
+    function add_goal() {
+        $('#last_goal_line').before(
+            '<li id="add_goal_line">' +
+              '<div class="row">' +
+                '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
+                '<button class="btn btn-primary col-1" id="submit_goal_btn" onclick="submit_goal()" ' +
+                  'style="background-color: blue; border-color:blue; height:100%">' +
+                  '+' +
+                '</button>' +
+              '</div>' +
+            '</li>'
+        );
+        $('#add_goal_btn').prop('disabled', true);
+    }
+
+    function submit_goal() {
+        const goal = $('#goal_input').val();
+        if(goal === "") {
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'api/dashboard/submit_goal.php',
+            data: {
+                goal: goal
+            },
+            success: function(data) {
+                const parent = document.getElementById('goals');
+                parent.removeChild(document.getElementById('add_goal_line'));
+                $('#last_goal_line').before(
+                    '<li>' + data +
+                      '<button type="button" ' +
+                        'class="close text-right" ' +
+                        'id="' + goal + '" onclick="delete_goal(this)">' +
+                        '×' +
+                      '</button>' +
+                    '</li>'
+                );
+                $('#add_goal_btn').prop('disabled', false);
+            },
+            error: function() {
+                console.log("Submit_Goal ERROR");
+            }
+        });
+    }
+
+    function delete_goal(button) {
+        let goal = button.id;
+        let list = document.querySelectorAll('#goals li');
+        $.ajax({
+            type: 'POST',
+            url: 'api/dashboard/remove_goal.php',
+            data: {
+                goal: goal
+            },
+            success: function() {
+                for(let key in list) {
+                    if(list.hasOwnProperty(key)) {
+                        if(list[key].childNodes[0].textContent === goal) {
+                            list[key].remove();
+                            break;
+                        }
+                    }
+                }
+            },
+            error: function() {
+                console.log("ERROR");
+            }
+        });
+    }
+
     function get_guides(number, container, tag, favorites) {
         $.ajax({
             type:'POST',
-            url: 'api/dashboard/home.php',
-            //dataType: 'string',
+            url: 'api/dashboard/get_guides.php',
             data: {
                 number: number,
                 tag: tag,
                 favorites: favorites
             },
             success: function(data) {
-                console.log(data);
                 container.html(make_cards(JSON.parse(data)));
             },
             error: function() {
@@ -49,7 +156,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       '<div class="small-box">' +
                         '<div class="inner">' +
                         '<svg class="overlay-button-wrapper">' +
-                          '<polygon id="' + key + 'guide" class="overlay-button" onclick="favorite(this)" points="10,1 4,20 19,8 1,8 16,20"/>' +
+                          '<polygon id="guide' + data[key]["guide_id"] + '" class="overlay-button" onclick="favorite(this)" points="10,1 4,20 19,8 1,8 16,20"/>' +
                         '</svg>' +
                           '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid">' +
                         '</div>' +
@@ -110,12 +217,24 @@ require("structure/top.php"); //Include the sidebar HTML
     }
 
     function favorite(button) {
-        // const class_list = document.getElementById(button).classList;
-        // if(class_list.contains('favorite'))
-        //     document.getElementById(button).classList.remove('favorite');
-        // else
-        //     document.getElementById(button).classList.add('favorite');
-        console.log(button);
+        // button.disable();
+        const guide_id = button.id.slice('guide'.length);
+        const adding = -1;
+        $.ajax({
+            type:'POST',
+            url: 'api/dashboard/favorite_guide.php',
+            data: {
+                guide_id: guide_id,
+                adding: adding
+            },
+            success: function(data) {
+                console.log(data);
+                // button.enable();
+            },
+            error: function() {
+                console.log("ERROR");
+            }
+        });
     }
   </script>
 </head>
@@ -169,9 +288,15 @@ require("structure/top.php"); //Include the sidebar HTML
           <div class="card-header">
             <h3 class="card-title">My Goals</h3>
           </div>
-          <ul class="todo-list">
-            <li class="item">Do the things.</li>
-            <li class="item">Work on stuff.</li>
+          <ul class="todo-list" id="goals">
+            <!-- This is populated by get_goals in the header -->
+<!--            <li>This is a goal! <button type="button" class="close text-right" id="goal0" onclick="delete_goal(this)">×</button></li>-->
+<!--            <li class="text-right" id="last_goal_line"> -->
+<!--              <button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()"  -->
+<!--                style="background-color: green; border-color:green; height:100%">-->
+<!--                Add Goal-->
+<!--              </button> -->
+<!--            </li>-->
           </ul>
       </div>
 
