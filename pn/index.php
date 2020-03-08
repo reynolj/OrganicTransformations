@@ -49,7 +49,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       '<div class="small-box">' +
                         '<div class="inner">' +
                         '<svg class="overlay-button-wrapper">' +
-                          '<polygon class="overlay-button" onclick="favorite(this)" points="10,1 4,20 19,8 1,8 16,20"/>' + // points="100,10 40,198 190,78 10,78 160,198"/>' +
+                          '<polygon id="' + key + 'guide" class="overlay-button" onclick="favorite(this)" points="10,1 4,20 19,8 1,8 16,20"/>' +
                         '</svg>' +
                           '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid">' +
                         '</div>' +
@@ -110,11 +110,12 @@ require("structure/top.php"); //Include the sidebar HTML
     }
 
     function favorite(button) {
-        if(button.hasClass('favorite'))
-            button.removeClass('favorte');
-        else
-            button.addClass('favorite');
-        console.log("CLICK");
+        // const class_list = document.getElementById(button).classList;
+        // if(class_list.contains('favorite'))
+        //     document.getElementById(button).classList.remove('favorite');
+        // else
+        //     document.getElementById(button).classList.add('favorite');
+        console.log(button);
     }
   </script>
 </head>

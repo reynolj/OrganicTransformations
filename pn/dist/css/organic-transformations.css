@@ -10,19 +10,14 @@
 .overlay-button-wrapper {
     position: absolute;
     z-index: 10;
-    /*width: 100%;*/
-    /*height: 100%;*/
     stroke-width: 1px;
-    stroke: yellow;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
+    bottom:-5px;
+    right:-5px;
 }
 
 
 .overlay-button {
-    color: #ffeb2f;
+    fill: #666666;
 }
 
 .overlay-button-wrapper > .overlay-button:hover {
@@ -31,5 +26,6 @@
 }
 
 .overlay-button.favorite {
-    fill:blue;
+    opacity:100%;
+    fill:#ffeb2f;
 }
