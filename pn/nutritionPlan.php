@@ -72,15 +72,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                                                                      </thead>
                                                                                      <tbody>
                                                                                        <tr>
-                                                                                         <td>1.</td>
                                                                                          <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                       </tr>
-                                                                                       <tr>
-                                                                                         <td>2.</td>
                                                                                          <td></td>
                                                                                          <td></td>
                                                                                          <td></td>
@@ -88,15 +80,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                                                                          <td></td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                         <td>3.</td>
                                                                                          <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                         <td></td>
-                                                                                       </tr>
-                                                                                       <tr>
-                                                                                         <td>4.</td>
                                                                                          <td></td>
                                                                                          <td></td>
                                                                                          <td></td>
@@ -104,7 +88,23 @@ require("structure/top.php"); //Include the sidebar HTML
                                                                                          <td></td>
                                                                                        </tr>
                                                                                        <tr>
-                                                                                        <td>5.</td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                         <td></td>
+                                                                                       </tr>
+                                                                                       <tr>
+                                                                                        <td></td>
                                                                                           <td></td>
                                                                                           <td></td>
                                                                                           <td></td>

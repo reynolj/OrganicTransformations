@@ -8,14 +8,15 @@ require("structure/top.php"); //Include the sidebar HTML
   <script type="text/javascript">
     function calculate(){
     //Check if all the required fields are filled out
-          if($('#blood_type :selected').text() == ""
-            || $('#body_type :selected').text() == ""
-            || $('#current_weight').val() == ""
-            || $('#target_fat').val() == ""
-            || $('#sex :selected').text() == ""
-            || $('#desired_outcome :selected').text() == ""
-            || $('#current_fat').val() == ""
-            ){
+          if($('#blood_type :selected').text() === ""
+            || $('#body_type :selected').text() === ""
+            || $('#current_weight').val() === ""
+            || $('#target_fat').val() === ""
+            || $('#sex :selected').text() === ""
+            || $('#desired_outcome :selected').text() === ""
+            || $('#current_fat').val() === ""
+            || $('#activity_lvl :selected').text() === ""
+          ){
             $('#statusMsg').html("Make sure to fill out every field.");
             return;
           }
@@ -41,11 +42,12 @@ require("structure/top.php"); //Include the sidebar HTML
             data: {
               blood_type: $('#blood_type :selected').text(),
               body_type: $('#body_type :selected').text(),
-              current_weight: $('#current_weight').val(),
+              plan_weight: $('#current_weight').val(),
               target_fat: $('#target_fat').val(),
               sex: $('#sex :selected'),
               desired_outcome: $('#desired_outcome :selected').text() == ""
               current_fat: $('#current_fat').val()
+              activity_lvl: $('#activity_lvl :selected').text()
             },
             success: function(data, status){
               if(data == "success"){
@@ -110,12 +112,15 @@ require("structure/top.php"); //Include the sidebar HTML
                        <input id = "current_weight" type="number" class="form-control" placeholder="Enter your weight here">
                     </div>
                   </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                       <label>Target body fat:</label>
-                           <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here">
+                  <div class="col-sm-4">
+                      <div class="form-group">
+                          <label>Activity level</label>
+                          <select id="activity_lvl" class="form-control">
+                              <option>No exercise</option>
+                              <option>1-2 days/wk of exercise</option>
+                              <option>3+ days/wk of exercise</option></select>
+                      </div>
                   </div>
-                </div>
               </div><!-- /row -->
               <div class="row">
                 <div class="col-sm-4">
@@ -260,23 +265,29 @@ require("structure/top.php"); //Include the sidebar HTML
                             <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatM.jpg">
                             <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatF.jpg">
                           </div>
-                          <label>My body fat percentage:</label>
+
                          <div class="row">
                            <div class="col-sm-4">
                              <div class="form-group">
-
+                                 <label>My body fat percentage:</label>
                                 <input id="current_fat" type="number" class="form-control" placeholder="Enter your body fat % here" required>
                              </div>
                            </div>
+                             <div class="col-sm-4">
+                                 <div class="form-group">
+                                     <label>Target body fat:</label>
+                                     <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here">
+                                 </div>
+                             </div>
 
 
 
-                            <div class="col-sm-4">
-                                <td>
-                                 <button id="calcBtn" onclick="calculate()" type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
-                                </td>
-                            </div>
                          </div>
+                 <div class="col-sm-4">
+                     <td>
+                         <button id="calcBtn" onclick="calculate()" type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
+                     </td>
+                 </div>
 
              </div>
       </div>
