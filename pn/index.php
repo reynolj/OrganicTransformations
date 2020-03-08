@@ -46,11 +46,14 @@ require("structure/top.php"); //Include the sidebar HTML
                 str_hold.push(
                     '<div class="col-lg-3 col-md-6 col-sm-12">' +
                       ribbon_str +
+                    // '<div class="small-box" style="background-image: url(' + data[key]["thumbnail"] + ');">' +
                       '<div class="small-box">' +
-                        '<div class="inner">' +
-                        '<svg class="overlay-button-wrapper">' +
-                          '<polygon id="' + key + 'guide" class="overlay-button" onclick="favorite(this)" points="10,1 4,20 19,8 1,8 16,20"/>' +
-                        '</svg>' +
+                        '<div class="inner"> ' +
+                            '<svg class="overlay-button" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +
+                                '<path id="' + key + 'guide" onclick="favorite(this)" d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
+                                'c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601' +
+                                'c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>' +
+                            '</svg>' +
                           '<img src="' + data[key]["thumbnail"] + '" alt="" class="img-fluid">' +
                         '</div>' +
                         '<a class="small-box-footer">' +
