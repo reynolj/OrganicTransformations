@@ -166,7 +166,7 @@ require("structure/top.php"); //Include the sidebar HTML
                          </div><!-- /.card-header -->
                               <div class="card-body" style="text-align:center;">
                                 <div>
-                                   <img style='height: 60%; width: 60%; object-fit: contain' src="images/ectos.jpg">
+                                   <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/ectos.jpg">
                                 </div>
                                 <ul style="display: inline-block; text-align: left;">
                                   <li>Skinny</li>
@@ -195,7 +195,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-header -->
                               <div class="card-body" style="text-align:center;">
                                  <div>
-                                 <img style='height: 60%; width: 60%; object-fit: contain' src="images/mesos.jpg">
+                                 <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/mesos.jpg">
                                  </div>
                                   <ul style="display: inline-block; text-align: left;">
                                   <li>Naturally Lean</li>
@@ -224,7 +224,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               <!-- /.card-header -->
                               <div class="card-body" style="text-align:center;">
                                 <div>
-                                <img style='height: 60%; width: 60%; object-fit: contain' src="images/Endos.jpg">
+                                <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/Endos.jpg">
                                 </div>
                                 <ul style="display: inline-block; text-align: left;">
                                 <li>Soft, round body</li>
@@ -262,8 +262,8 @@ require("structure/top.php"); //Include the sidebar HTML
                             <p>Next we have to know your body fat percentage. It is best to go get this tested for a
                             more precise measure, but you can reference these pictures to get a rough estimate</p>
                              </h3>
-                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatM.jpg">
-                            <img style='height: 50%; width: 50%; object-fit: contain' src="images/fatF.jpg">
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="dist/img/fatM.jpg">
+                            <img style='height: 50%; width: 50%; object-fit: contain' src="dist/img/fatF.jpg">
                           </div>
 
                          <div class="row">
