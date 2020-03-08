@@ -21,10 +21,8 @@ require("structure/top.php"); //Include the sidebar HTML
             type:'POST',
             url: 'api/dashboard/get_goals.php',
             success: function(data) {
-                console.log(data);
                 let goal_str = Array();
                 const json = JSON.parse(data);
-                console.log(json);
                 for(let key in json) {
                     if (json.hasOwnProperty(key))
                         goal_str.push(
@@ -40,7 +38,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 goal_str.push(
                     '<li class="text-right" id="last_goal_line">' +
                       '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
-                        'style="background-color: green; border-color:green; height:100%">' +
+                        'style="background-color:green;border-color:green;height:100%">' +
                         'Add Goal' +
                       '</button>' +
                     '</li>'
@@ -134,7 +132,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 favorites: favorites
             },
             success: function(data) {
-                container.html(make_cards(JSON.parse(data)));
+                container.html(make_cards(JSON.parse(data), favorites));
             },
             error: function() {
                 console.log("ERROR");
@@ -142,7 +140,7 @@ require("structure/top.php"); //Include the sidebar HTML
         });
     }
 
-    function make_cards(data) {
+    function make_cards(data, favorites) {
         let str_hold = Array();
         let day_str;
         let ribbon_str;
@@ -155,9 +153,10 @@ require("structure/top.php"); //Include the sidebar HTML
                       ribbon_str +
                     // '<div class="small-box" style="background-image: url(' + data[key]["thumbnail"] + ');">' +
                       '<div class="small-box">' +
-                        '<div class="inner"> ' +
-                            '<svg class="overlay-button" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +
-                                '<path id="' + key + 'guide" onclick="favorite(this)" d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
+                        '<div class="inner">' +
+                            '<svg class="overlay-button' + (favorites === 1 ? " favorite" : "") + '" ' +
+                              'id="guide' + data[key]["guide_id"] + '" onclick="favorite(this)" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +
+                              '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
                                 'c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601' +
                                 'c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>' +
                             '</svg>' +
@@ -219,20 +218,25 @@ require("structure/top.php"); //Include the sidebar HTML
         );
     }
 
-    function favorite(button) {
-        // button.disable();
-        const guide_id = button.id.slice('guide'.length);
-        const adding = -1;
+    function favorite(wrapper) {
+        let classes = wrapper.classList;
+        const guide_id = wrapper.id.slice('guide'.length);
+        const favorited = classes.contains('favorite') ? 1 : 0;
         $.ajax({
             type:'POST',
             url: 'api/dashboard/favorite_guide.php',
             data: {
                 guide_id: guide_id,
-                adding: adding
+                favorited: favorited
             },
             success: function(data) {
-                console.log(data);
-                // button.enable();
+                if(favorited)
+                    classes.remove('favorite');
+                else
+                    classes.add('favorite');
+                get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
+                get_guides(4, $('#exercise_favorites'), 'exercise', 1);
+                get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
             },
             error: function() {
                 console.log("ERROR");
@@ -266,25 +270,25 @@ require("structure/top.php"); //Include the sidebar HTML
 
       <!-- Announcements -->
       <!-- Connecting to twitter may prove difficult, there's a lot more stuff needed than initially thought -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Announcements</h3>
-        </div>
-        <div class="card-body p-0">
-          <ul class="products-list product-list-in-card">
-            <li class="item">
-              <div class="row product-info ml-3 mr-3">
-                <div class="pl-0 pr-0 col-10">
-                  <div class="product-description">Hello, this is an annoucement!.</div>
-                </div>
-                <div class="text-right pl-0 pr-0 col-2">
-                  <div class="product-description">Added 100 days ago</div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+<!--      <div class="card">-->
+<!--        <div class="card-header">-->
+<!--          <h3 class="card-title">Announcements</h3>-->
+<!--        </div>-->
+<!--        <div class="card-body p-0">-->
+<!--          <ul class="products-list product-list-in-card">-->
+<!--            <li class="item">-->
+<!--              <div class="row product-info ml-3 mr-3">-->
+<!--                <div class="pl-0 pr-0 col-10">-->
+<!--                  <div class="product-description">Hello, this is an annoucement!.</div>-->
+<!--                </div>-->
+<!--                <div class="text-right pl-0 pr-0 col-2">-->
+<!--                  <div class="product-description">Added 100 days ago</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <!-- Goals -->
       <div class="card">
@@ -293,13 +297,11 @@ require("structure/top.php"); //Include the sidebar HTML
           </div>
           <ul class="todo-list" id="goals">
             <!-- This is populated by get_goals in the header -->
-<!--            <li>This is a goal! <button type="button" class="close text-right" id="goal0" onclick="delete_goal(this)">×</button></li>-->
-<!--            <li class="text-right" id="last_goal_line"> -->
-<!--              <button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()"  -->
-<!--                style="background-color: green; border-color:green; height:100%">-->
-<!--                Add Goal-->
-<!--              </button> -->
-<!--            </li>-->
+            <li>
+<!--              <svg id="guide1" onclick="favorite(this)" class="overlay-button" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +-->
+<!--                <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>-->
+<!--              </svg>-->
+            </li>
           </ul>
       </div>
 

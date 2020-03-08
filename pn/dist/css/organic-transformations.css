@@ -11,8 +11,8 @@
     position: absolute;
     z-index: 1;
     fill: #666666;
-    opacity: 90%;
-    stroke: white;
+    opacity: 50%;
+    stroke: #FFE044;
     stroke-width: 8px;
     display: inline-block;
     bottom: 45px;
@@ -27,10 +27,11 @@
 
 .overlay-button:hover {
     fill:#FFE044;
+    opacity: 80%;
 }
 
 .overlay-button.favorite {
     opacity:100%;
-    fill:#FFE044;
+    fill: #ffe044;
     stroke-width: 0;
 }

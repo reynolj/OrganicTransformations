@@ -5,7 +5,10 @@ require_once('../../variables.php');
 try {
     $user_id = intval($_SESSION['user_id']);
     $guide_id = intval($_POST['guide_id']);
-    $adding = $_POST['adding'];
+    $favorited = $_POST['favorited'];
+
+
+//    die((($favorited == 1) ? "Removing" : "Adding") . " favorite for " . $user_id . ": " . $guide_id);
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
@@ -13,7 +16,8 @@ try {
     //YOU MUST MAKE THEM THE RELEVANT DATA TYPES BEFORE CALLING.
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
-    if($adding == 1) {
+    if($favorited == 0) {
+        //Adding to favorites
         $stmt = $con->prepare("
         INSERT INTO favorite_guides SET 
         guide_id = ?, 
@@ -21,6 +25,7 @@ try {
         ");
     }
     else {
+        //Removing from favorites
         $stmt = $con->prepare("
         DELETE FROM favorite_guides WHERE 
         guide_id = ? AND 

@@ -13,34 +13,37 @@ try {
     //YOU MUST MAKE THEM THE RELEVANT DATA TYPES BEFORE CALLING.
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
+    //Get favorites
     if($_POST['favorites'] == 1) {
-        //Favorites query
         $stmt = $con->prepare("
             SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
             FROM guides
             WHERE 
                 guide_id IN (SELECT guide_id FROM tags WHERE tag = ?) AND
                 guide_id IN (SELECT guide_id FROM favorite_guides WHERE user_id = ?)
-            ORDER BY date_last_modified
+            ORDER BY date_last_modified DESC
             LIMIT ?
         ");
         $stmt->execute([$tag, $user_id, $number]);
-    }
-    else {
-        $stmt = $con->prepare("
-            SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
-            FROM guides
-            WHERE guide_id IN (SELECT guide_id FROM tags WHERE tag = ?)
-            ORDER BY date_last_modified
-            LIMIT ?
-        ");
-        $stmt->execute([$tag, $number]);
+        $results_favorites = $stmt->fetchAll();
+
+        die(json_encode($results_favorites));
     }
 
-    $result = $stmt->fetchAll();
+    //Get all
+    $stmt = $con->prepare("
+        SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
+        FROM guides
+          WHERE guide_id NOT IN (SELECT guide_id FROM favorite_guides WHERE user_id = ?)
+        ORDER BY date_last_modified DESC
+        LIMIT ?
+    ");
+    $stmt->execute([$user_id, $number]);
+    $results_all = $stmt->fetchAll();
 
-    die(json_encode($result));
+    die(json_encode($results_all));
 }
+
 catch(PDOException $e) {
     die("Request failed");
 }
