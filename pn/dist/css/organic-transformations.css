@@ -11,7 +11,15 @@
 }
 
 
-.overlay-button-wrapper > .overlay-button {
-    opacity: 50%;
+.overlay-button {
     color: #ffeb2f;
+}
+
+.overlay-button-wrapper > .overlay-button:hover {
+    opacity:80%;
+    fill:#ffeb2f;
+}
+
+.overlay-button.favorite {
+    fill:blue;
 }
