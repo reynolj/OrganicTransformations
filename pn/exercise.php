@@ -4,6 +4,10 @@ $title = "OT | Exercise"; //Set the browser title
 $highlight = "Exercise"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
+<html>
+    <head>
+        <link rel="stylesheet" href="dist/css/organic-transformations.css">
+    </head>
 
     <scrip type="text/javascript">
         <!-- Put Javascript Here -->
@@ -50,7 +54,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <!-- /.card-body -->
                                     <div class="card-body" align="center">
                                         <!-- Physique Diagram FRONT -->
-                                        <svg id="physique-diagram" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+                                        <svg id="physique-diagram" xmlns="http://www.w3.org/2000/svg"
                                              viewBox="0 0 492.78 1005.01"><title>Front</title>
                                                 <g id="Front_Joined" data-name="Front Joined">
                                                     <path id="Body"
@@ -362,5 +366,5 @@ require("structure/top.php"); //Include the sidebar HTML
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
+    </html>
 <?php include('structure/bottom.php'); ?>
