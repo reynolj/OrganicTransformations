@@ -153,7 +153,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       ribbon_str +
                     // '<div class="small-box" style="background-image: url(' + data[key]["thumbnail"] + ');">' +
                       '<div class="small-box">' +
-                        '<div class="inner">' +
+                        '<div class="inner" style="position: relative;">' +
                             '<svg class="overlay-button' + (favorites === 1 ? " favorite" : "") + '" ' +
                               'id="guide' + data[key]["guide_id"] + '" onclick="favorite(this)" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +
                               '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +

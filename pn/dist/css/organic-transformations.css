@@ -8,6 +8,7 @@
 }
 
 .overlay-button {
+    cursor: pointer;
     position: absolute;
     z-index: 1;
     fill: #666666;
@@ -15,14 +16,15 @@
     stroke: #FFE044;
     stroke-width: 8px;
     display: inline-block;
-    bottom: 45px;
+    bottom: 15px;
     right: 15px;
+    /*bottom: 45px;*/
+    /*right: 15px;*/
     /*vertical-align: bottom;*/
     /*horiz-align: right;*/
     /*align-self: center;*/
     /*alignment: bottom;*/
     /*text-align: right;*/
-    vertical-align: middle;
 }
 
 .overlay-button:hover {
