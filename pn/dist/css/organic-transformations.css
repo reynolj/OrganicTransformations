@@ -8,6 +8,7 @@
 }
 
 .overlay-button {
+    cursor: pointer;
     position: absolute;
     z-index: 1;
     fill: #666666;
@@ -15,14 +16,17 @@
     stroke: #FFE044;
     stroke-width: 8px;
     display: inline-block;
-    bottom: 45px;
+    bottom: 15px;
     right: 15px;
+    width: 30px;
+    height: auto;
+    /*bottom: 45px;*/
+    /*right: 15px;*/
     /*vertical-align: bottom;*/
     /*horiz-align: right;*/
     /*align-self: center;*/
     /*alignment: bottom;*/
     /*text-align: right;*/
-    vertical-align: middle;
 }
 
 .overlay-button:hover {
@@ -34,4 +38,9 @@
     opacity:100%;
     fill: #ffe044;
     stroke-width: 0;
+}
+
+.muscle:hover path{
+    fill: #c52c2c;
+    cursor: pointer;
 }
