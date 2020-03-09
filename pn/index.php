@@ -10,11 +10,59 @@ require("structure/top.php"); //Include the sidebar HTML
 <head>
   <script type="text/javascript">
     $( window ).on( "load", function() {
-        get_goals();
-        get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
-        get_guides(4, $('#exercise_favorites'), 'exercise', 1);
-        get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
+        get_body();
+        // get_goals();
+        // get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
+        // get_guides(4, $('#exercise_favorites'), 'exercise', 1);
+        // get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
     });
+
+    function get_body() {
+        $.ajax({
+            type: 'POST',
+            url: 'api/nutri/get_nutrition.php',
+            success: function(data) {
+                let json = JSON.parse(data);
+                for(let key in json) {
+                    if(json.hasOwnProperty(key)) {
+                        $('#blood_type').val(json[key]['blood_type']);
+                        $('#body_type').val(json[key]['body_type']);
+                        $('#weight').val(json[key]['current_weight']);
+                        $('#activity_level').val(json[key]['activity_lvl']);
+                        break;
+                    }
+                }
+            },
+            error: function() {
+                console.log("Get_Body ERROR");
+            }
+        });
+    }
+
+    function save_body() {
+        $('#add_goal_btn').prop('disabled', true);
+        const blood_type = $('#blood_type').val();
+        const body_type = $('#body_type').val();
+        const weight = $('#weight').val();
+        const activity_level = $('#activity_level').val();
+        $.ajax({
+            type: 'POST',
+            url: 'api/nutri/save_nutrition.php',
+            data: {
+                blood_type: blood_type,
+                body_type: body_type,
+                weight: weight,
+                activity_level: activity_level
+            },
+            success: function() {
+                $('#add_goal_btn').prop('disabled', false);
+            },
+            error: function() {
+                $('#add_goal_btn').prop('disabled', false);
+                console.log("Get_Body ERROR");
+            }
+        });
+    }
 
     function get_goals() {
         $.ajax({
@@ -297,11 +345,6 @@ require("structure/top.php"); //Include the sidebar HTML
           </div>
           <ul class="todo-list" id="goals">
             <!-- This is populated by get_goals in the header -->
-            <li>
-<!--              <svg id="guide1" onclick="favorite(this)" class="overlay-button" width="45px" height="45px" viewBox="0 0 940.688 940.688">' +-->
-<!--                <path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>-->
-<!--              </svg>-->
-            </li>
           </ul>
       </div>
 
@@ -309,6 +352,57 @@ require("structure/top.php"); //Include the sidebar HTML
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">My Body</h3>
+        </div>
+        <div class="card-body">
+          <ul style="list-style-type:none">
+            <li>
+              <div class="row">
+                <div class="col-2">
+                  <label for="blood_type">Blood Type:</label>
+                  <select id="blood_type" class="form-control">
+                    <option>I don't know my blood type</option>
+                    <option>A-</option>
+                    <option>A+</option>
+                    <option>B-</option>
+                    <option>B+</option>
+                    <option>AB-</option>
+                    <option>AB+</option>
+                    <option>O-</option>
+                    <option>O+</option>
+                  </select>
+                </div>
+                <div class="col-3">
+                  <label for="body_type">Body Type:</label>
+                  <select id="body_type" class="form-control">
+                    <option>Ectomorph</option>
+                    <option>Mesomorph</option>
+                    <option>Endomorph</option>
+                  </select>
+                </div>
+                <div class="col-2">
+                  <label for="weight">Weight</label>
+                  <input id="weight" class="form-control" type="number">
+                </div>
+                <div class="col-3">
+                  <label for="activity_level">Activity Level</label>
+                  <select id="activity_level" class="form-control">
+                    <option value="0">No exercise</option>
+                    <option value="1">1-2 days/wk of exercise</option>
+                    <option value="2">3+ days/wk of exercise</option>
+                  </select>
+                </div>
+                <div class="col-2">
+                  <button
+                    class="btn btn-primary text-right align-text-bottom"
+                    id="save_body_btn"
+                    onclick="save_body()"
+                    style="background-color:green;border-color:green;">
+                      Save
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
 
