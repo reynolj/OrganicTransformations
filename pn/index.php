@@ -11,10 +11,10 @@ require("structure/top.php"); //Include the sidebar HTML
   <script type="text/javascript">
     $( window ).on( "load", function() {
         get_body();
-        // get_goals();
-        // get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
-        // get_guides(4, $('#exercise_favorites'), 'exercise', 1);
-        // get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
+        get_goals();
+        get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
+        get_guides(4, $('#exercise_favorites'), 'exercise', 1);
+        get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
     });
 
     function get_body() {
