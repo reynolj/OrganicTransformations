@@ -18,6 +18,8 @@
     display: inline-block;
     bottom: 15px;
     right: 15px;
+    width: 30px;
+    height: auto;
     /*bottom: 45px;*/
     /*right: 15px;*/
     /*vertical-align: bottom;*/
@@ -36,4 +38,9 @@
     opacity:100%;
     fill: #ffe044;
     stroke-width: 0;
+}
+
+.muscle:hover path{
+    fill: #c52c2c;
+    cursor: pointer;
 }
