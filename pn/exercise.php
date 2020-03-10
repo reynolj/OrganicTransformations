@@ -16,6 +16,27 @@ require("structure/top.php"); //Include the sidebar HTML
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Place guide querying in here-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
@@ -119,7 +140,8 @@ require("structure/top.php"); //Include the sidebar HTML
                                                               d="M348.83,173.94c3.95-1.38,27.64-2.69,42.95,12.23a57.84,57.84,0,0,1,15.66,25.5c2.59,8.83-.83,19.91-1.83,27.11s-5.67-18.86-22.5-37.2C359.53,175.9,341.93,176.37,348.83,173.94Z"
                                                               fill="#9b2323"/>
                                                     </g>
-                                                    <g class="muscle" id="Deltoid_Anterior" data-name="Deltoid Anterior">
+                                                    <g class="muscle" id="Deltoid_Anterior"
+                                                       data-name="Deltoid Anterior">
                                                         <path id="Deltoid_Anterior-2" data-name="Deltoid Anterior"
                                                               d="M149.08,176.67c4.17-1.75,14.78-.42,12.09,1.16-18.67,10.95-18,28.76-23.12,37.84-5.43,9.67-18.54,17.76-17,30,.35,2.69-8,4.62-15.53,8.83C95,260.39,95.44,278.56,90.17,266.56c-6.06-13.77,6-39.12,11.75-48.23C115.28,197.12,133.73,183.11,149.08,176.67Z"
                                                               fill="#9b2323"/>
@@ -271,7 +293,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         </h3>
                                     </div>
                                     <!-- /.card-body -->
-                                    <div class="card-body" >
+                                    <div class="card-body">
                                         <!-- Physique Diagram BACK -->
                                         <div class="d-md-flex" align="center">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="478.98" height="auto"
