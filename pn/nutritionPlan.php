@@ -1,7 +1,7 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Home"; //Set the browser title
-$highlight = "index"; //Select which tab in the navigation to highlight
+$title = "OT | Nutrition"; //Set the browser title
+$highlight = "nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 
