@@ -14,9 +14,9 @@ try {
 
     //Query their information from the database
     $stmt = $con->prepare("SELECT blood_type, body_type, activit_lvl, current_fat, target_fat, plan_weight, 
-                        sex, desired_outcome, FROM users WHERE user_id = ?");
+                        sex, desired_outcome FROM users WHERE user_id = ?");
     $stmt->execute([ $_SESSION['user_id'] ]);
-    $data = $stmt->fetch();
+    $data = $stmt->fetchAll();
     if( !$data ){
         die("That user doesn't exist.");
     }
