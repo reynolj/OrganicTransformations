@@ -81,7 +81,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <div class="card-body">
                                         <div class="d-md-flex" align="center">
                                             <!-- Physique Diagram FRONT -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="492.78" height="auto"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto"
                                                  viewBox="0 0 492.78 1005.01"><title>Front</title>
                                                 <g id="Front_Joined" data-name="Front Joined">
                                                     <path id="Body"
@@ -296,7 +296,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <div class="card-body">
                                         <!-- Physique Diagram BACK -->
                                         <div class="d-md-flex" align="center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="478.98" height="auto"
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto"
                                                  viewBox="0 0 478.98 1004.67"><title>Back</title>
                                                 <g id="Rear_Joined" data-name="Rear Joined">
                                                     <path id="Body"
