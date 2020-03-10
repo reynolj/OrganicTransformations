@@ -33,7 +33,7 @@ session_start();
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
