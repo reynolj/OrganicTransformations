@@ -69,7 +69,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card-body">
                         <!-- Place page content here -->
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="card">
                                     <!-- /.card-header -->
                                     <div class="card-header">
@@ -81,7 +81,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <div class="card-body">
                                         <div class="d-md-flex" align="center">
                                             <!-- Physique Diagram FRONT -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto"
+                                            <svg class="physique-diagram" xmlns="http://www.w3.org/2000/svg"
                                                  viewBox="0 0 492.78 1005.01"><title>Front</title>
                                                 <g id="Front_Joined" data-name="Front Joined">
                                                     <path id="Body"
@@ -284,7 +284,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 </div>
                                 <!-- /.card -->
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="card">
                                     <!-- /.card-header -->
                                     <div class="card-header">
@@ -296,7 +296,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <div class="card-body">
                                         <!-- Physique Diagram BACK -->
                                         <div class="d-md-flex" align="center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto"
+                                            <svg class="physique-diagram" xmlns="http://www.w3.org/2000/svg"
                                                  viewBox="0 0 478.98 1004.67"><title>Back</title>
                                                 <g id="Rear_Joined" data-name="Rear Joined">
                                                     <path id="Body"
