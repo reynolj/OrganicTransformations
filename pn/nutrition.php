@@ -38,15 +38,15 @@ require("structure/top.php"); //Include the sidebar HTML
           $.ajax({
             type: "POST",
             dataType: 'text',
-            url: 'api/auth/register.php',
+            url: 'api/nutri/plan_attribs.php',
             data: {
               blood_type: $('#blood_type :selected').text(),
               body_type: $('#body_type :selected').text(),
               plan_weight: $('#current_weight').val(),
               target_fat: $('#target_fat').val(),
               sex: $('#sex :selected'),
-              desired_outcome: $('#desired_outcome :selected').text() == ""
-              current_fat: $('#current_fat').val()
+              desired_outcome: $('#desired_outcome :selected').text(),
+              current_fat: $('#current_fat').val(),
               activity_lvl: $('#activity_lvl :selected').text()
             },
             success: function(data, status){

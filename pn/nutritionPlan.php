@@ -7,6 +7,18 @@ require("structure/top.php"); //Include the sidebar HTML
 
   <script type="text/javascript">
     <!-- Put Javascript Here -->
+    function get_plan() {
+        $.ajax({
+            type: 'POST',
+            url: 'api/nutri/mealCalc.php',
+            success: function(data) {
+                let json = JSON.parse(data);
+
+                }
+            })
+
+
+}
   </script>
 
   <!-- Content Wrapper. Contains page content -->
@@ -57,7 +69,7 @@ require("structure/top.php"); //Include the sidebar HTML
                         <div class="tab-content" id="custom-tabs-two-tabContent">
                            <div class="tab-pane fade active show" id="custom-tabs-two-plan" role="tabpanel" aria-labelledby="custom-tabs-two-plan-tab">
                                 <div class="card-body p-0">
-                                    <table class="table">
+                                    <table id="plan_table" class="table">
                                          <thead>
                                             <tr>
                                               <th>Meal#</th>
