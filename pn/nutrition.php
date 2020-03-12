@@ -37,11 +37,10 @@ require("structure/top.php"); //Include the sidebar HTML
              const body_type = $('#body_type').val();
              const plan_weight = $('#plan_weight').val();
              const target_fat = $('#target_fat').val();
-             const sex = $('#sex').val
+             const sex = $('#sex').val();
              const desired_outcome = $('#desired_outcome').val();
              const current_fat = $('#current_fat').val();
-             const activity_level = $('#activity_level').val();
-
+             const activity_lvl = $('#activity_lvl').val();
           //Send the form data
           $.ajax({
             type: "POST",
@@ -54,7 +53,7 @@ require("structure/top.php"); //Include the sidebar HTML
               sex: sex,
               desired_outcome: desired_outcome,
               current_fat: current_fat,
-              activity_lvl: activity_level
+              activity_lvl: activity_lvl
                   },
                   success: function() {
                     $('#calc_btn').prop('disabled', false);
