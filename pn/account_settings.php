@@ -7,6 +7,86 @@ require("structure/top.php"); //Include the sidebar HTML
 
 <head>
 
+  <!-- SweetAlert -->
+  <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      console.log("READY"); 
+      refresh();
+    });
+
+
+    function refresh(){
+      $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        url: 'api/account_settings/get_settings.php',
+        success: function(data, status){
+          if(data != "ERROR"){
+            $('#first_name').val(data['first_name']);
+            $('#last_name').val(data['last_name']);
+            $('#email').val(data['email']);
+            //Todo : Format phone_number
+            $('#phone_number').val(data['phone_number']);
+            $('#last_name').val(data['last_name']);
+            $('#last_name').val(data['last_name']);
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'This page failed to load properly.. Please try again later.'
+            });
+          }
+        }
+      });
+    }
+
+
+    function changePassword(){
+      var old_password = $('#password').val();
+      if($('#new_password1').val() != $('#new_password2').val()){
+        //Passwords do not match
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Those passwords do not match!'
+        });
+        return;
+      }
+      var new_password = $('#new_password1').val();
+      $('#changePasswordBtn').attr("disabled", true);
+      $.ajax({
+        type: "POST",
+        data: {
+          old_password: old_password,
+          new_password: new_password
+        },
+        url: 'api/auth/change_password.php',
+        success: function(data, status){
+          $('#changePasswordBtn').attr("disabled", false);
+          if(data == "success"){
+            $('#old_password').val("");
+            $('#new_password1').val("");
+            $('#new_password2').val("");
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'Your password has been updated.'
+            });
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: data
+            });
+          }
+        }
+      });      
+    }
+  </script>
 
   <style>
     ul {
@@ -59,18 +139,19 @@ require("structure/top.php"); //Include the sidebar HTML
                       </div>
 
                       <div class="form-group">
-                        <label for="email_address">Email address</label>
-                        <input type="email" class="form-control" id="email_address" placeholder="Enter Email">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter Email">
                       </div>
 
                       <div class="form-group">
                         <label for="phone_number">Phone Number</label>
-                        <input type="text" class="form-control" data-inputmask='mask": "(999) 999-9999"' data-mask="" im-insert="true" placeholder="(___) ___-____">
+                        <input type="text" class="form-control" id="phone_number" data-inputmask='mask": "(999) 999-9999"' data-mask="" im-insert="true" placeholder="(___) ___-____">
                       </div>
 
                       <div class="form-group">
                         <label>Gender</label>
-                        <select class="custom-select" id="gender">
+                        <select class="custom-select" id="sex">
+                          <option>Unknown</option>
                           <option>Male</option>
                           <option>Female</option>
                         </select>
@@ -243,25 +324,22 @@ require("structure/top.php"); //Include the sidebar HTML
                   <div class="card-header">
                     <h3 class="card-title">Change Password</h3>
                   </div> <!-- /.card-header -->
-                  <!-- form start -->
-                  <form role="form">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="new_password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Old Password">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" class="form-control" id="new_password" placeholder="New Password">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" class="form-control" id="new_password" placeholder="Confirm New Password">
-                      </div>
-                    </div> <!-- /.card-body -->
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" id="password" placeholder="Old Password">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="new_password1" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="new_password2" placeholder="Confirm New Password">
+                    </div>
+                  </div> <!-- /.card-body -->
 
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div> <!-- /.card-footer -->
-                  </form>
+                  <div class="card-footer">
+                    <button onclick="changePassword()" id="changePasswordBtn" class="btn btn-primary">Submit</button>
+                  </div> <!-- /.card-footer -->
               </div> <!-- /.card-primary -->
 
               <div class="card card-primary card-outline"> <!--card-secondary for grey format-->
@@ -396,5 +474,9 @@ require("structure/top.php"); //Include the sidebar HTML
 
   });
 </script>
+
+<!-- ChartJS -->
+<script src="AdminLTE/plugins/chart.js/Chart.min.js"></script>
+
 
 <?php include('structure/bottom.php'); ?>
