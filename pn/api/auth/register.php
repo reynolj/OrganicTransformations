@@ -44,7 +44,7 @@ if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$
 }
 
 //Make sure the password is the correct length
-if( !(strlen($password) > 9 && strlen($password) < 50) ){
+if( !(strlen($password) > 9 || strlen($password) > 50) ){
 	die("That password is not long enough.");
 }
 
