@@ -38,7 +38,7 @@ require("structure/top.php"); //Include the sidebar HTML
              const plan_weight = $('#plan_weight').val();
              const target_fat = $('#target_fat').val();
              const sex = $('#sex').val
-             const desire_outcome = $('#desired_outcome').val();
+             const desired_outcome = $('#desired_outcome').val();
              const current_fat = $('#current_fat').val();
              const activity_level = $('#activity_level').val();
 
@@ -52,7 +52,7 @@ require("structure/top.php"); //Include the sidebar HTML
               plan_weight: plan_weight,
               target_fat: target_fat,
               sex: sex,
-              desired_outcome: desire_outcome,
+              desired_outcome: desired_outcome,
               current_fat: current_fat,
               activity_lvl: activity_level
                   },
@@ -117,7 +117,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label>My weigth(lbs):</label>
-                       <input id = "current_weight" type="number" class="form-control" placeholder="Enter your weight here">
+                       <input id="plan_weight" type="number" class="form-control" placeholder="Enter your weight here">
                     </div>
                   </div>
                   <div class="col-sm-4">
