@@ -4,11 +4,11 @@ $title = "OT | Nutrition"; //Set the browser title
 $highlight = "nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
-
+<HTML>
   <script type="text/javascript">
     function calculate(){
     //Check if all the required fields are filled out
-          if($('#blood_type :selected').text() === ""
+         /* if($('#blood_type :selected').text() === ""
             || $('#body_type :selected').text() === ""
             || $('#current_weight').val() === ""
             || $('#target_fat').val() === ""
@@ -30,35 +30,43 @@ require("structure/top.php"); //Include the sidebar HTML
           $('#statusMsg').html("Please enter a valid target fat level");
           return;
           }
-
+*/
           //Disable the login button
-          $('#calcBtn').prop('disabled', true);
+          $('#calc_btn').prop('disabled', true);
+             const blood_type = $('#blood_type').val();
+             const body_type = $('#body_type').val();
+             const plan_weight = $('#plan_weight').val();
+             const target_fat = $('#target_fat').val();
+             const sex = $('#sex').val
+             const desire_outcome = $('#desired_outcome').val();
+             const current_fat = $('#current_fat').val();
+             const activity_level = $('#activity_level').val();
 
           //Send the form data
           $.ajax({
             type: "POST",
-            dataType: 'text',
             url: 'api/nutri/plan_attribs.php',
             data: {
-              blood_type: $('#blood_type :selected').text(),
-              body_type: $('#body_type :selected').text(),
-              plan_weight: $('#current_weight').val(),
-              target_fat: $('#target_fat').val(),
-              sex: $('#sex :selected'),
-              desired_outcome: $('#desired_outcome :selected').text(),
-              current_fat: $('#current_fat').val(),
-              activity_lvl: $('#activity_lvl :selected').text()
-            },
-            success: function(data, status){
-              if(data == "success"){
-                window.location.replace("login.php?register_success");
-              }else{
-                $('#statusMsg').html(data);
-                $('#loginBtn').prop('disabled', false);
-              }
+              blood_type: blood_type ,
+              body_type: body_type,
+              plan_weight: plan_weight,
+              target_fat: target_fat,
+              sex: sex,
+              desired_outcome: desire_outcome,
+              current_fat: current_fat,
+              activity_lvl: activity_level
+                  },
+                  success: function() {
+                    $('#calc_btn').prop('disabled', false);
+                    },
+                  error: function() {
+                    $('#calc_btn').prop('disabled', false);
+                     console.log("ERROR");
+                  }
+              });
             }
-          });
-        }
+
+
   </script>
 
   <!-- Content Wrapper. Contains page content -->
@@ -116,9 +124,9 @@ require("structure/top.php"); //Include the sidebar HTML
                       <div class="form-group">
                           <label>Activity level</label>
                           <select id="activity_lvl" class="form-control">
-                              <option>No exercise</option>
-                              <option>1-2 days/wk of exercise</option>
-                              <option>3+ days/wk of exercise</option></select>
+                              <option value="0">No exercise</option>
+                              <option value =1>1-2 days/wk of exercise</option>
+                              <option value =2>3+ days/wk of exercise</option></select>
                       </div>
                   </div>
               </div><!-- /row -->
@@ -247,21 +255,19 @@ require("structure/top.php"); //Include the sidebar HTML
                 </div>
 
                          <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label>My body type is:</label>
-                                                <select id="body_type"class="form-control">
-                                                <option> </option>
-                                                <option>Ectomorph</option>
-                                                <option>Mesomorph</option>
-                                                <option>Endomorph</option>
-                                                </select>
-                                              </div>
-                                        </div>
-                          <div>
-                             <h3>
-                            <p>Next we have to know your body fat percentage. It is best to go get this tested for a
-                            more precise measure, but you can reference these pictures to get a rough estimate</p>
-                             </h3>
+                            <div class="form-group">
+                                <label>My body type is:</label>
+                                    <select id="body_type"class="form-control">
+                                       <option> </option>
+                                       <option>Ectomorph</option>
+                                       <option>Mesomorph</option>
+                                       <option>Endomorph</option>
+                                    </select>
+                                </div>
+                            </div>
+                         <div>
+                            <h3><p>Next we have to know your body fat percentage. It is best to go get this tested for a
+                            more precise measure, but you can reference these pictures to get a rough estimate</p></h3>
                             <img style='height: 50%; width: 50%; object-fit: contain' src="dist/img/fatM.jpg">
                             <img style='height: 50%; width: 50%; object-fit: contain' src="dist/img/fatF.jpg">
                           </div>
@@ -279,16 +285,10 @@ require("structure/top.php"); //Include the sidebar HTML
                                      <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here">
                                  </div>
                              </div>
-
-
-
                          </div>
-                 <div class="col-sm-4">
-                     <td>
-                         <button id="calcBtn" onclick="calculate()" type="button" class="btn btn-block btn-primary">Calculate my nutrition plan</button>
-                     </td>
-                 </div>
-
+                      <div class="col-sm-4">
+                            <button class="btn btn-block btn-primary" id="calc_btn" onclick="calculate()">Calculate my nutrition plan</button>
+                      </div>
              </div>
       </div>
       <!-- /.container-fluid -->
@@ -296,5 +296,5 @@ require("structure/top.php"); //Include the sidebar HTML
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-<?php include('structure/bottom.php'); ?>
+</HTML>
+<?php include('structure/bottom.php');
