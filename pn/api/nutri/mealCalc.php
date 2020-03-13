@@ -44,11 +44,11 @@ try {
     if($desired_outcome = "Burn fat/lose weight"){
         $protein = (($plan_weight - ($plan_weight * ($current_fat / 100)))/2)/5;
 
-        if($activity_lvl == "No exercise"){
+        if($activity_lvl == "No guides"){
             $fat = 85/5;
             $fruit2 = 5;
             $fruit5 = 5;}
-        elseif($activity_lvl == "1-2 days/wk of exercise"){
+        elseif($activity_lvl == "1-2 days/wk of guides"){
             $fat = 95/5;
             $fruit2 = 5;
             $fruit5 = 10;}

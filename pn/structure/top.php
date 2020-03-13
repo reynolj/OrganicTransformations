@@ -101,7 +101,7 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a href="exercise.php" class="nav-link <?php if($highlight == "exercise"){ echo "active";} ?>">
+            <a href="exercise.php" class="nav-link <?php if($highlight == "guides"){ echo "active";} ?>">
               <i class="nav-icon fas fa-dumbbell"></i>
               <p>
                 Exercise

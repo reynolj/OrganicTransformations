@@ -239,7 +239,7 @@ require("structure/top.php"); //Include the sidebar HTML
                   <!-- form start -->
                   <form role="form">
                     <div class="card-body">
-                        <p>We have to verify your request to delete your account by sending an email to you. After clicking "Delete Account," please check your email and click the link provided.</p>
+                        <p>We will have to verify your account deletion request via an email. After clicking "Delete Account," please check your email and click the link provided. Payments will not be refunded.</p>
                     </div>
                     <!-- /.card-body -->
 

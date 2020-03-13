@@ -199,7 +199,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 str_hold.push(
                     '<div class="col-lg-3 col-md-6 col-sm-12">' +
                       ribbon_str +
-                    // '<div class="small-box" style="background-image: url(' + data[key]["thumbnail"] + ');">' +
+                    // '<div class="small-box" style="background-image: url(' + data[key]["thumbnail"] + ');" background-size: contain>' +
                       '<div class="small-box">' +
                         '<div class="inner" style="position: relative;">' +
                             '<svg class="overlay-button' + (favorites === 1 ? " favorite" : "") + '" ' +
