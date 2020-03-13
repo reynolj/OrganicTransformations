@@ -1,6 +1,6 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Home"; //Set the browser title
+$title = "OT | Account Settings"; //Set the browser title
 $highlight = "index"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
@@ -144,7 +144,7 @@ require("structure/top.php"); //Include the sidebar HTML
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+              <li class="breadcrumb-item"><a href="index.php">Account Settings</a></li>
               <li class="breadcrumb-item active">Account Settings</li>
             </ol>
           </div><!-- /.col -->
@@ -232,22 +232,7 @@ require("structure/top.php"); //Include the sidebar HTML
                   </div> <!-- /.card-footer -->
               </div> <!-- /.card-primary -->
 
-              <div class="card card-primary card-outline"> <!--card-secondary for grey format-->
-                  <div class="card-header">
-                    <h3 class="card-title">Delete Account</h3>
-                  </div> <!-- /.card-header -->
-                  <!-- form start -->
-                  <form role="form">
-                    <div class="card-body">
-                        <p>We have to verify your request to delete your account by sending an email to you. After clicking "Delete Account," please check your email and click the link provided.</p>
-                    </div>
-                    <!-- /.card-body -->
 
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Delete Account</button>
-                    </div> <!-- /.card-footer -->
-                  </form>
-              </div> <!-- /.card-primary -->
             </div> <!-- /.col-md-6 -->
           </div> <!-- /.row -->
 

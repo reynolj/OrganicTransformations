@@ -73,7 +73,7 @@ session_start();
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
+          <a href="account_settings.php" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
         </div>
       </div>
 
