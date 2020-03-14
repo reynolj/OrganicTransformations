@@ -45,6 +45,14 @@
     cursor: pointer;
 }
 
+.physique-diagram{
+    width: auto;
+    height: auto;
+    max-height: 900px;
+    flex-grow: 1;
+}
+
+
 #info-box {
     display: none;
     position: absolute;
