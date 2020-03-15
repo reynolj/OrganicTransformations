@@ -20,7 +20,7 @@ try {
             FROM guides
             WHERE 
                 guide_id IN (SELECT guide_id FROM tags WHERE tag = ?) AND
-                guide_id IN (SELECT guide_id FROM favorite_guides WHERE user_id = ?)
+                guide_id IN (SELECT guide_id FROM favorites WHERE user_id = ?)
             ORDER BY date_last_modified DESC
             LIMIT ?
         ");
@@ -34,7 +34,7 @@ try {
     $stmt = $con->prepare("
         SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
         FROM guides
-          WHERE guide_id NOT IN (SELECT guide_id FROM favorite_guides WHERE user_id = ?)
+          WHERE guide_id NOT IN (SELECT guide_id FROM favorites WHERE user_id = ?)
         ORDER BY date_last_modified DESC
         LIMIT ?
     ");

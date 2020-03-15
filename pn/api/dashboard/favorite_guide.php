@@ -19,7 +19,7 @@ try {
     if($favorited == 0) {
         //Adding to favorites
         $stmt = $con->prepare("
-        INSERT INTO favorite_guides SET 
+        INSERT INTO favorites SET 
         guide_id = ?, 
         user_id = ?;
         ");
@@ -27,7 +27,7 @@ try {
     else {
         //Removing from favorites
         $stmt = $con->prepare("
-        DELETE FROM favorite_guides WHERE 
+        DELETE FROM favorites WHERE 
         guide_id = ? AND 
         user_id = ?;
         ");
