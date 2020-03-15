@@ -13,7 +13,7 @@ try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
     //Query their information from the database
-    $stmt = $con->prepare("SELECT blood_type, body_type, activit_lvl, current_fat, target_fat, plan_weight, 
+    $stmt = $con->prepare("SELECT blood_type, body_type, activity_lvl, current_fat, target_fat, plan_weight, 
                         sex, desired_outcome FROM users WHERE user_id = ?");
     $stmt->execute([ $_SESSION['user_id'] ]);
     $data = $stmt->fetchAll();
@@ -42,7 +42,7 @@ try {
     $fat = 0;
 
     if($desired_outcome = "Burn fat/lose weight"){
-        $protein = (($plan_weight - ($plan_weight * ($current_fat / 100)))/2)/5;
+        $protein = $plan_weight/5;
 
         if($activity_lvl == "No exercise"){
             $fat = 85/5;
@@ -62,16 +62,17 @@ try {
         }
     }
 
-    $Meal1 = array("Meal#"=>"1", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat);
-    $Meal2 = array("Meal#"=>"2", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat);
-    $Meal3 = array("Meal#"=>"3", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat);
-    $Meal4 = array("Meal#"=>"4", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat);
-    $Meal5 = array("Meal#"=>"5", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat);
-    $plan = array($Meal1, $Meal2, $Meal3, $Meal4, $Meal5);
+    $meals = [
+        ["Meal"=>"1", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
+        ["Meal"=>"2", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
+        ["Meal"=>"3", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
+        ["Meal"=>"4", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
+        ["Meal"=>"5", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
+    ];
 
-    $myJSON = json_encode($plan);
+    die(json_encode($meals));
 
-    die($myJSON);
+
 
 
 

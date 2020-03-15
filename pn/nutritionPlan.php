@@ -4,22 +4,26 @@ $title = "OT | Nutrition"; //Set the browser title
 $highlight = "nutrition"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
-
-  <script type="text/javascript">
+<script type="text/javascript">
     <!-- Put Javascript Here -->
+
+    $( window ).on( "load", function() {
+        get_plan();
+    });
     function get_plan() {
         $.ajax({
             type: 'POST',
             url: 'api/nutri/mealCalc.php',
-            success: function(data) {
+
+            success: function (data) {
                 let json = JSON.parse(data);
-
-                }
-            })
-
-
+                console.log(json);
+            }
+        });
 }
-  </script>
+</script>
+<html>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -70,8 +74,8 @@ require("structure/top.php"); //Include the sidebar HTML
                            <div class="tab-pane fade active show" id="custom-tabs-two-plan" role="tabpanel" aria-labelledby="custom-tabs-two-plan-tab">
                                 <div class="card-body p-0">
                                     <table id="plan_table" class="table">
-                                         <thead>
-                                            <tr>
+                                        <thead>
+                                             <tr>
                                               <th>Meal#</th>
                                               <th>Protein</th>
                                               <th>Starch</th>
@@ -79,49 +83,10 @@ require("structure/top.php"); //Include the sidebar HTML
                                               <th>Fruits</th>
                                               <th>Fats</th>
                                              </tr>
-                                         </thead>
-                                         <tbody>
-                                           <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                           </tr>
-                                           <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                           </tr>
-                                           <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                           </tr>
-                                           <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                           </tr>
-                                           <tr>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                             <td></td>
-                                           </tr>
-                                         </tbody>
+                                        </thead>
+                                        <tbody id="tdata">
+
+                                        </tbody>
                                     </table>
                                 </div>
                            </div>
@@ -334,5 +299,5 @@ require("structure/top.php"); //Include the sidebar HTML
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+</html>
 <?php include('structure/bottom.php'); ?>

@@ -13,7 +13,7 @@ try {
     $sex = $_POST['sex'];
     $desired_outcome = $_POST['desired_outcome'];
     $current_fat = intval($_POST['current_fat']);
-    $activity_lvl = $_POST['activity_lvl'];
+    $activity_lvl = intval($_POST['activity_lvl']);
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
