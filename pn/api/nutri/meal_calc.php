@@ -1,25 +1,24 @@
 <?php
 require_once("../auth/login_check.php"); //Make sure the user is logged in
-
-session_start(); //Start the session (so you can use the $_SESSION['###'] variable)
-
 require_once("../../variables.php"); //Get the database connection patameters
 
 
 
 
 try {
-    //Create connection
+    $user_id = intval($_SESSION['user_id']);
+
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
-    //Query their information from the database
-    $stmt = $con->prepare("SELECT blood_type, body_type, activity_lvl, current_fat, target_fat, plan_weight, 
-                        sex, desired_outcome FROM users WHERE user_id = ?");
-    $stmt->execute([ $_SESSION['user_id'] ]);
+    $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+    $stmt = $con->prepare("
+        SELECT blood_type, body_type, target_fat, plan_weight, sex, desired_outcome, current_fat , activity_lvl
+        FROM users
+        WHERE user_id = ?;
+    ");
+
+    $stmt->execute([$user_id]);
     $data = $stmt->fetchAll();
-    if( !$data ){
-        die("That user doesn't exist.");
-    }
 
     //Do calculations here
     $blood_type = $data['blood_type'];
@@ -31,7 +30,7 @@ try {
     $current_fat = $data['current_fat'];
     $activity_lvl = $data['activity_lvl'];
 
-    $protein = 0;
+    $protein = $data['plan_weight'];
     $starch = 0;
     $veg = 3;
     $fruit1 = 10;
@@ -42,7 +41,7 @@ try {
     $fat = 0;
 
     if($desired_outcome = "Burn fat/lose weight"){
-        $protein = $plan_weight/5;
+
 
         if($activity_lvl == "No exercise"){
             $fat = 85/5;
@@ -63,11 +62,11 @@ try {
     }
 
     $meals = [
-        ["Meal"=>"1", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
-        ["Meal"=>"2", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
-        ["Meal"=>"3", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
-        ["Meal"=>"4", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
-        ["Meal"=>"5", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
+        ["Meal"=>"1", "Protein"=>$data['plan_weight'], "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
+        ["Meal"=>"2", "Protein"=>$data['plan_weight'], "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
+        ["Meal"=>"3", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
+        ["Meal"=>"4", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
+        ["Meal"=>"5", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
     ];
 
     die(json_encode($meals));

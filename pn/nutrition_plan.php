@@ -13,7 +13,7 @@ require("structure/top.php"); //Include the sidebar HTML
     function get_plan() {
         $.ajax({
             type: 'POST',
-            url: 'api/nutri/mealCalc.php',
+            url: 'api/nutri/meal_calc.php',
 
             success: function (data) {
                 let json = JSON.parse(data);
