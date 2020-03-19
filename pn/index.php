@@ -64,6 +64,8 @@ require("structure/top.php"); //Include the sidebar HTML
         });
     }
 
+    let goal_len = 0;
+
     function get_goals() {
         $.ajax({
             type:'POST',
@@ -78,7 +80,7 @@ require("structure/top.php"); //Include the sidebar HTML
                               json[key]['goal'] +
                               '<button type="button" ' +
                               'class="close text-right" ' +
-                              'id="goal' + parent.length + '" onclick="delete_goal(this)">' +
+                              'id="' + json[key]['goal'] + '" onclick="delete_goal(this)">' +
                               '×' +
                               '</button>' +
                             '</li>');
@@ -132,11 +134,12 @@ require("structure/top.php"); //Include the sidebar HTML
                     '<li>' + data +
                       '<button type="button" ' +
                         'class="close text-right" ' +
-                        'id="' + goal + '" onclick="delete_goal(this)">' +
+                        'id="' + data + '" onclick="delete_goal(this)">' +
                         '×' +
                       '</button>' +
                     '</li>'
                 );
+                ++goal_len;
                 $('#add_goal_btn').prop('disabled', false);
             },
             error: function() {
