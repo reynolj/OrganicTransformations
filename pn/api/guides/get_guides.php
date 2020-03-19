@@ -14,7 +14,7 @@ try {
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
     //Get favorites
-    if($_POST['favorites'] == 1) {
+    if($_POST['favorite'] == 1) {
         $stmt = $con->prepare("
             SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
             FROM guides
@@ -33,12 +33,11 @@ try {
     //Get all
     $stmt = $con->prepare("
         SELECT guide_id, guide_name, thumbnail, subscription_level, date_last_modified
-        FROM guides
-          WHERE guide_id NOT IN (SELECT guide_id FROM favorites WHERE user_id = ?)
+        FROM guides WHERE guide_id IN (SELECT guide_id FROM tags WHERE tag = ?)
         ORDER BY date_last_modified DESC
         LIMIT ?
     ");
-    $stmt->execute([$user_id, $number]);
+    $stmt->execute([$tag, $number]);
     $results_all = $stmt->fetchAll();
 
     die(json_encode($results_all));
