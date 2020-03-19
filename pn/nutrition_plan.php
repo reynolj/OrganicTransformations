@@ -6,9 +6,12 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
 <script type="text/javascript">
     <!-- Put Javascript Here -->
+    let plan = get_plan();
 
     $( window ).on( "load", function() {
         get_plan();
+        buildTable(plan);
+
     });
     function get_plan() {
         $.ajax({
@@ -16,11 +19,27 @@ require("structure/top.php"); //Include the sidebar HTML
             url: 'api/nutri/meal_calc.php',
 
             success: function (data) {
-                let json = JSON.parse(data);
-                console.log(json);
-            }
+                console.log(data);
+
+
+                return data;
+                }
         });
-}
+    }
+    function buildTable(data)
+    let table = document.getElementById('plan_table')
+    for(let i = 0; i < data.length; i++){
+        let row =` <tr>
+                                        <td>${data[i].Meal}</td>
+                                        <td>${data[i].Protein}</td>
+                                        <td>${data[i].Starch}</td>
+                                        <td>${data[i].Vegetables}</td>
+                                        <td>${data[i].Fruits}</td>
+                                        <td>${data[i].Fats}</td>
+                                    </tr>`
+        table.innerHTML += row
+    }
+    }
 </script>
 <html>
 
@@ -73,7 +92,7 @@ require("structure/top.php"); //Include the sidebar HTML
                         <div class="tab-content" id="custom-tabs-two-tabContent">
                            <div class="tab-pane fade active show" id="custom-tabs-two-plan" role="tabpanel" aria-labelledby="custom-tabs-two-plan-tab">
                                 <div class="card-body p-0">
-                                    <table id="plan_table" class="table">
+                                    <table class="table">
                                         <thead>
                                              <tr>
                                               <th>Meal#</th>
@@ -84,7 +103,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                               <th>Fats</th>
                                              </tr>
                                         </thead>
-                                        <tbody id="tdata">
+                                        <tbody id="plan_table">
 
                                         </tbody>
                                     </table>
