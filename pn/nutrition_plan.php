@@ -6,11 +6,25 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
 <script type="text/javascript">
     <!-- Put Javascript Here -->
-    let plan = get_plan();
+    function buildTable(data){
+        let table = document.getElementById('plan_table')
+        for(let i = 0; i < data.length; i++){
+            let row =` <tr>
+                                        <td>${data[i].Meal}</td>
+                                        <td>${data[i].Protein}</td>
+                                        <td>${data[i].Starch}</td>
+                                        <td>${data[i].Vegetables}</td>
+                                        <td>${data[i].Fruits}</td>
+                                        <td>${data[i].Fats}</td>
+                                    </tr>`
+            table.innerHTML += row
+        }
+    }
+
 
     $( window ).on( "load", function() {
         get_plan();
-        buildTable(plan);
+
 
     });
     function get_plan() {
@@ -19,27 +33,15 @@ require("structure/top.php"); //Include the sidebar HTML
             url: 'api/nutri/meal_calc.php',
 
             success: function (data) {
+                let json = JSON.parse(data);
                 console.log(data);
-
+                buildTable(json);
 
                 return data;
                 }
         });
     }
-    function buildTable(data)
-    let table = document.getElementById('plan_table')
-    for(let i = 0; i < data.length; i++){
-        let row =` <tr>
-                                        <td>${data[i].Meal}</td>
-                                        <td>${data[i].Protein}</td>
-                                        <td>${data[i].Starch}</td>
-                                        <td>${data[i].Vegetables}</td>
-                                        <td>${data[i].Fruits}</td>
-                                        <td>${data[i].Fats}</td>
-                                    </tr>`
-        table.innerHTML += row
-    }
-    }
+
 </script>
 <html>
 
