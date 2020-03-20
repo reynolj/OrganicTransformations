@@ -141,16 +141,17 @@ session_start();
               <p>
                 Logout
               </p>
-            </a
-          </li
+            </a>
+          </li>
 
-          <?php if($highlight == "exercise"){ ?>
+            <!-- Owner Panel-->
+          <?php if($_SESSION['is_admin'] == 1 ){ ?>
             <li class="nav-header">
                OWNER PANELS
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Guides
@@ -159,7 +160,7 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Counseling
@@ -168,7 +169,7 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Members
@@ -176,7 +177,6 @@ session_start();
                 </a>
             </li>
             <?php;} ?>
-
 
             <div id="owner-panels"></div>
 
