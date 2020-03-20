@@ -17,13 +17,17 @@ try {
 
     //Get tag filtered guides
     $stmt = $con->prepare("
-                SELECT g.guide_id, g.guide_name, g.thumbnail, g.subscription_level, g.date_last_modified, CASE WHEN fav.guide_id IS NOT NULL THEN true ELSE false END AS fav
-                FROM guides g
-                LEFT JOIN favorites AS fav ON (g.guide_id = fav.guide_id AND fav.user_id = ?) 
-                WHERE
-                	g.guide_id IN (SELECT guide_id FROM tags WHERE FIND_IN_SET(tag, ?) > 0)
-                ORDER BY date_last_modified DESC
+            SELECT g.guide_id, g.guide_name, g.thumbnail, g.subscription_level, g.date_last_modified, CASE WHEN fav.guide_id IS NOT NULL THEN true ELSE false END AS fav, group_concat(t.tag) as tags
+            FROM guides g
+            LEFT JOIN favorites AS fav ON (g.guide_id = fav.guide_id AND fav.user_id = ?)
+            LEFT JOIN tags AS t ON (g.guide_id = t.guide_id)
+            WHERE
+            	g.guide_id IN (SELECT guide_id FROM tags WHERE FIND_IN_SET(tag, ?) > 0)
+            GROUP BY guide_id
+            ORDER BY date_last_modified DESC
         ");
+    // Reference 1 https://stackoverflow.com/questions/8343458/mysql-select-distinct-rows-into-a-comma-delimited-list-column
+    // Reference 2 https://stackoverflow.com/questions/43481869/aggregated-query-without-group-by
     $stmt->execute([$user_id, $tags]);
     $results_favorites = $stmt->fetchAll();
 
