@@ -20,17 +20,20 @@ try {
     $stmt->execute([$user_id]);
     $data = $stmt->fetchAll();
 
-    //Do calculations here
-    $blood_type = $data['blood_type'];
-    $body_type = $data['body_type'];
-    $target_fat = $data['target_fat'];
-    $plan_weight = $data['plan_weight'];
-    $sex = $data['sex'];
-    $desired_outcome = $data['desired_outcome'];
-    $current_fat = $data['current_fat'];
-    $activity_lvl = $data['activity_lvl'];
 
-    $protein = $data['plan_weight'];
+
+    //Do calculations here
+    $blood_type = $data[0][0];
+    $body_type = $data[0][1];
+    $target_fat = $data[0][2];
+    $plan_weight = $data[0][3];
+    $sex = $data[0][4];
+    $desired_outcome = $data[0][5];
+    $current_fat = $data[0][6];
+    $activity_lvl = $data[0][7];
+
+
+    $protein = (int)(($plan_weight - ($plan_weight * ($current_fat / 100))) /2)/ 5;
     $starch = 0;
     $veg = 3;
     $fruit1 = 10;
@@ -40,14 +43,16 @@ try {
     $fruit5 = 0;
     $fat = 0;
 
+
+
     if($desired_outcome = "Burn fat/lose weight"){
 
 
-        if($activity_lvl == "No exercise"){
+        if($activity_lvl == 0){
             $fat = 85/5;
             $fruit2 = 5;
             $fruit5 = 5;}
-        elseif($activity_lvl == "1-2 days/wk of exercise"){
+        elseif($activity_lvl == 1){
             $fat = 95/5;
             $fruit2 = 5;
             $fruit5 = 10;}
@@ -62,16 +67,16 @@ try {
     }
 
     $meals = [
-        ["Meal"=>"1", "Protein"=>$data['plan_weight'], "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
-        ["Meal"=>"2", "Protein"=>$data['plan_weight'], "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
-        ["Meal"=>"3", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
-        ["Meal"=>"4", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
-        ["Meal"=>"5", "Protein"=>$activity_lvl, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
+        ["Meal"=>"1", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
+        ["Meal"=>"2", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
+        ["Meal"=>"3", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
+        ["Meal"=>"4", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
+        ["Meal"=>"5", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
     ];
 
-    die(json_encode($meals));
 
 
+die(json_encode($meals));
 
 
 
