@@ -1,34 +1,15 @@
 import Guide from '../guides/Guide.js';
 
-let favorites = Array();
+let guides = Array();
 let goal_len = 0;
 
 $( window ).on( "load", function() {
-    get_favorites();
     get_body();
     get_goals();
-    get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
-    get_guides(4, $('#exercise_favorites'), 'exercise', 1);
-    get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
+    get_guides($('#highlighted_guides'), ['highlighted'], 0);
+    get_guides($('#exercise_favorites'), ['exercise'], 1);
+    get_guides($('#nutrition_favorites'), ['nutrition'], 1);
 });
-
-function get_favorites() {
-    $.ajax({
-        type: 'POST',
-        url: '/pn/api/dashboard/get_favorites.php',
-        success: function(data) {
-            let json = JSON.parse(data);
-            for(let key in json) {
-                if(json.hasOwnProperty(key)) {
-                    favorites.push(json[key]['guide_id']);
-                }
-            }
-        },
-        error: function() {
-            console.log('get_favorites ERROR');
-        }
-    });
-}
 
 function get_body() {
     $.ajax({
@@ -185,34 +166,33 @@ function delete_goal(button) {
     });
 }
 
-function get_guides(number, container, tag, favorite) {
+function get_guides(container, tags, favorites) {
     $.ajax({
         type:'POST',
-        url: '/pn/api/guides/get_guides.php',
+        url: '/pn/api/guides/get_guides_tag_filtered.php',
         data: {
-            number: number,
-            tag: tag,
-            favorite: favorite
+            tags: tags
         },
         success: function(data) {
-            container.html(make_cards(JSON.parse(data)));
+            const json = JSON.parse(data);
+            let cards = Array();
+            let guide;
+            for(let key in json) {
+                if(json.hasOwnProperty(key)) {
+                    guide = new Guide(json[key]);
+                    if(guides.includes(guide) === false) guides.push(guide);
+                    if(favorites === 1) {
+                        if(guide['favorite'] === 1) cards.push(guide.card());
+                    }
+                    else cards.push(guide.card());
+                }
+            }
+            container.html(cards);
         },
         error: function() {
             console.log("get_guides ERROR");
         }
     });
-}
-
-function make_cards(data) {
-    let str_hold = Array();
-    let guide;
-    for(let key in data) {
-        if(data.hasOwnProperty(key)) {
-            guide = new Guide(data[key]);
-            str_hold.push(guide.card(favorites.includes(data[key]['guide_id'])));
-        }
-    }
-    return str_hold;
 }
 
 function favorite(wrapper) {

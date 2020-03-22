@@ -28,7 +28,6 @@ session_start();
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Organic Transformations style -->
   <link rel="stylesheet" href="dist/css/organic-transformations.css">
-
   <!-- jQuery -->
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
 
@@ -144,6 +143,42 @@ session_start();
               </p>
             </a>
           </li>
+
+            <!-- Owner Panel-->
+          <?php if($_SESSION['is_admin'] == 1 ){ ?>
+            <li class="nav-header">
+               OWNER PANELS
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Guides
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Counseling
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Members
+                    </p>
+                </a>
+            </li>
+            <?php;} ?>
+
+            <div id="owner-panels"></div>
 
         </ul>
       </nav>

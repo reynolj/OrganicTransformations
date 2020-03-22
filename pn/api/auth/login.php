@@ -21,7 +21,7 @@ try {
   $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
    
   //Authenticate user
-  $stmt = $con->prepare("SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?");
+  $stmt = $con->prepare("SELECT user_id, is_admin, email_verified FROM users WHERE (username = ? OR email = ?) AND password = ?");
   $stmt->execute([ strtolower($_POST['username']), strtolower($_POST['username']), $_POST['password'] ]);
   $data = $stmt->fetch();
   if(!$data){
@@ -35,6 +35,7 @@ try {
 
   //Login is correct, create the session
   $_SESSION['user_id'] = $data['user_id'];
+  $_SESSION['is_admin'] = $data['is_admin'];
 
   die('success');
   
