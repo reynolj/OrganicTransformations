@@ -6,6 +6,8 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
 <script type="text/javascript">
     <!-- Put Javascript Here -->
+
+
     function buildTable(data){
         let table = document.getElementById('plan_table')
         for(let i = 0; i < data.length; i++){
@@ -24,8 +26,7 @@ require("structure/top.php"); //Include the sidebar HTML
 
     $( window ).on( "load", function() {
         get_plan();
-
-
+        food_by_blood();
     });
     function get_plan() {
         $.ajax({
@@ -34,13 +35,44 @@ require("structure/top.php"); //Include the sidebar HTML
 
             success: function (data) {
                 let json = JSON.parse(data);
-                console.log(data);
                 buildTable(json);
-
-                return data;
                 }
         });
     }
+
+    function food_by_blood(){
+        $.ajax({
+            type: 'POST',
+            url: 'api/nutri/blood.php',
+            success: function(data){
+            console.log(data);
+                document.getElementById("blood").innerHTML = data;
+            }
+        });
+    }
+
+    function change_plan(){
+        $('#change_btn').prop('disabled', true);
+        const has_meal_plan = 0;
+        $.ajax({
+            type: "POST",
+            url: 'api/nutri/plan_attribs.php',
+            data: {
+                has_meal_plan: has_meal_plan
+            },
+            success: function() {
+                $('#change_btn').prop('disabled', false);
+            },
+            error: function() {
+                $('#change_btn').prop('disabled', false);
+                console.log("ERROR");
+            }
+        });
+        window.location.replace("get_nutrition.php");
+    }
+
+
+
 
 </script>
 <html>
@@ -312,9 +344,15 @@ require("structure/top.php"); //Include the sidebar HTML
                                </div>
                            </div>
                         </div>
+                        <p id="blood"></p>
                     </div>
                     <!-- /.card -->
+
                  </div>
+          <div class="col-sm-4">
+              <button class="btn btn-block btn-primary" id="change_btn" onclick="change_plan()">Change my nutrition plan</button>
+          </div>
+
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
