@@ -14,6 +14,8 @@ try {
     $desired_outcome = $_POST['desired_outcome'];
     $current_fat = intval($_POST['current_fat']);
     $activity_lvl = intval($_POST['activity_lvl']);
+    $has_meal_plan = intval($_POST['has_meal_plan']);
+
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
@@ -30,10 +32,11 @@ try {
             sex = ?,
             desired_outcome = ?,
             current_fat = ?,
-            activity_lvl = ?
+            activity_lvl = ?,
+            has_meal_plan = ?
         WHERE user_id = ?;
     ");
-    $stmt->execute([$blood_type, $body_type, $target_fat, $plan_weight, $sex, $desired_outcome, $current_fat, $activity_lvl, $user_id]);
+    $stmt->execute([$blood_type, $body_type, $target_fat, $plan_weight, $sex, $desired_outcome, $current_fat, $activity_lvl, $has_meal_plan, $user_id]);
 } catch(PDOException $e) {
     die("Request failed");
 }
