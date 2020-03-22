@@ -96,13 +96,12 @@ function get_goals() {
 function add_goal() {
     $('#last_goal_line').before(
         '<li id="add_goal_line">' +
-            '<div class="row">' +
-            '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
-                '<button class="btn btn-primary col-1" id="submit_goal_btn" onclick="submit_goal()" ' +
-                'style="background-color: blue; border-color:blue; height:100%">' +
-                    '+' +
-                '</button>' +
-            '</div>' +
+        '<div class="row">' +
+        '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
+        '<button class="btn btn-primary col-1" id="submit_goal_btn"  onclick="submit_goal()"> ' +
+        '<i class="fas fa-plus"> </i>' +
+        '</button>' +
+        '</div>' +
         '</li>'
     );
     $('#add_goal_btn').prop('disabled', true);
