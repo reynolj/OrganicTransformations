@@ -1,5 +1,6 @@
 export default class Guide {
-    constructor(json) {
+    //json data and 'on_favorite' function that is triggered when a guide has been favorited, allows rebuilding of a page if needed
+    constructor(json, on_favorite) {
         this.id = json['guide_id'];
         this.thumbnail = json['thumbnail'];
         this.date_last_modified = json['date_last_modified'];
@@ -11,7 +12,7 @@ export default class Guide {
         $(document).on('click','#guide-fav-' + this.id,function(){
             console.log('click triggered');
             console.log(this);
-            this.favorite($(this));
+            Guide.favorite($(this),on_favorite);
         });
 
     }
@@ -81,13 +82,12 @@ export default class Guide {
         );
     }
 
-    favorite(wrapper) {
-        console.log('favoriting')
-        console.log(wrapper);
-        let classes = wrapper.classList;
-        console.log(classes);
-        const guide_id = wrapper.id.slice('guide'.length);
-        const favorited = classes.contains('favorite') ? 1 : 0;
+    //TODO favorite should change the color of the guide card without executing the on_favorite function  (append favorite to class or not)
+    //Sends favorite message to db AND executes executes 'on_favorite' on function that can perform a rebuild of some sort
+    static favorite(wrapper, on_favorite) {
+        let classes = $(wrapper).attr('class').toString();
+        const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
+        const favorited = classes.includes('favorite') ? 1 : 0;
         $.ajax({
             type:'POST',
             url: '/pn/api/dashboard/favorite_guide.php',
@@ -96,10 +96,12 @@ export default class Guide {
                 favorited: favorited
             },
             success: function(data) {
-                // get_guides(['highlighted', 'nutrition', 'exercise']);
+                if (typeof on_favorite !== 'undefined' ) {
+                    on_favorite();
+                }
             },
             error: function() {
-                // console.log("ERROR");
+                console.log("ERROR");
             }
         });
     }

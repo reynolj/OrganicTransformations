@@ -216,7 +216,9 @@ require("structure/top.php"); //Include the sidebar HTML
                   const json = JSON.parse(data);
                   for(let key in json) {
                       if(json.hasOwnProperty(key)) {
-                          guide = new Guide(json[key]);
+                          guide = new Guide(json[key],function(){
+                              get_guides(['highlighted', 'nutrition', 'exercise']);
+                          });
                           if(guide.is_favorite === 1) {
                               if(guide.tags.includes('nutrition') && !nutrition.includes(guide))
                                   nutrition.push(guide);
