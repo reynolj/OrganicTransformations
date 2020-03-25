@@ -3,8 +3,6 @@ $(window).on("load", function () {
 });
 
 $(document).ready(function () {
-    console.log('ready!');
-
     //Mouse moved over a muscle, show tooltip
     $('.muscle').hover(function () {
         $('#info-box').css('display', 'block');

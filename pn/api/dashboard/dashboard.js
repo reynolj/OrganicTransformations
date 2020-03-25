@@ -1,14 +1,10 @@
 import Guide from '../guides/Guide.js';
 
-let guides = Array();
-let goal_len = 0;
-
 $( window ).on( "load", function() {
+    // $('#highlighted_guides').html(page_nav.get_current_page_html());
     get_body();
     get_goals();
-    get_guides($('#highlighted_guides'), ['highlighted'], 0);
-    get_guides($('#exercise_favorites'), ['exercise'], 1);
-    get_guides($('#nutrition_favorites'), ['nutrition'], 1);
+    get_guides(['highlighted', 'nutrition', 'exercise']);
 });
 
 function get_body() {
@@ -34,7 +30,7 @@ function get_body() {
 }
 
 function save_body() {
-    $('#add_goal_btn').prop('disabled', true);
+    $('#save_body_btn').prop('disabled', true);
     const blood_type = $('#blood_type').val();
     const body_type = $('#body_type').val();
     const weight = $('#weight').val();
@@ -49,7 +45,7 @@ function save_body() {
             activity_level: activity_level
         },
         success: function() {
-            $('#add_goal_btn').prop('disabled', false);
+            $('#save_body_btn').prop('disabled', false);
         },
         error: function() {
             $('#add_goal_btn').prop('disabled', false);
@@ -69,20 +65,20 @@ function get_goals() {
                 if (json.hasOwnProperty(key))
                     goal_str.push(
                         '<li>' +
-                            json[key]['goal'] +
-                            '<button type="button" ' +
-                                'class="close text-right" ' +
-                                'id="' + json[key]['goal'] + '" onclick="delete_goal(this)">' +
-                                '×' +
-                            '</button>' +
+                        json[key]['goal'] +
+                        '<button type="button" ' +
+                        'class="close text-right" ' +
+                        'id="' + json[key]['goal'] + '" onclick="delete_goal(this)">' +
+                        '×' +
+                        '</button>' +
                         '</li>');
             }
             goal_str.push(
                 '<li class="text-right" id="last_goal_line">' +
-                    '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
-                    'style="background-color:green;border-color:green;height:100%">' +
-                        'Add Goal' +
-                    '</button>' +
+                '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
+                'style="background-color:green;border-color:green;height:100%">' +
+                'Add Goal' +
+                '</button>' +
                 '</li>'
             );
             $('#goals').html(goal_str);
@@ -123,11 +119,11 @@ function submit_goal() {
             parent.removeChild(document.getElementById('add_goal_line'));
             $('#last_goal_line').before(
                 '<li>' + data +
-                    '<button type="button" ' +
-                    'class="close text-right" ' +
-                    'id="' + data + '" onclick="delete_goal(this)">' +
-                        '×' +
-                    '</button>' +
+                '<button type="button" ' +
+                'class="close text-right" ' +
+                'id="' + data + '" onclick="delete_goal(this)">' +
+                '×' +
+                '</button>' +
                 '</li>'
             );
             ++goal_len;
@@ -165,7 +161,7 @@ function delete_goal(button) {
     });
 }
 
-function get_guides(container, tags, favorites) {
+function get_guides(tags) {
     $.ajax({
         type:'POST',
         url: '/pn/api/guides/get_guides_tag_filtered.php',
@@ -173,53 +169,36 @@ function get_guides(container, tags, favorites) {
             tags: tags
         },
         success: function(data) {
-            const json = JSON.parse(data);
-            let cards = Array();
             let guide;
+            let highlighted = Array();
+            let exercises = Array();
+            let nutrition = Array();
+            let nutrition_string = Array();
+            let exercises_string = Array();
+            let highlighted_string = Array();
+            const json = JSON.parse(data);
             for(let key in json) {
                 if(json.hasOwnProperty(key)) {
                     guide = new Guide(json[key]);
-                    if(guides.includes(guide) === false) guides.push(guide);
-                    if(favorites === 1) {
-                        if(guide['favorite'] === 1) cards.push(guide.card());
+                    if(guide.is_favorite === 1) {
+                        if(guide.tags.includes('nutrition') && !nutrition.includes(guide))
+                            nutrition.push(guide);
+                        if(guide.tags.includes('exercise') && !exercises.includes(guide))
+                            exercises.push(guide);
                     }
-                    else cards.push(guide.card());
+                    if(guide.tags.includes('highlighted') && !highlighted.includes(guide))
+                        highlighted.push(guide);
                 }
             }
-            container.html(cards);
+            for(let i = 0; i < nutrition.length; ++i) nutrition_string.push(nutrition[i].card);
+            for(let i = 0; i < exercises.length; ++i) exercises_string.push(exercises[i].card);
+            for(let i = 0; i < highlighted.length; ++i) highlighted_string.push(highlighted[i].card);
+            $('#highlighted_guides').html(highlighted_string);
+            $('#nutrition_favorites').html(nutrition_string);
+            $('#exercise_favorites').html(exercises_string);
         },
         error: function() {
             console.log("get_guides ERROR");
-        }
-    });
-}
-
-function favorite(wrapper) {
-    let classes = wrapper.classList;
-    const guide_id = wrapper.id.slice('guide'.length);
-    const favorited = classes.contains('favorite') ? 1 : 0;
-    $.ajax({
-        type:'POST',
-        url: '/pn/api/dashboard/favorite_guide.php',
-        data: {
-            guide_id: guide_id,
-            favorited: favorited
-        },
-        success: function(data) {
-            if(favorited) {
-                classes.remove('favorite');
-                favorites.splice(favorites.indexOf(guide_id), 1);
-            }
-            else {
-                classes.add('favorite');
-                favorites.push(guide_id);
-            }
-            get_guides(4, $('#nutrition_favorites'), 'nutrition', 1);
-            get_guides(4, $('#exercise_favorites'), 'exercise', 1);
-            get_guides(4, $('#highlighted_guides'), 'nutrition', -1);
-        },
-        error: function() {
-            console.log("ERROR");
         }
     });
 }
