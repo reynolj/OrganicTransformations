@@ -78,7 +78,7 @@ require("structure/top.php"); //Include the sidebar HTML
                      console.log("ERROR");
                   }
               });
-        window.location.replace("nutrition.php");
+        window.location.replace("nutrition_plan.php");
             }
 
 
@@ -139,7 +139,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       <div class="form-group">
                           <label>Activity level</label>
                           <select id="activity_lvl" class="form-control">
-                              <option value="0">No exercise</option>
+                              <option value=0>No exercise</option>
                               <option value =1>1-2 days/wk of exercise</option>
                               <option value =2>3+ days/wk of exercise</option></select>
                       </div>
