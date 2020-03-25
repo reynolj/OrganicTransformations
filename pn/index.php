@@ -8,9 +8,10 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
 <html>
 <head>
-<!--  <script type="module" src="api/dashboard/dashboard.js">-->
-<!--  </script>-->
-
+<!--  <script type="module" src="api/dashboard/dashboard.js"></script>-->
+<!--    <script type="module" src="api/guides/Guide.js"></script>-->
+<!--  <script type="module">-->
+<!--      import Guide from './api/guides/Guide.js';-->
   <script type="text/javascript">
       let Guide = class {
           constructor(json) {
@@ -167,7 +168,6 @@ require("structure/top.php"); //Include the sidebar HTML
                     '</div>' +
                   '</div>'
               );
-
               return string.join("");
           }
       };
@@ -180,6 +180,11 @@ require("structure/top.php"); //Include the sidebar HTML
           exercise: exercise_pages,
           nutrition: nutrition_pages
       };
+// <!--    Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules-->
+// <!--    Reference: https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import-->
+//
+// <!--    TODO for Joel:  Goals ID should use goal id from database instead of goal text -->
+// <!--    TODO why is the Add a goal button added via script and not apart of the html-->
       let goal_len = 0;
 
       $( window ).on( "load", function() {
@@ -282,20 +287,27 @@ require("structure/top.php"); //Include the sidebar HTML
                               '<li>' +
                               json[key]['goal'] +
                               '<button type="button" ' +
-                              'class="close text-right" ' +
-                              'id="' + json[key]['goal'] + '" onclick="delete_goal(this)">' +
+                              'class="delete-goal close text-right" ' +
+                              'id="' + json[key]['goal'] + '"">' +
                               '×' +
                               '</button>' +
                               '</li>');
                   }
                   goal_str.push(
                       '<li class="text-right" id="last_goal_line">' +
-                      '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
+                      '<button class="btn btn-primary" id="add_goal_btn" ' +
                       'style="background-color:green;border-color:green;height:100%">' +
                       'Add Goal' +
                       '</button>' +
                       '</li>'
                   );
+                  $(document).on('click','#add_goal_btn', function (){
+                      add_goal();
+                  });
+                  $(document).on('click','.delete-goal', function (){
+                      console.log($(this));
+                      delete_goal($(this));
+                  });
                   $('#goals').html(goal_str);
               },
               error: function() {
@@ -305,16 +317,20 @@ require("structure/top.php"); //Include the sidebar HTML
       }
 
       function add_goal() {
+          console.log('adding goal');
           $('#last_goal_line').before(
               '<li id="add_goal_line">' +
               '<div class="row">' +
               '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
-              '<button class="btn btn-primary col-1" id="submit_goal_btn" onclick="submit_goal()"> ' +
+              '<button class="btn btn-primary col-1" id="submit_goal_btn"> ' +
               '<i class="fas fa-plus"> </i>' +
               '</button>' +
               '</div>' +
               '</li>'
           );
+          $(document).on('click','#submit_goal_btn', function (){
+              submit_goal();
+          });
           $('#add_goal_btn').prop('disabled', true);
       }
 
@@ -335,12 +351,15 @@ require("structure/top.php"); //Include the sidebar HTML
                   $('#last_goal_line').before(
                       '<li>' + data +
                       '<button type="button" ' +
-                      'class="close text-right" ' +
-                      'id="' + data + '" onclick="delete_goal(this)">' +
+                      'class="delete-goal close text-right" ' +
+                      'id="' + data + '">' +
                       '×' +
                       '</button>' +
                       '</li>'
                   );
+                  $(document).on('click','.delete-goal', function (){
+                      delete_goal($(this));
+                  });
                   ++goal_len;
                   $('#add_goal_btn').prop('disabled', false);
               },
@@ -351,7 +370,8 @@ require("structure/top.php"); //Include the sidebar HTML
       }
 
       function delete_goal(button) {
-          let goal = button.id;
+          console.log(button);
+          let goal = $(button).attr('id');
           let list = document.querySelectorAll('#goals li');
           $.ajax({
               type: 'POST',
@@ -405,35 +425,12 @@ require("structure/top.php"); //Include the sidebar HTML
                   set_pages["nutrition"] = new Pages(nutrition, "nutrition");
                   set_pages["exercise"] = new Pages(exercise, "exercise");
                   set_pages["highlighted"] = new Pages(highlighted, "highlighted");
-                  // console.log(highlighted_pages.get_current_page_html());
-                  // console.log(exercise_pages.get_current_page_html());
-                  // console.log(nutrition_pages.get_current_page_html());
                   $('#highlighted_guides').html(set_pages["highlighted"].get_current_page_html());
                   $('#nutrition_favorites').html(set_pages["nutrition"].get_current_page_html());
                   $('#exercise_favorites').html(set_pages["exercise"].get_current_page_html());
               },
               error: function() {
                   console.log("get_guides ERROR");
-              }
-          });
-      }
-
-      function favorite(wrapper) {
-          let classes = wrapper.classList;
-          const guide_id = wrapper.id.slice('guide'.length);
-          const favorited = classes.contains('favorite') ? 1 : 0;
-          $.ajax({
-              type:'POST',
-              url: '/pn/api/dashboard/favorite_guide.php',
-              data: {
-                  guide_id: guide_id,
-                  favorited: favorited
-              },
-              success: function() {
-                  get_guides(['highlighted', 'nutrition', 'exercise']);
-              },
-              error: function() {
-                  console.log("ERROR");
               }
           });
       }

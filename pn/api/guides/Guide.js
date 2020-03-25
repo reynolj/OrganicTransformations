@@ -5,31 +5,38 @@ export default class Guide {
         this.date_last_modified = json['date_last_modified'];
         this.name = json['guide_name'];
         this.subscription_level = json['subscription_level'];
-        this.favorite = json['fav'];
+        this.is_favorite = json['fav'];
+        this.tags = json['tags'];
+
+        $(document).on('click','#guide-fav-' + this.id,function(){
+            console.log('click triggered');
+            console.log(this);
+            this.favorite($(this));
+        });
+
     }
 
-    card() {
-        return (
-            '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
-                '<div class="small-box">' +
-                    '<div class="inner" style="position: relative;">' +
-                        '<svg class="overlay-button' + (this.favorite === 1 ? " favorite" : "") + '" ' +
-                        'id="guide' + this.id + '" onclick="favorite(this)" viewBox="0 0 940.688 940.688">' +
-                            '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
-                            'c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601' +
-                            'c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>' +
-                        '</svg>' +
-                        '<img src="' + this.thumbnail + '" alt="" class="img-fluid">' +
-                    '</div>' +
-                    '<a class="small-box-footer">' +
-                        '<div class="row pl-1 pr-1">' +
-                            '<div class="text-left col-6">' + this.name + '</div>' +
-                            '<div class="text-right col-6">' + 'Added ' + this.date_str()  + '</div>' +
-                        '</div>' +
-                    '</a>' +
-                '</div>' +
-            '</div>'
-        );
+    get card() {
+        var html = '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
+            '<div class="small-box">' +
+            '<div class="inner" style="position: relative;">' +
+            '<svg class="overlay-button' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
+            'id="guide-fav-' + this.id + '" viewBox="0 0 940.688 940.688">' +
+            '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
+            'c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601' +
+            'c45.4,27,100.5-15,86.5-65.9l-71.3-247.7l209.2-181.399C960.443,389.172,938.744,322.071,885.344,319.071z"/>' +
+            '</svg>' +
+            '<img src="' + this.thumbnail + '" alt="" class="img-fluid">' +
+            '</div>' +
+            '<a class="small-box-footer">' +
+            '<div class="row pl-1 pr-1">' +
+            '<div class="text-left col-6">' + this.name + '</div>' +
+            '<div class="text-right col-6">' + 'Added ' + this.date_str()  + '</div>' +
+            '</div>' +
+            '</a>' +
+            '</div>' +
+            '</div>';
+        return html;
     }
 
     date_str() {
@@ -67,10 +74,33 @@ export default class Guide {
         };
         return (
             '<div class="ribbon-wrapper ribbon-lg" style="right:5px">' +
-                color_levels[this.subscription_level] +
-                    this.subscription_level +
-                '</div>' +
+            color_levels[this.subscription_level] +
+            this.subscription_level +
+            '</div>' +
             '</div>'
         );
+    }
+
+    favorite(wrapper) {
+        console.log('favoriting')
+        console.log(wrapper);
+        let classes = wrapper.classList;
+        console.log(classes);
+        const guide_id = wrapper.id.slice('guide'.length);
+        const favorited = classes.contains('favorite') ? 1 : 0;
+        $.ajax({
+            type:'POST',
+            url: '/pn/api/dashboard/favorite_guide.php',
+            data: {
+                guide_id: guide_id,
+                favorited: favorited
+            },
+            success: function(data) {
+                // get_guides(['highlighted', 'nutrition', 'exercise']);
+            },
+            error: function() {
+                // console.log("ERROR");
+            }
+        });
     }
 };
