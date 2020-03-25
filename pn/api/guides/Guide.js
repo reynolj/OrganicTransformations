@@ -1,5 +1,5 @@
 export default class Guide {
-    //json data and 'on_favorite' function that is triggered when a guide has been favorited, allows rebuilding of a page if needed
+    //json data and 'on_favorite' function that is triggered when a guide has been favorited (is optional), allows rebuilding of a page if needed
     constructor(json, on_favorite) {
         this.id = json['guide_id'];
         this.thumbnail = json['thumbnail'];
@@ -83,7 +83,7 @@ export default class Guide {
     }
 
     //TODO favorite should change the color of the guide card without executing the on_favorite function  (append favorite to class or not)
-    //Sends favorite message to db AND executes executes 'on_favorite' on function that can perform a rebuild of some sort
+    //Sends favorite message to db AND executes'on_favorite function that can perform a rebuild of some sort
     static favorite(wrapper, on_favorite) {
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
@@ -96,6 +96,7 @@ export default class Guide {
                 favorited: favorited
             },
             success: function(data) {
+                //TODO check for function instead
                 if (typeof on_favorite !== 'undefined' ) {
                     on_favorite();
                 }
