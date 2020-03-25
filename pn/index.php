@@ -28,7 +28,6 @@ require("structure/top.php"); //Include the sidebar HTML
                   '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
                   '<div class="small-box">' +
                   '<div class="inner" style="position: relative;">' +
-                  // '<i id="guide" class="overlay-button fas fa-star' + (this.favorite === 1 ? " favorite" : "") + '"></i>' +
                   '<svg class="overlay-button' + (this.favorite === 1 ? " favorite" : "") + '" ' +
                   'id="guide' + this.id + '" onclick="favorite(this)" viewBox="0 0 940.688 940.688">' +
                   '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
@@ -91,68 +90,136 @@ require("structure/top.php"); //Include the sidebar HTML
           }
       };
 
-      // let Pages = class {
-      //     constructor(list) {
-      //         this.list = list;
-      //         this.cur_page = 1;
-      //         this.first_page = 1;
-      //         this.last_page = 1;
-      //         this.width = 5;
-      //     }
-      //
-      //     add_to_list(card) {
-      //         this.list.push(card);
-      //
-      //     }
-      //
-      //     remove_from_list(card) {
-      //         this.list.splice(this.list.indexOf(card), 1);
-      //     }
-      //
-      //     get_page_set() {
-      //         let pages = [
-      //             this.cur_page - 2,
-      //             this.cur_page - 1,
-      //             this.cur_page,
-      //             this.cur_page + 1,
-      //             this.cur_page + 2
-      //         ];
-      //         if(pages.includes(this.first_page)) pages = pages.slice(pages.indexOf(this.first_page));
-      //         if(pages.includes(this.last_page) pages.length = pages.indexOf(this.last_page) + 1;
-      //         return pages;
-      //     }
-      //
-      //     set_current_page(page) {
-      //         if(page > this.last_page || page < this.first_page) return;
-      //         this.cur_page = page;
-      //     }
-      //
-      //     get_current_page_html() {
-      //         let numbers = Array();
-      //         const set = this.get_page_set();
-      //         numbers.push(
-      //             '<div class="row">' +
-      //               '<a class="fa-angle-double-left"></a>' +
-      //         );
-      //         for(let number in set) {
-      //             if(number === this.cur_page) numbers.push('<b>' + number + '</b>');
-      //             else numbers.push('<b>' + number + '</b>');
-      //         }
-      //         numbers.push(
-      //               '<a class="fa-angle-double-right"></a>' +
-      //             '</div>'
-      //         );
-      //         return set.join("");
-      //     }
-      // };
+      let Pages = class {
 
-      // let page_nav = Pages(highlighted);
+          constructor(list, name) {
+              this.name = name;
+              this.width = 4;
+              this.list = list;
+              this.cur_page = 1;
+              this.first_page = 1;
+              this.last_page = (Math.floor(this.list.length/this.width)) + 1;
+          }
+
+          get_page_set() {
+              let pages = [
+                  this.cur_page - 2,
+                  this.cur_page - 1,
+                  this.cur_page,
+                  this.cur_page + 1,
+                  this.cur_page + 2
+              ];
+              if(pages.includes(this.first_page))
+              {
+                  pages = pages.slice(pages.indexOf(this.first_page));
+              }
+              if(pages.includes(this.last_page))
+              {
+                  pages.splice(pages.indexOf(this.last_page) + 1);
+              }
+              return pages;
+          }
+
+          set_current_page(page) {
+              if(page > this.last_page || page < this.first_page) return;
+              this.cur_page = page;
+          }
+
+          get_current_page_html() {
+              let string = Array();
+              const set = this.get_page_set();
+              string.push(
+                  '<div class="row">' +
+                    '<div class="col-12">' +
+                      '<ul class="page-nav float-left">' +
+                        '<li class="fas fa-angle-double-left page-nav icon" id="' + this.name + ':' + this.first_page + '"></li>'
+              );
+              for(let number in set) {
+                  if(set[number] === this.cur_page) string.push('<li class="page-nav text current-page" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
+                  else string.push('<li class="page-nav text" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
+              }
+              string.push(
+                        '<li class="fas fa-angle-double-right page-nav icon" id="' + this.name + ':' + this.last_page + '"></li>' +
+                      '</ul>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="row">'
+              );
+
+              for(let i = this.width * (this.cur_page - 1); i < this.list.length && i < (this.width * this.cur_page); ++i) {
+                  string.push(this.list[i].card);
+              }
+
+              string.push(
+                  '</div>' +
+                  '<div class="row">' +
+                    '<div class="col-12">' +
+                      '<ul class="page-nav float-right">' +
+                        '<li class="fas fa-angle-double-left page-nav icon" id="' + this.name + ':' + this.first_page + '"></li>'
+              );
+              for(let number in set) {
+                  if(set[number] === this.cur_page) string.push('<li class="page-nav text current-page" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
+                  else string.push('<li class="page-nav text" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
+              }
+              string.push(
+                        '<li class="fas fa-angle-double-right page-nav icon" id="' + this.name + ':' + this.last_page + '"></li>' +
+                      '</ul>' +
+                    '</div>' +
+                  '</div>'
+              );
+
+              return string.join("");
+          }
+      };
+
+      let highlighted_pages;
+      let exercise_pages;
+      let nutrition_pages;
+      let set_pages = {
+          highlighted: highlighted_pages,
+          exercise: exercise_pages,
+          nutrition: nutrition_pages
+      };
+      let goal_len = 0;
 
       $( window ).on( "load", function() {
-          // $('#highlighted_guides').html(page_nav.get_current_page_html());
-          get_body();
-          get_goals();
           get_guides(['highlighted', 'nutrition', 'exercise']);
+          $(document).on('click', '.page-nav.text', function(event) {
+              let category = event.target.id.split(":")[0];
+              console.log(set_pages[category]);
+              set_pages[category].cur_page = parseInt(event.target.id.split(":")[1]);
+              switch(category) {
+                  case("highlighted"):
+                    $('#highlighted_guides').html(set_pages[category].get_current_page_html());
+                    break;
+                  case("nutrition"):
+                    $('#nutrition_favorites').html(set_pages[category].get_current_page_html());
+                    break;
+                  case("exercise"):
+                    $('#exercise_favorites').html(set_pages[category].get_current_page_html());
+                    break;
+              }
+              console.log(set_pages[category]);
+          });
+          $(document).on('click', '.page-nav.icon', function(event) {
+              let category = event.target.id.split(":")[0];
+              console.log(set_pages[category]);
+              set_pages[category].cur_page = parseInt(event.target.id.split(":")[1]);
+              switch(category) {
+                  case("highlighted"):
+                      $('#highlighted_guides').html(set_pages[category].get_current_page_html());
+                      break;
+                  case("nutrition"):
+                      $('#nutrition_favorites').html(set_pages[category].get_current_page_html());
+                      break;
+                  case("exercise"):
+                      $('#exercise_favorites').html(set_pages[category].get_current_page_html());
+                      break;
+              }
+              console.log(set_pages[category]);
+          });
+          //get_body();
+          //get_goals();
       });
 
       function get_body() {
@@ -242,7 +309,7 @@ require("structure/top.php"); //Include the sidebar HTML
               '<li id="add_goal_line">' +
               '<div class="row">' +
               '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
-              '<button class="btn btn-primary col-1" id="submit_goal_btn"  onclick="submit_goal()"> ' +
+              '<button class="btn btn-primary col-1" id="submit_goal_btn" onclick="submit_goal()"> ' +
               '<i class="fas fa-plus"> </i>' +
               '</button>' +
               '</div>' +
@@ -318,32 +385,32 @@ require("structure/top.php"); //Include the sidebar HTML
               },
               success: function(data) {
                   let guide;
-                  let highlighted = Array();
-                  let exercises = Array();
                   let nutrition = Array();
-                  let nutrition_string = Array();
-                  let exercises_string = Array();
-                  let highlighted_string = Array();
+                  let exercise = Array();
+                  let highlighted = Array();
                   const json = JSON.parse(data);
                   for(let key in json) {
                       if(json.hasOwnProperty(key)) {
                           guide = new Guide(json[key]);
                           if(guide.favorite === 1) {
-                              if(guide.tags.includes('nutrition') && !nutrition.includes(guide))
+                              if(guide.tags.includes('nutrition'))
                                   nutrition.push(guide);
-                              if(guide.tags.includes('exercise') && !exercises.includes(guide))
-                                  exercises.push(guide);
+                              if(guide.tags.includes('exercise'))
+                                  exercise.push(guide);
                           }
-                          if(guide.tags.includes('highlighted') && !highlighted.includes(guide))
+                          if(guide.tags.includes('highlighted'))
                               highlighted.push(guide);
                       }
                   }
-                  for(let i = 0; i < nutrition.length; ++i) nutrition_string.push(nutrition[i].card);
-                  for(let i = 0; i < exercises.length; ++i) exercises_string.push(exercises[i].card);
-                  for(let i = 0; i < highlighted.length; ++i) highlighted_string.push(highlighted[i].card);
-                  $('#highlighted_guides').html(highlighted_string);
-                  $('#nutrition_favorites').html(nutrition_string);
-                  $('#exercise_favorites').html(exercises_string);
+                  set_pages["nutrition"] = new Pages(nutrition, "nutrition");
+                  set_pages["exercise"] = new Pages(exercise, "exercise");
+                  set_pages["highlighted"] = new Pages(highlighted, "highlighted");
+                  // console.log(highlighted_pages.get_current_page_html());
+                  // console.log(exercise_pages.get_current_page_html());
+                  // console.log(nutrition_pages.get_current_page_html());
+                  $('#highlighted_guides').html(set_pages["highlighted"].get_current_page_html());
+                  $('#nutrition_favorites').html(set_pages["nutrition"].get_current_page_html());
+                  $('#exercise_favorites').html(set_pages["exercise"].get_current_page_html());
               },
               error: function() {
                   console.log("get_guides ERROR");
@@ -362,7 +429,7 @@ require("structure/top.php"); //Include the sidebar HTML
                   guide_id: guide_id,
                   favorited: favorited
               },
-              success: function(data) {
+              success: function() {
                   get_guides(['highlighted', 'nutrition', 'exercise']);
               },
               error: function() {
@@ -491,7 +558,7 @@ require("structure/top.php"); //Include the sidebar HTML
           <h3 class="card-title">Highlighted For You</h3>
         </div>
         <div class="card-body">
-          <div id="highlighted_guides" class="row">
+          <div id="highlighted_guides">
             <!-- This is populated by get_guides in the header -->
           </div>
         </div>
@@ -503,7 +570,7 @@ require("structure/top.php"); //Include the sidebar HTML
           <h3 class="card-title">Nutrition Favorites</h3>
         </div>
         <div class="card-body">
-          <div id="nutrition_favorites" class="row">
+          <div id="nutrition_favorites">
             <!-- This is populated by get_guides in the header -->
           </div>
         </div>
@@ -515,7 +582,7 @@ require("structure/top.php"); //Include the sidebar HTML
           <h3 class="card-title">Exercise Favorites</h3>
         </div>
         <div class="card-body">
-          <div id="exercise_favorites" class="row">
+          <div id="exercise_favorites">
             <!-- This is populated by get_guides in the header -->
           </div>
       </div>

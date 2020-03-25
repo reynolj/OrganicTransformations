@@ -52,7 +52,6 @@
     flex-grow: 1;
 }
 
-
 #info-box {
     display: none;
     position: absolute;
@@ -65,4 +64,25 @@
     padding: 5px;
     font-family: arial;
     font-weight: bold;
+}
+
+.page-nav {
+    float:left;
+    list-style-type:none;
+    padding-left: 0;
+}
+
+.page-nav.icon {
+    padding-top:.45em;
+    position:relative;
+}
+
+.page-nav.text {
+    font-size:1.25em;
+    padding-left:.1em;
+    padding-right:.05em;
+}
+
+.page-nav.text.current-page {
+    font-weight:bold;
 }
