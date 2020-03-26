@@ -11,110 +11,30 @@ require("structure/top.php"); //Include the sidebar HTML
 <!--  <script type="module" src="api/dashboard/dashboard.js"></script>-->
 <!--    <script type="module" src="api/guides/Guide.js"></script>-->
   <script type="module">
-    import Guide from './api/guides/Guide.js';
-
-      let Pages = class {
-
-          constructor(list, name) {
-              this.name = name;
-              this.width = 4;
-              this.list = list;
-              this.cur_page = 1;
-              this.first_page = 1;
-              this.last_page = (Math.floor(this.list.length/this.width)) + 1;
-          }
-
-          get_page_set() {
-              let pages = [
-                  this.cur_page - 2,
-                  this.cur_page - 1,
-                  this.cur_page,
-                  this.cur_page + 1,
-                  this.cur_page + 2
-              ];
-              if(pages.includes(this.first_page))
-              {
-                  pages = pages.slice(pages.indexOf(this.first_page));
-              }
-              if(pages.includes(this.last_page))
-              {
-                  pages.splice(pages.indexOf(this.last_page) + 1);
-              }
-              return pages;
-          }
-
-          set_current_page(page) {
-              if(page > this.last_page || page < this.first_page) return;
-              this.cur_page = page;
-          }
-
-          get_current_page_html() {
-              let string = Array();
-              const set = this.get_page_set();
-              string.push(
-                  '<div class="row">' +
-                    '<div class="col-12">' +
-                      '<ul class="page-nav float-left">' +
-                        '<li class="fas fa-angle-double-left page-nav icon" id="' + this.name + ':' + this.first_page + '"></li>'
-              );
-              for(let number in set) {
-                  if(set[number] === this.cur_page) string.push('<li class="page-nav text current-page" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
-                  else string.push('<li class="page-nav text" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
-              }
-              string.push(
-                        '<li class="fas fa-angle-double-right page-nav icon" id="' + this.name + ':' + this.last_page + '"></li>' +
-                      '</ul>' +
-                    '</div>' +
-                  '</div>' +
-                  '<div class="row">'
-              );
-
-              for(let i = this.width * (this.cur_page - 1); i < this.list.length && i < (this.width * this.cur_page); ++i) {
-                  string.push(this.list[i].card);
-              }
-
-              string.push(
-                  '</div>' +
-                  '<div class="row">' +
-                    '<div class="col-12">' +
-                      '<ul class="page-nav float-right">' +
-                        '<li class="fas fa-angle-double-left page-nav icon" id="' + this.name + ':' + this.first_page + '"></li>'
-              );
-              for(let number in set) {
-                  if(set[number] === this.cur_page) string.push('<li class="page-nav text current-page" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
-                  else string.push('<li class="page-nav text" id="' + this.name + ':' + set[number] + '">' + set[number] + '</li>');
-              }
-              string.push(
-                        '<li class="fas fa-angle-double-right page-nav icon" id="' + this.name + ':' + this.last_page + '"></li>' +
-                      '</ul>' +
-                    '</div>' +
-                  '</div>'
-              );
-              return string.join("");
-          }
-      };
+      import Guide from './api/guides/Guide.js';
+      import Pages from './api/guides/Pages.js';
 
       let highlighted_pages;
       let exercise_pages;
       let nutrition_pages;
+      let goal_len = 0;
       let set_pages = {
           highlighted: highlighted_pages,
           exercise: exercise_pages,
           nutrition: nutrition_pages
       };
-// <!--    Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules-->
-// <!--    Reference: https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import-->
-//
-// <!--    TODO for Joel:  Goals ID should use goal id from database instead of goal text -->
-// <!--    TODO why is the Add a goal button added via script and not apart of the html-->
-      let goal_len = 0;
+  // <!--    Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules-->
+  // <!--    Reference: https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import-->
+  //
+  // <!--    TODO for Joel:  Goals ID should use goal id from database instead of goal text -->
+  // <!--    TODO why is the Add a goal button added via script and not apart of the html-->
 
       $( window ).on( "load", function() {
           get_guides(['highlighted', 'nutrition', 'exercise']);
           $(document).on('click', '.page-nav.text', function(event) {
               let category = event.target.id.split(":")[0];
               console.log(set_pages[category]);
-              set_pages[category].cur_page = parseInt(event.target.id.split(":")[1]);
+              set_pages[category].set_current_page(parseInt(event.target.id.split(":")[1]));
               switch(category) {
                   case("highlighted"):
                     $('#highlighted_guides').html(set_pages[category].get_current_page_html());
@@ -130,8 +50,7 @@ require("structure/top.php"); //Include the sidebar HTML
           });
           $(document).on('click', '.page-nav.icon', function(event) {
               let category = event.target.id.split(":")[0];
-              console.log(set_pages[category]);
-              set_pages[category].cur_page = parseInt(event.target.id.split(":")[1]);
+              set_pages[category].set_current_page(parseInt(event.target.id.split(":")[1]));
               switch(category) {
                   case("highlighted"):
                       $('#highlighted_guides').html(set_pages[category].get_current_page_html());
@@ -143,7 +62,6 @@ require("structure/top.php"); //Include the sidebar HTML
                       $('#exercise_favorites').html(set_pages[category].get_current_page_html());
                       break;
               }
-              console.log(set_pages[category]);
           });
           //get_body();
           //get_goals();
