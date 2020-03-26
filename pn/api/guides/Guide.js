@@ -82,9 +82,9 @@ export default class Guide {
         );
     }
 
-    //TODO favorite should change the color of the guide card without executing the on_favorite function  (append favorite to class or not)
-    //Sends favorite message to db AND executes'on_favorite function that can perform a rebuild of some sort
+    //Sends favorite message to db AND executes'on_favorite function that can perform a rebuild of some sort on your page
     static favorite(wrapper, on_favorite) {
+
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
         const favorited = classes.includes('favorite') ? 1 : 0;
@@ -95,9 +95,16 @@ export default class Guide {
                 guide_id: guide_id,
                 favorited: favorited
             },
-            success: function(data) {
-                //TODO check for function instead
-                if (typeof on_favorite !== 'undefined' ) {
+            success: function() {
+                if(favorited){
+                    $(wrapper).removeClass('favorite')
+                } else {
+                    $(wrapper).addClass('favorite')
+                }
+                //Fire toast alert?
+
+                //Perform callback function
+                if (isFunction(on_favorite)) {
                     on_favorite();
                 }
             },
@@ -105,5 +112,9 @@ export default class Guide {
                 console.log("ERROR");
             }
         });
+
+        function isFunction(functionToCheck) {
+            return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+        }
     }
 };

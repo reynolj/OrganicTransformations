@@ -13,8 +13,8 @@
     z-index: 1;
     fill: #666666;
     opacity: 50%;
-    stroke: #FFE044;
-    stroke-width: 8px;
+    stroke: white;
+    stroke-width: 20;
     display: inline-block;
     bottom: 15px;
     right: 15px;
@@ -31,13 +31,18 @@
 
 .overlay-button:hover {
     fill:#FFE044;
-    opacity: 80%;
+    opacity: 60%;
+    stroke-width: 0;
 }
 
 .overlay-button.favorite {
     opacity:100%;
     fill: #ffe044;
     stroke-width: 0;
+}
+
+.overlay-button.favorite:hover {
+    opacity:60%;
 }
 
 .muscle:hover path{
