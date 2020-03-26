@@ -11,7 +11,7 @@ require("structure/top.php"); //Include the sidebar HTML
         <script type="text/javascript">
             <!-- Put Javascript Here -->
         </script>
-        <script src="dist/js/physique_diagram.js"></script>
+        <script type= module src="dist/js/physique_diagram.js"></script>
     </head>
 
     <!-- Content Wrapper. Contains page content -->
@@ -28,7 +28,9 @@ require("structure/top.php"); //Include the sidebar HTML
                         </button>
                     </div>
                     <div class="modal-body" id="modalBody">
+                        <div class="row" id="modalRow">
                         <!-- Place guide querying in here-->
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
