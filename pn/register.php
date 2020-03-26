@@ -64,12 +64,12 @@ include_once("variables.php");
         return;
       }      
       //Check the first_name length
-      if( $('#first_name').val().length < 5 || $('#first_name').val().length > 100){
+      if( $('#first_name').val().length < 2 || $('#first_name').val().length > 100){
         $('#statusMsg').html("That first name is too short or too long.");
         return;
       }
       //Check the last_name length
-      if( $('#last_name').val().length < 5 || $('#last_name').val().length > 100){
+      if( $('#last_name').val().length < 1 || $('#last_name').val().length > 100){
         $('#statusMsg').html("That last name is too short or too long.");
         return;
       }

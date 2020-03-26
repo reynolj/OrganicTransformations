@@ -44,7 +44,7 @@ if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$
 }
 
 //Make sure the password is the correct length
-if( !(strlen($password) > 9 && strlen($password) < 50) ){
+if( !(strlen($password) > 9 || strlen($password) > 50) ){
 	die("That password is not long enough.");
 }
 
@@ -107,11 +107,11 @@ try {
         $email = strtolower($email);
 
         $to      = $email; // Send email to our user
-        $subject = 'Organic Transformations Signup | Verification'; // Give the email a subject
+        $subject = 'Organic Transformations Registration | Verification'; // Give the email a subject
         $message = '
 
         Thanks for signing up!
-        Your account has been created, you can login with your credentials after you have activated your account by clicking the url below.
+        Your account has been created. You can login with your credentials after you have activated your account by clicking the url below.
 
         Please click this link to activate your account:
         http://www.organictransformations.com/verify.php?email='.$email.'&email_token='.$email_token.'

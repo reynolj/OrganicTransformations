@@ -26,12 +26,13 @@ session_start();
   <link rel="stylesheet" href="AdminLTE/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+  <!-- Organic Transformations style -->
+  <link rel="stylesheet" href="dist/css/organic-transformations.css">
   <!-- jQuery -->
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -57,7 +58,7 @@ session_start();
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link" style="background-color: #fff;">
-      <img src="AdminLTE/dist/img/svg/logo.svg" alt="Organic Transformations Logo" class="brand-image" //Removed: img-circle elevation-1
+      <img src="AdminLTE/dist/img/logo.png" alt="Organic Transformations Logo" class="brand-image" //Removed: img-circle elevation-1
            style="opacity: .9">
       <span class="brand-text font-weight-bold" style="color: #333; font-size: 1.05rem;">Organic</span>
       <span class="brand-text" style="color: #333; font-size: 1.05rem;">Transformations</span>
@@ -71,7 +72,7 @@ session_start();
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
+          <a href="account_settings.php" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
         </div>
       </div>
 
@@ -142,6 +143,42 @@ session_start();
               </p>
             </a>
           </li>
+
+            <!-- Owner Panel-->
+          <?php if($_SESSION['is_admin'] == 1 ){ ?>
+            <li class="nav-header">
+               OWNER PANELS
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Guides
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Counseling
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                        Members
+                    </p>
+                </a>
+            </li>
+            <?php;} ?>
+
+            <div id="owner-panels"></div>
 
         </ul>
       </nav>
