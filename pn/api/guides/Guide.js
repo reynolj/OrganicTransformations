@@ -113,6 +113,7 @@ export default class Guide {
             }
         });
 
+        //Checks if the passed param is a function
         function isFunction(functionToCheck) {
             return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
         }

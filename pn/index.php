@@ -4,7 +4,6 @@ $title = "OT | Home"; //Set the browser title
 $highlight = "index"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 
-
 ?>
 <html>
 <head>
@@ -421,8 +420,6 @@ require("structure/top.php"); //Include the sidebar HTML
           <h3 class="card-title">My Body</h3>
         </div>
         <div class="card-body">
-          <ul style="list-style-type:none">
-            <li>
               <div class="row">
                 <div class="col-2">
                   <label for="blood_type">Blood Type:</label>
@@ -468,8 +465,6 @@ require("structure/top.php"); //Include the sidebar HTML
                   </button>
                 </div>
               </div>
-            </li>
-          </ul>
         </div>
       </div>
 
