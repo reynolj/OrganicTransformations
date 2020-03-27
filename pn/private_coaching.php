@@ -7,6 +7,8 @@ require("structure/top.php"); //Include the sidebar HTML
 <html>
 <head>
   <script type="text/javascript">
+    let date_range = null;
+
     $( window ).on( "load", function() {
       // load session range
       // load email
@@ -19,14 +21,77 @@ require("structure/top.php"); //Include the sidebar HTML
       let ld = String(new Date(yyyy, mm, 0).getDate()); // Creates string of last day of month
       f_date = mm + '/' + fd + '/' + yyyy; //First date
       l_date = mm + '/' + ld + '/' + yyyy; //Last date
-      const date_range = f_date + " - " + l_date;
+      date_range = f_date + " - " + l_date;
+      init_box();
+    });
+
+    function init_box(){
+      document.getElementById("coaching_box").innerHTML =
+        '<!-- Thank You-->' +
+        '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
+        '<p class = "coach_white">Every month you can request counseling with either one of us, <b>Doug</b> or <b>Dan</b>.</p>' +
+        '<!-- Plan Cycle -->' +
+        '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
+        '<p class = "coach_black"><b id = "date"></b></p>' +
+        '<!-- Instructions-->' +
+        '<p class = "coach_white"><b>Simply</b> let us know your <b>goals</b> and/or <b>concerns</b> in the field below</p>' +
+        '<p class = "coach_white">and we will contact you for private coaching if possible.*</p>' +
+        '<!-- Text Box -->' +
+        '<textarea id="meeting_topic" class="form-control" rows="3" maxlength = "918" placeholder="Enter your goals/concerns..." onchange="allow()"> </textarea>' +
+        "<!-- Contact text -->" +
+        '<p class = coach_black><br><b>"I would like to be contacted via..."</b></p>' +
+        '<!-- Email/Phone number Buttons -->' +
+        '<div class="btn-group" style = "display: flex; align-items: center; justify-content: center">' +
+        '<div class = "col-4" style = "display: flex; align-items: center; justify-content: center">' +
+        '<button id = "email_btn" ' +
+        'class="btn btn-primary" ' +
+        'style="text-align: center; color: black; background-color:GhostWhite; border-color:LightGrey; width: 800px;" ' +
+        'onclick="disable_button(this)">' +
+        '</button>' +
+        '</div>' +
+        '<div class = "col-4" style = "display: flex; align-items: center; justify-content: center">' +
+        '<button id = "phone_number_btn" ' +
+        'class="btn btn-primary" ' +
+        'style="text-align: center; color: black; background-color:GhostWhite; border-color:LightGrey; width: 800px;" ' +
+        'onclick="disable_button(this)">' +
+        '</button>' +
+        '</div>' +
+        '</div>' +
+        '<br>' +
+        '<div class = "fc-row" style="display: flex; align-items: center; justify-content:center;">' +
+        '<button id = "submit_btn" ' +
+        'class = btn-lg ' +
+        'style="text-align: center; color: white; background-color:Black" ' +
+        'onclick="coach_request()">' +
+        'Done! Request my session with Doug/Dan!' +
+        '</button>' +
+        '</div>' +
+        '<p class = "coach_white" style ="font-size: medium"><b><br><br>*Meetings every month are not guaranteed and depend on our demand as private trainers</b>';
+        get_contact_info();
+        $('#submit_btn').prop('disabled', true);
+        document.getElementById("date").innerHTML = date_range;
+    }
+
+    function after_request(){
+      document.getElementById("coaching_box").innerHTML =
+      '<!-- Thank You-->' +
+      '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
+      '<p class = "coach_white">You have <b id = "request_status">successfully requested a session this month</b>.</p>' +
+      '<!-- Plan Cycle -->' +
+      '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
+      '<p class = "coach_black"><b id = "date"></b></p>' +
+      '<br><br>' +
+      '<p class = "coach_white">Please wait at least <b>1-7 business days</b> for us to get in touch with you*.</p>' +
+      '<p class = "coach_white">If we are not able to reach you this month, we apologize profusely.</p>' +
+      '<p class = "coach_white">We are private trainers with busy schedule and <b>do our best to set aside some time</b></p>' +
+      '<p class = "coach_white">to meet one-on-one with <b>dedicated individuals</b> such as <b>yourself</b>.</p>' +
+      '<p class = "coach_white" style ="font-size: medium"><b><br><br>*Meetings every month are not guaranteed and depend on our demand as private trainers</b>';
       document.getElementById("date").innerHTML = date_range;
-      get_info();
-      });
+    }
 
     function formatPhoneNumber(phoneNumberString) {
-        let cleaned = ('' + phoneNumberString).replace(/\D/g, '')
-        let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+        let cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+        let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
         if (match) {
             return '(' + match[1] + ') ' + match[2] + '-' + match[3]
         }
@@ -44,8 +109,7 @@ require("structure/top.php"); //Include the sidebar HTML
         }
     }
 
-
-    function get_info() {
+    function get_contact_info(){
         $.ajax({
             type: 'POST',
             url: 'api/coaching/contactInfo.php',
@@ -53,26 +117,27 @@ require("structure/top.php"); //Include the sidebar HTML
                 let json = JSON.parse(data);
                 for(let key in json) {
                     if(json.hasOwnProperty(key)) {
-                        document.getElementById("email_btn").innerHTML = json[key]['email'] + " (Recommended)";
+                        document.getElementById("email_btn").innerHTML = json[key]['email'];
                         document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber(json[key]['phone_number']);
                         break;
                     }
                 }
             },
             error: function() {
-                console.log("Get_Info ERROR");
+                console.log("Get_Contact_Info ERROR");
             }
         });
     }
 
     function coach_request() {
-        let goals_text = document.getElementById("goals").innerText;
+        let topic_text = document.getElementById("meeting_topic").value;
+        let preferred_contact = document.getElementById("email_btn").disabled ? "EMAIL" : "PHONE";
         $.ajax({
             type: 'POST',
             url: 'api/coaching/coachingRequest.php',
-            data:{ goals: goals_text },
-            success: function(data) {
-                document.getElementById("onRequest").innerHTML = "change this";
+            data:{ topic: topic_text, contact: preferred_contact },
+            success: function() {
+                after_request();
             },
             error: function() {
                 console.log("Coach_request ERROR");
@@ -80,7 +145,9 @@ require("structure/top.php"); //Include the sidebar HTML
         });
     }
 
-
+    function allow(){
+        $('#submit_btn').prop('disabled', false);
+    }
 
   </script>
 
@@ -126,47 +193,7 @@ require("structure/top.php"); //Include the sidebar HTML
     <div class="container-fluid">
       <!-- Body -->
       <div class="card">
-        <div class="card-body" style = "background-color:#17a2b8">
-          <div id = "onRequest">
-            <!-- Thank You-->
-            <p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>
-            <p class = "coach_white">Every month you can request counseling with either one of us, <b>Doug</b> or <b>Dan</b>.</p>
-            <!-- Plan Cycle -->
-            <p class = "coach_black"><b> Session for plan cycle</b></p>
-            <p class = "coach_black"><b id = "date"></b></p>
-            <!-- Instructions-->
-            <p class = "coach_white"><b>Simply</b> let us know your <b>goals</b> and/or <b>concerns</b> in the field below</p>
-            <p class = "coach_white">and we will contact you for private coaching if possible.*</p>
-            <!-- Text Box -->
-            <textarea id="goals" class="form-control" rows="3" maxlength = "918" placeholder="Enter your goals/concerns..."></textarea>
-            <!-- Contact text -->
-            <p class = coach_black><br><b>"I would like to be contacted via my..."</b></p>
-          </div>
-          <!-- Email/Phone number Buttons -->
-          <div class="btn-group" style = "display: flex; align-items: center; justify-content: center" >
-            <button id = "email_btn"
-              class="btn btn-primary"
-              style="text-align: center; color: black; background-color:GhostWhite;border-color:LightGrey;"
-              onclick="disable_button(this)">
-            </button>
-            <button id = "phone_number_btn"
-              class="btn btn-primary"
-              style="text-align: center; color: black; background-color:GhostWhite;border-color:LightGrey;"
-              onclick="disable_button(this)">
-            </button>
-          </div>
-
-          <div style="display: flex; align-items: center; justify-content:center;">
-            <button id = "submit_btn"
-                    class = btn-lg
-                    style="text-align: center; color: white; background-color:Black"
-                    onclick="coach_request()">
-              Done! Request my session with Doug/Dan!
-            </button>
-          </div>
-
-          <p class = "coach_white" style ="font-size: medium"><b><br><br>*Meetings every month are not guaranteed and depend on our demand as private trainers</b>
-          </div>
+        <div id = "coaching_box" class="card-body" style = "background-color:#17a2b8">
         </div>
       </div>
     </div>
