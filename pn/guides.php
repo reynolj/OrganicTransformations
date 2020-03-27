@@ -8,11 +8,26 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
     <html>
     <head>
-        <script type="module" src="api/dashboard/dashboard.js">
-          import Guide from './api/guides/Guide.js';
-          import Pages from './api/guides/Pages.js';
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#search-submit').on('click', function () {
+                    console.log('LOG: Search clicked');
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            search_terms: $('#search-input').val()
+                        },
+                        url: 'api/guides/get_guides_term_search.php',
+                        success: function (searchResults) {
+                            console.log(searchResults)
+                        },
+                        error: function () {
+                            console.log('Error Retrieving search results')
+                        }
 
-
+                    });
+                });
+            });
         </script>
     </head>
     <!-- Content Wrapper. Contains page content -->
@@ -49,7 +64,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <input id="search-input" class="form-control" type="text" placeholder="Search for...">
                             </div>
                             <div class="col-3">
-                                <button id="search-submit" class="form-control btn btn-primary" onclick="perform_search()">
+                                <button id="search-submit" class="form-control btn btn-primary">
                                     Search
                                 </button>
                             </div>

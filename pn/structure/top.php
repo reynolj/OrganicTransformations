@@ -154,7 +154,7 @@ session_start();
           </li>
 
             <!-- Owner Panel-->
-          <?php if($_SESSION['is_admin'] == 1 ){} ?>
+          <?php if($_SESSION['is_admin'] == 1 ){ ?>
             <li class="nav-header">
                OWNER PANELS
             </li>
