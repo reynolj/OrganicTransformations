@@ -1,9 +1,5 @@
 import Guide from "../../api/guides/Guide.js"
 
-$(window).on("load", function () {
-
-});
-
 $(document).ready(function () {
     //Mouse moved over a muscle, show tooltip
     $('.muscle').hover(function () {
@@ -80,6 +76,4 @@ function get_guides_tag_filtered(tags_array, make_cards){
             console.log("ERROR")
         }
     })
-
 }
-

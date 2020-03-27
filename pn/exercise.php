@@ -11,7 +11,8 @@ require("structure/top.php"); //Include the sidebar HTML
         <script type="text/javascript">
             <!-- Put Javascript Here -->
         </script>
-        <script type= module src="dist/js/physique_diagram.js"></script>
+        <script type="module" src="dist/js/physique_diagram.js"></script>
+        <script type="module" src="dist/js/exercise.js"></script>
     </head>
 
     <!-- Content Wrapper. Contains page content -->
@@ -63,6 +64,18 @@ require("structure/top.php"); //Include the sidebar HTML
             <div class="card" id="info-box"></div>
 
             <div class="container-fluid">
+
+                <!-- Exercise Favorites -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Exercise Favorites</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="exercise_favorites">
+                            <!-- This is populated by get_guides -->
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card card-primary card-outline">
                     <div class="card-header">
