@@ -72,13 +72,22 @@ session_start();
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="account_settings.php" class="d-block"><?php echo $_SESSION['first_name'] . ' ' . $_SESSION['last_name']; ?></a>
+          <a href="account_settings.php" class="d-block">First Last</a>
         </div>
       </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <li class="nav-item">
+              <a href="my_plan.php" class="nav-link <?php if($highlight == "my_plan"){ echo "active";} ?>">
+                  <i class="nav-icon fas fa-dollar-sign"></i>
+                  <p>
+                      My Plan
+                  </p>
+              </a>
+          </li>
 
           <li class="nav-item">
             <a href="index.php" class="nav-link <?php if($highlight == "index"){ echo "active";} ?>">
@@ -145,7 +154,7 @@ session_start();
           </li>
 
             <!-- Owner Panel-->
-          <?php if($_SESSION['is_admin'] == 1 ){ ?>
+          <?php if($_SESSION['is_admin'] == 1 ){} ?>
             <li class="nav-header">
                OWNER PANELS
             </li>
