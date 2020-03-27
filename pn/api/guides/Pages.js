@@ -1,9 +1,9 @@
 export default class Pages {
 
     constructor(list, obj) {
-        this.obj = obj;
+        this.obj = obj; //The page element
         this.width = 4;
-        this.list = list;
+        this.list = list; //Our list of guides
         this.cur_page = 1;
         this.first_page = 1;
         this.last_page = (Math.floor(this.list.length/this.width)) + 1;
@@ -47,39 +47,52 @@ export default class Pages {
     update_html() {
         let string = Array();
         const set = this.get_page_set();
-        string.push(
-            '<div class="row">' +
+        //Get numbers only if we actually have pages
+        if(this.list.length > this.width) {
+            string.push(
+                '<div class="row">' +
                 '<div class="col-12">' +
-                    '<ul class="page-nav float-left">' +
-                        '<li class="fas fa-angle-double-left page-nav page-button icon" id="' + this.first_page + '"></li>'
-        );
-        string.push(this.get_numbers(set));
-        string.push(
-                        '<li class="fas fa-angle-double-right page-nav page-button icon" id="' + this.last_page + '"></li>' +
-                    '</ul>' +
+                '<ul class="page-nav float-left">' +
+                '<li class="fas fa-angle-double-left page-nav page-button icon" id="' + this.first_page + '"></li>'
+            );
+            string.push(this.get_numbers(set));
+            string.push(
+                '<li class="fas fa-angle-double-right page-nav page-button icon" id="' + this.last_page + '"></li>' +
+                '</ul>' +
                 '</div>' +
-            '</div>' +
-            '<div class="row">'
-        );
+                '</div>'
+            );
+        }
 
+        //New row for guides
+        string.push(
+            '<div class="row">');
+
+        //Insert guides
         for(let i = this.width * (this.cur_page - 1); i < this.list.length && i < (this.width * this.cur_page); ++i) {
             string.push(this.list[i].card);
         }
 
+        //End row
         string.push(
-            '</div>' +
-            '<div class="row">' +
+            '</div>');
+
+        //Get numbers only if we actually have pages
+        if(this.list.length > this.width) {
+            string.push(
+                '<div class="row">' +
                 '<div class="col-12">' +
-                    '<ul class="page-nav float-right">' +
-                        '<li class="fas fa-angle-double-left page-nav page-button icon" id="' + this.first_page + '"></li>'
-        );
-        string.push(this.get_numbers(set));
-        string.push(
-                        '<li class="fas fa-angle-double-right page-nav page-button icon" id="' + this.last_page + '"></li>' +
-                    '</ul>' +
+                '<ul class="page-nav float-right">' +
+                '<li class="fas fa-angle-double-left page-nav page-button icon" id="' + this.first_page + '"></li>'
+            );
+            string.push(this.get_numbers(set));
+            string.push(
+                '<li class="fas fa-angle-double-right page-nav page-button icon" id="' + this.last_page + '"></li>' +
+                '</ul>' +
                 '</div>' +
-            '</div>'
-        );
+                '</div>'
+            );
+        }
         this.obj.html(string.join(""));
     }
 };
