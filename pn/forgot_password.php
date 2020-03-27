@@ -19,22 +19,24 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <script type="text/javascript">
     function process(){
-       //Disable the login button
+       //Disable the submit button
       $('#submitBtn').prop('disabled', true);
 
       //Send the form data
       $.ajax({
         type: "POST",
         dataType: 'text',
-        url: 'api/auth/forgot_password.php',
+        url: 'api/auth/generate_password_reset.php',
         data: {
-          email: $('#email').val(),
+          email: $('#email').val()
         },
         success: function(data, status){
           if(data == "success"){
             window.location.replace("index.php");
           }else{
             $('#statusMsg').html(data);
+            $('#submitBtn').prop('disabled', false);
+
           }
         }
       });
@@ -65,7 +67,7 @@
 
         <!-- /.col -->
         <div class="col-4">
-          <button id="submitBtn" class="btn btn-primary btn-block">Submit</button>
+          <button id="submitBtn" onclick="process()" class="btn btn-primary btn-block">Submit</button>
         </div>
         <!-- /.col -->
       </div>
