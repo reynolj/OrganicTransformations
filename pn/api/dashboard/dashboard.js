@@ -189,6 +189,7 @@ function delete_goal(button) {
     });
 }
 
+//TODO Kinda weird that this method has tags as a parameter ("get_guides(['highlighted', 'nutrition', 'exercise']);") but its all hardcoded in the success statement, might as well just skip it
 function get_guides(tags, categories, favorites) {
     $.ajax({
         type:'POST',
