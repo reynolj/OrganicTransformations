@@ -235,6 +235,7 @@ require("structure/top.php"); //Include the sidebar HTML
           });
       }
 
+      //TODO Kinda weird that this method has tags as a parameter ("get_guides(['highlighted', 'nutrition', 'exercise']);") but its all hardcoded in the success statement
       function get_guides(tags) {
           $.ajax({
               type:'POST',

@@ -9,10 +9,10 @@ export default class Guide {
         this.is_favorite = json['fav'];
         this.tags = json['tags'];
 
-        $(document).on('click','#guide-fav-' + this.id,function(){
+        $(document).on('click','#guide-fav-' + this.id, this ,function(event){
             console.log('click triggered');
             console.log(this);
-            Guide.favorite($(this),on_favorite);
+            event.data.favorite($(this),on_favorite);
         });
 
     }
@@ -82,8 +82,8 @@ export default class Guide {
         );
     }
 
-    //Sends favorite message to db AND executes'on_favorite function that can perform a rebuild of some sort on your page
-    static favorite(wrapper, on_favorite) {
+    //Sends favorite message to db AND executes'on_favorite' function that can perform a rebuild of some sort on your page
+    favorite(wrapper, on_favorite_handler) {
 
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
@@ -104,8 +104,8 @@ export default class Guide {
                 //Fire toast alert?
 
                 //Perform callback function
-                if (isFunction(on_favorite)) {
-                    on_favorite();
+                if (isFunction(on_favorite_handler)) {
+                    on_favorite_handler();
                 }
             },
             error: function() {
