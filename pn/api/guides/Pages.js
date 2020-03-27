@@ -1,8 +1,8 @@
 export default class Pages {
 
-    constructor(list, obj) {
+    constructor(list, width, obj) {
         this.obj = obj; //The page element
-        this.width = 4;
+        this.width = width; //Number of elements allowed per page
         this.list = list; //Our list of guides
         this.cur_page = 1;
         this.first_page = 1;
@@ -11,6 +11,7 @@ export default class Pages {
             event.data.set_current_page(parseInt(event.target.id));
             event.data.update_html();
         });
+        this.update_html();
     }
 
     get_page_set() {
