@@ -42,10 +42,14 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div>
                     <div class="card-body">
                                 <div class="row">
-                                    <input id="search-input" class="form-control col-11" type="text" placeholder="Search for...">
-                                    <button id="search-submit" class="btn btn-primary col-1" onclick="perform_search()">
-                                        Search
-                                    </button>
+                                    <div class="col-9">
+                                        <input id="search-input" class="form-control" type="text" placeholder="Search for...">
+                                    </div>
+                                    <div class="col-3">
+                                        <button id="search-submit" class="form-control btn btn-primary" onclick="perform_search()">
+                                            Search
+                                        </button>
+                                    </div>
                                 </div>
                     </div>
                 </div>
