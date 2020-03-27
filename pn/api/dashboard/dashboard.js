@@ -1,21 +1,18 @@
 import Guide from '../guides/Guide.js';
 import Pages from '../guides/Pages.js';
 
-let highlighted_pages;
-let exercise_pages;
-let nutrition_pages;
 let goal_len = 0;
 
-let set_pages = {
-    highlighted_guides: highlighted_pages,
-    exercise_favorites: exercise_pages,
-    nutrition_favorites: nutrition_pages
-};
 // TODO for Joel:  Goals ID should use goal id from database instead of goal text
 // TODO why is the Add a goal button added via script and not apart of the html
 
 $( window ).on( "load", function() {
-    get_guides(['highlighted', 'nutrition', 'exercise']);
+    Guide.get_guides(
+        [$('#highlighted_guides'), $('#nutrition_favorites'), $('#exercise_favorites')],
+        [['highlighted'], ['nutrition'], ['exercise']],
+        [false, true, true],
+        4
+    );
     get_body();
     get_goals();
 });
@@ -185,49 +182,6 @@ function delete_goal(button) {
         },
         error: function() {
             console.log("ERROR");
-        }
-    });
-}
-
-//TODO Kinda weird that this method has tags as a parameter ("get_guides(['highlighted', 'nutrition', 'exercise']);") but its all hardcoded in the success statement, might as well just skip it
-function get_guides(tags, categories, favorites) {
-    $.ajax({
-        type:'POST',
-        url: '/pn/api/guides/get_guides_tag_filtered.php',
-        data: {
-            tags: tags
-        },
-        success: function(data) {
-            let guide;
-            let nutrition = Array();
-            let exercise = Array();
-            let highlighted = Array();
-            const json = JSON.parse(data);
-            for(let key in json) {
-                if(json.hasOwnProperty(key)) {
-                    guide = new Guide(json[key],function(){
-                        get_guides(['highlighted', 'nutrition', 'exercise']);
-                    });
-                    if(guide.is_favorite === 1) {
-                        if(guide.tags.includes('nutrition'))
-                            nutrition.push(guide);
-                        if(guide.tags.includes('exercise'))
-                            exercise.push(guide);
-                    }
-                    if(guide.tags.includes('highlighted'))
-                        highlighted.push(guide);
-                }
-            }
-            set_pages["nutrition_favorites"] = new Pages(nutrition, $("#nutrition_favorites"));
-            set_pages["exercise_favorites"] = new Pages(exercise, $("#exercise_favorites"));
-            set_pages["highlighted_guides"] = new Pages(highlighted, $("#highlighted_guides"));
-            for(let title in set_pages) {
-                if(set_pages.hasOwnProperty(title))
-                    set_pages[title].update_html();
-            }
-        },
-        error: function() {
-            console.log("get_guides ERROR");
         }
     });
 }
