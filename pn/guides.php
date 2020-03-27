@@ -44,16 +44,21 @@ require("structure/top.php"); //Include the sidebar HTML
                         <h3 class="card-title">Search</h3>
                     </div>
                     <div class="card-body">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <input id="search-input" class="form-control" type="text" placeholder="Search for...">
-                                    </div>
-                                    <div class="col-3">
-                                        <button id="search-submit" class="form-control btn btn-primary" onclick="perform_search()">
-                                            Search
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-9">
+                                <input id="search-input" class="form-control" type="text" placeholder="Search for...">
+                            </div>
+                            <div class="col-3">
+                                <button id="search-submit" class="form-control btn btn-primary" onclick="perform_search()">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="results">
+
+                        </div>
                     </div>
                 </div>
 
