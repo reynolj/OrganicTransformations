@@ -7,10 +7,6 @@ require("structure/top.php"); //Include the sidebar HTML
 
     <head>
 
-        <!-- SweetAlert -->
-        <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-        <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -129,13 +125,5 @@ require("structure/top.php"); //Include the sidebar HTML
             </div> <!-- /.container-fluid -->
         </div> <!-- /.content -->
     </div> <!-- /.content-wrapper -->
-
-
-    <script src="AdminLTE/plugins/moment/moment.min.js"></script>
-    <script src="AdminLTE/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-
-    <!-- ChartJS -->
-    <script src="AdminLTE/plugins/chart.js/Chart.min.js"></script>
-
 
 <?php include('structure/bottom.php'); ?>

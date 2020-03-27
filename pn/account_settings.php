@@ -1,7 +1,7 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Account Settings"; //Set the browser title
-$highlight = "index"; //Select which tab in the navigation to highlight
+$highlight = "none"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 

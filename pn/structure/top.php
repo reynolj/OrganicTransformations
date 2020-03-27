@@ -160,7 +160,7 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                <a href="" class="nav-link <?php if($highlight == "guides"){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Guides
@@ -169,7 +169,7 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                <a href="counseling.php" class="nav-link <?php if($highlight == "counseling"){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Counseling
@@ -178,14 +178,13 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == ""){ echo "active";} ?>">
+                <a href="members.php" class="nav-link <?php if($highlight == "members"){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Members
                     </p>
                 </a>
             </li>
-            <?php;} ?>
 
             <div id="owner-panels"></div>
 
