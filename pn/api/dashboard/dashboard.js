@@ -1,10 +1,23 @@
 import Guide from '../guides/Guide.js';
+import Pages from '../guides/Pages.js';
+
+let highlighted_pages;
+let exercise_pages;
+let nutrition_pages;
+let goal_len = 0;
+
+let set_pages = {
+    highlighted_guides: highlighted_pages,
+    exercise_favorites: exercise_pages,
+    nutrition_favorites: nutrition_pages
+};
+// TODO for Joel:  Goals ID should use goal id from database instead of goal text
+// TODO why is the Add a goal button added via script and not apart of the html
 
 $( window ).on( "load", function() {
-    // $('#highlighted_guides').html(page_nav.get_current_page_html());
+    get_guides(['highlighted', 'nutrition', 'exercise']);
     get_body();
     get_goals();
-    get_guides(['highlighted', 'nutrition', 'exercise']);
 });
 
 function get_body() {
@@ -67,20 +80,27 @@ function get_goals() {
                         '<li>' +
                         json[key]['goal'] +
                         '<button type="button" ' +
-                        'class="close text-right" ' +
-                        'id="' + json[key]['goal'] + '" onclick="delete_goal(this)">' +
+                        'class="delete-goal close text-right" ' +
+                        'id="' + json[key]['goal'] + '"">' +
                         '×' +
                         '</button>' +
                         '</li>');
             }
             goal_str.push(
                 '<li class="text-right" id="last_goal_line">' +
-                '<button class="btn btn-primary" id="add_goal_btn" onclick="add_goal()" ' +
+                '<button class="btn btn-primary" id="add_goal_btn" ' +
                 'style="background-color:green;border-color:green;height:100%">' +
                 'Add Goal' +
                 '</button>' +
                 '</li>'
             );
+            $(document).on('click','#add_goal_btn', function (){
+                add_goal();
+            });
+            $(document).on('click','.delete-goal', function (){
+                console.log($(this));
+                delete_goal($(this));
+            });
             $('#goals').html(goal_str);
         },
         error: function() {
@@ -90,16 +110,20 @@ function get_goals() {
 }
 
 function add_goal() {
+    console.log('adding goal');
     $('#last_goal_line').before(
         '<li id="add_goal_line">' +
         '<div class="row">' +
         '<input id="goal_input" class="form-control col-11" type="text" placeholder="New Goal">' +
-        '<button class="btn btn-primary col-1" id="submit_goal_btn"  onclick="submit_goal()"> ' +
+        '<button class="btn btn-primary col-1" id="submit_goal_btn"> ' +
         '<i class="fas fa-plus"> </i>' +
         '</button>' +
         '</div>' +
         '</li>'
     );
+    $(document).on('click','#submit_goal_btn', function (){
+        submit_goal();
+    });
     $('#add_goal_btn').prop('disabled', true);
 }
 
@@ -120,12 +144,15 @@ function submit_goal() {
             $('#last_goal_line').before(
                 '<li>' + data +
                 '<button type="button" ' +
-                'class="close text-right" ' +
-                'id="' + data + '" onclick="delete_goal(this)">' +
+                'class="delete-goal close text-right" ' +
+                'id="' + data + '">' +
                 '×' +
                 '</button>' +
                 '</li>'
             );
+            $(document).on('click','.delete-goal', function (){
+                delete_goal($(this));
+            });
             ++goal_len;
             $('#add_goal_btn').prop('disabled', false);
         },
@@ -136,7 +163,8 @@ function submit_goal() {
 }
 
 function delete_goal(button) {
-    let goal = button.id;
+    console.log(button);
+    let goal = $(button).attr('id');
     let list = document.querySelectorAll('#goals li');
     $.ajax({
         type: 'POST',
@@ -161,7 +189,7 @@ function delete_goal(button) {
     });
 }
 
-function get_guides(tags) {
+function get_guides(tags, categories, favorites) {
     $.ajax({
         type:'POST',
         url: '/pn/api/guides/get_guides_tag_filtered.php',
@@ -170,32 +198,32 @@ function get_guides(tags) {
         },
         success: function(data) {
             let guide;
-            let highlighted = Array();
-            let exercises = Array();
             let nutrition = Array();
-            let nutrition_string = Array();
-            let exercises_string = Array();
-            let highlighted_string = Array();
+            let exercise = Array();
+            let highlighted = Array();
             const json = JSON.parse(data);
             for(let key in json) {
                 if(json.hasOwnProperty(key)) {
-                    guide = new Guide(json[key]);
+                    guide = new Guide(json[key],function(){
+                        get_guides(['highlighted', 'nutrition', 'exercise']);
+                    });
                     if(guide.is_favorite === 1) {
-                        if(guide.tags.includes('nutrition') && !nutrition.includes(guide))
+                        if(guide.tags.includes('nutrition'))
                             nutrition.push(guide);
-                        if(guide.tags.includes('exercise') && !exercises.includes(guide))
-                            exercises.push(guide);
+                        if(guide.tags.includes('exercise'))
+                            exercise.push(guide);
                     }
-                    if(guide.tags.includes('highlighted') && !highlighted.includes(guide))
+                    if(guide.tags.includes('highlighted'))
                         highlighted.push(guide);
                 }
             }
-            for(let i = 0; i < nutrition.length; ++i) nutrition_string.push(nutrition[i].card);
-            for(let i = 0; i < exercises.length; ++i) exercises_string.push(exercises[i].card);
-            for(let i = 0; i < highlighted.length; ++i) highlighted_string.push(highlighted[i].card);
-            $('#highlighted_guides').html(highlighted_string);
-            $('#nutrition_favorites').html(nutrition_string);
-            $('#exercise_favorites').html(exercises_string);
+            set_pages["nutrition_favorites"] = new Pages(nutrition, $("#nutrition_favorites"));
+            set_pages["exercise_favorites"] = new Pages(exercise, $("#exercise_favorites"));
+            set_pages["highlighted_guides"] = new Pages(highlighted, $("#highlighted_guides"));
+            for(let title in set_pages) {
+                if(set_pages.hasOwnProperty(title))
+                    set_pages[title].update_html();
+            }
         },
         error: function() {
             console.log("get_guides ERROR");

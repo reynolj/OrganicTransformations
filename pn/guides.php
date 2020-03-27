@@ -8,9 +8,12 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
     <html>
     <head>
-        <!--  <script type="module" src="api/dashboard/dashboard.js">-->
-        <!--  </script>-->
+        <script type="module" src="api/dashboard/dashboard.js">
+          import Guide from './api/guides/Guide.js';
+          import Pages from './api/guides/Pages.js';
 
+
+        </script>
     </head>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

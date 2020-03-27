@@ -78,17 +78,20 @@
     cursor: pointer;
 }
 
-.page-nav.icon {
+.page-nav.page-button {
+}
+
+.page-nav.page-button.icon {
     padding-top:.45em;
     position:relative;
 }
 
-.page-nav.text {
+.page-nav.page-button.text {
     font-size:1.25em;
     padding-left:.1em;
     padding-right:.05em;
 }
 
-.page-nav.text.current-page {
+.page-nav.page-button.current-page {
     font-weight:bold;
 }
