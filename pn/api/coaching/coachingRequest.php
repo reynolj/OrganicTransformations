@@ -4,7 +4,8 @@ require_once('../../variables.php');
 
 try {
   $user_id = intval($_SESSION['user_id']);
-  $request_text = $_POST['goals'];
+  $meeting_topic = $_POST['topic'];
+  $preferred_contact = $_POST['contact'];
 
   $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
@@ -13,16 +14,18 @@ try {
   $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
   $stmt = $con->prepare("
     INSERT INTO appointments 
-    (premium_expiration, request_date, first_name, last_name, sex, join_date, premium_state, meeting_topic) 
-    SELECT premium_expiration, current_time(), first_name, last_name, sex, join_date, premium_state, ?
-    FROM users WHERE user_id = ?;
-  
+    SET
+    request_date = ?,
+    meeting_topic = ?,
+    preferred_contact =? ,
+    user_id = ?;
   ");
-  $stmt->execute([$request_text, $user_id]);
+  $stmt->execute([date('Y-m-d'), $meeting_topic, $preferred_contact, $user_id]);
   $result = $stmt->fetchAll();
 
   die(json_encode($result));
-} catch(PDOException $e) {
+}
+catch(PDOException $e)
+{
   die("Request failed");
 }
-

@@ -98,12 +98,13 @@ try {
     	die("That username or email already exists.");
     }
 
-	//Create the user
+    $email_token = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
+
+    //Create the user
     $stmt = $con->prepare("INSERT INTO users (username, email, password, phone_number, birthdate, first_name, last_name, email_verified, join_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
 	$success = $stmt->execute([ $username, strtolower($email), $password, $phone_number, $birthdate, $first_name, $last_name, $email_token ]);
 
 	if(  $success  ){
-        $email_token = md5( rand(0,1000) ); // Generate random 32 character hash and assign it to a local variable.
         $email = strtolower($email);
 
         $to      = $email; // Send email to our user
