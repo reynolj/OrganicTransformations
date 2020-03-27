@@ -5,7 +5,6 @@ require_once('../../variables.php');
 try {
     $user_id = intval($_SESSION['user_id']);
     $tags = $_POST['tags'];
-    $tags = implode(",",$tags); //Turning a js list into a string list
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
