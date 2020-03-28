@@ -50,7 +50,8 @@ try {
     $stmt->execute();
     $results_favorites = $stmt->fetchAll();
 
-    die(json_encode($sql_query));
+//    die(json_encode($sql_query));
+    die (json_encode($results_favorites));
 } catch (PDOException $e) {
     die("Request failed");
 }
