@@ -185,7 +185,7 @@ session_start();
                     </p>
                 </a>
             </li>
-            <?php} ?>
+              <?php }; ?>
             <div id="owner-panels"></div>
 
         </ul>
