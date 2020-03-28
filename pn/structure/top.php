@@ -160,7 +160,7 @@ session_start();
             </li>
 
             <li class="nav-item">
-                <a href="" class="nav-link <?php if($highlight == "guides"){ echo "active";} ?>">
+                <a href="owner_guides.php" class="nav-link <?php if($highlight == "owner_guides"){ echo "active";} ?>">
                     <i class="nav-icon fas fa-table"></i>
                     <p>
                         Guides

@@ -21,7 +21,7 @@ export default class Guide {
 
     get card() {
         var html = '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
-            '<div class="small-box">' +
+            '<div class="guide-card small-box"  id="guide-card-'+this.id+'">' +
             '<div class="inner" style="position: relative;">' +
             '<svg class="overlay-button' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
             'id="guide-fav-' + this.id + '" viewBox="0 0 940.688 940.688">' +
@@ -43,27 +43,29 @@ export default class Guide {
     }
 
     date_str() {
-        const year_month_day = this.date_last_modified.split('-');
-        const date = new Date(year_month_day[0], year_month_day[1] - 1, year_month_day[2]);
-        const cur_date = new Date();
-        const milli_in_day = 24 * 60 * 60 * 1000;
-        const days_since = Math.floor(Math.abs(cur_date - date) / milli_in_day);
-        if(days_since >= 365) {
-            const years_since = cur_date.getFullYear() - date.getFullYear();
-            return years_since.toString() + ((years_since > 1) ? (' years ago') : (' year ago'));
-        }
-        if(days_since > 30) {
-            let months_since = cur_date.getMonth() - date.getMonth();
-            if(months_since < 0) months_since = months_since + 12;
-            return months_since.toString() + ((months_since > 1) ? (' months ago') : (' month ago'));
-        }
-        switch(days_since) {
-            case 0:
-                return 'today';
-            case 1:
-                return 'yesterday';
-            default:
-                return days_since.toString() + ' days ago';
+        if (this.date_last_modified !== undefined && this.date_last_modified !== null) {
+            const year_month_day = this.date_last_modified.split('-');
+            const date = new Date(year_month_day[0], year_month_day[1] - 1, year_month_day[2]);
+            const cur_date = new Date();
+            const milli_in_day = 24 * 60 * 60 * 1000;
+            const days_since = Math.floor(Math.abs(cur_date - date) / milli_in_day);
+            if (days_since >= 365) {
+                const years_since = cur_date.getFullYear() - date.getFullYear();
+                return years_since.toString() + ((years_since > 1) ? (' years ago') : (' year ago'));
+            }
+            if (days_since > 30) {
+                let months_since = cur_date.getMonth() - date.getMonth();
+                if (months_since < 0) months_since = months_since + 12;
+                return months_since.toString() + ((months_since > 1) ? (' months ago') : (' month ago'));
+            }
+            switch (days_since) {
+                case 0:
+                    return 'today';
+                case 1:
+                    return 'yesterday';
+                default:
+                    return days_since.toString() + ' days ago';
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Home"; //Set the browser title
+$title = "OT | Guides"; //Set the browser title
 $highlight = "guides"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 
@@ -8,26 +8,46 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
     <html>
     <head>
-        <script type="text/javascript">
+        <script type="module">
+            import Guide from "./api/guides/Guide.js";
+
             $(document).ready(function() {
-                $('#search-submit').on('click', function () {
-                    console.log('LOG: Search clicked');
+                //Perform search on search click
+                $('#search-submit').on('click', function(){
+                    var search = $('#search-input').val();  //Gettingsearch  from search input
+                    perform_search(search); //Performing search
+                    $('#results-title').html('Results for "' +  search + '"') //Renaming title of results card
+                });
+                //Get all guides (search)
+                perform_search();
+            });
+
+            function perform_search(search_terms){
                     $.ajax({
                         type: "POST",
                         data: {
-                            search_terms: $('#search-input').val()
+                            search_terms: search_terms
                         },
-                        url: 'api/guides/get_guides_term_search.php',
-                        success: function (searchResults) {
+                        url: './api/guides/get_guides_term_search.php',
+                        success: function (data) {
+                            const searchResults = JSON.parse(data);
+                            let guide;
                             console.log(searchResults)
+                            $('#search-results').html('');
+                            for(let key in searchResults) {
+                                if(searchResults.hasOwnProperty(key)) {
+                                    //Creating a new guide object
+                                    guide = new Guide(searchResults[key]);
+                                    $('#search-results').append(guide.card);
+                                }
+                            }
                         },
                         error: function () {
                             console.log('Error Retrieving search results')
                         }
 
                     });
-                });
-            });
+                }
         </script>
     </head>
     <!-- Content Wrapper. Contains page content -->
@@ -70,8 +90,22 @@ require("structure/top.php"); //Include the sidebar HTML
                             </div>
                         </div>
                     </div>
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </div>
+
+        <!-- /.content -->
+        <div class="content">
+            <div class="container-fluid">
+
+                <!-- Body -->
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title" id="results-title">Results</h3>
+                    </div>
                     <div class="card-body">
-                        <div id="results">
+                        <div class="row" id="search-results">
 
                         </div>
                     </div>
@@ -79,7 +113,6 @@ require("structure/top.php"); //Include the sidebar HTML
 
             </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     </html>
