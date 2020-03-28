@@ -12,8 +12,6 @@ export default class Guide {
         this.tags = json['tags'];
 
         $(document).on('click','#guide-fav-' + this.id, this ,function(event){
-            console.log('click triggered');
-            console.log(this);
             event.data.favorite($(this),on_favorite);
         });
 
@@ -88,7 +86,6 @@ export default class Guide {
 
     //Sends favorite message to db AND executes'on_favorite' function that can perform a rebuild of some sort on your page
     favorite(wrapper, on_favorite_handler) {
-
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
         const favorited = classes.includes('favorite') ? 1 : 0;
@@ -130,11 +127,15 @@ export default class Guide {
     //These will use corresponding indices, like containers[0] uses tag_bucket[0] and favorite_only[0]
     //Width specifies how many guides are allowed per page.
     static get_guides(containers, tag_bucket, favorite_only, width) {
+        let tags = Array();
+        for(let i = 0; i < tag_bucket.length; ++i)
+            for(let j = 0; j < tag_bucket[i].length; ++j)
+                tags.push(tag_bucket[i][j]);
         $.ajax({
             type:'POST',
             url: '/pn/api/guides/get_guides_tag_filtered.php',
             data: {
-                tags: tag_bucket.join(",")
+                tags: tags
             },
             success: function(data) {
                 let guide;
@@ -147,7 +148,7 @@ export default class Guide {
                         //Create a Guide object using the JSON value, making sure to add the favorite listener.
                         //Favorites just calls for a get_guides again to get an updated set.
                         guide = new Guide(json[key], function() {
-                            get_guides(containers, tag_bucket, favorite_only, width);
+                            Guide.get_guides(containers, tag_bucket, favorite_only, width);
                         });
                         //Go through each cluster of tags, these clusters each correspond to a container.
                         for(let index = 0; index < tag_bucket.length; ++index) {
