@@ -1,3 +1,5 @@
+import Pages from './Pages.js';
+
 export default class Guide {
     //json data and 'on_favorite' function that is triggered when a guide has been favorited (is optional), allows rebuilding of a page if needed
     constructor(json, on_favorite) {
@@ -9,10 +11,10 @@ export default class Guide {
         this.is_favorite = json['fav'];
         this.tags = json['tags'];
 
-        $(document).on('click','#guide-fav-' + this.id,function(){
+        $(document).on('click','#guide-fav-' + this.id, this ,function(event){
             console.log('click triggered');
             console.log(this);
-            Guide.favorite($(this),on_favorite);
+            event.data.favorite($(this),on_favorite);
         });
 
     }
@@ -82,8 +84,8 @@ export default class Guide {
         );
     }
 
-    //Sends favorite message to db AND executes'on_favorite function that can perform a rebuild of some sort on your page
-    static favorite(wrapper, on_favorite) {
+    //Sends favorite message to db AND executes'on_favorite' function that can perform a rebuild of some sort on your page
+    favorite(wrapper, on_favorite_handler) {
 
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
@@ -104,8 +106,8 @@ export default class Guide {
                 //Fire toast alert?
 
                 //Perform callback function
-                if (isFunction(on_favorite)) {
-                    on_favorite();
+                if (isFunction(on_favorite_handler)) {
+                    on_favorite_handler();
                 }
             },
             error: function() {
@@ -117,5 +119,58 @@ export default class Guide {
         function isFunction(functionToCheck) {
             return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
         }
+    }
+
+    //Parameter prototypes
+    //containers: [ $(container1), $(container2), ...]
+    //tag_bucket: [ [tag_for_1_a, tag_for_1_b, ...], [tag_for_2_a, tag_for_2_b, ...], ...]
+    //favorite_only [ TRUE, FALSE, ...]
+    //These will use corresponding indices, like containers[0] uses tag_bucket[0] and favorite_only[0]
+    //Width specifies how many guides are allowed per page.
+    static get_guides(containers, tag_bucket, favorite_only, width) {
+        $.ajax({
+            type:'POST',
+            url: '/pn/api/guides/get_guides_tag_filtered.php',
+            data: {
+                tags: tag_bucket.join(",")
+            },
+            success: function(data) {
+                let guide;
+                let guide_tags;
+                const json = JSON.parse(data);
+                let guides_bucket = Array();
+                for(let i = 0; i < containers.length; ++i) guides_bucket[i] = Array();
+                for(let key in json) {
+                    if(json.hasOwnProperty(key)) {
+                        //Create a Guide object using the JSON value, making sure to add the favorite listener.
+                        //Favorites just calls for a get_guides again to get an updated set.
+                        guide = new Guide(json[key], function() {
+                            get_guides(containers, tag_bucket, favorite_only, width);
+                        });
+                        //Go through each cluster of tags, these clusters each correspond to a container.
+                        for(let index = 0; index < tag_bucket.length; ++index) {
+                            //Turn the list of tags from a string to an array
+                            guide_tags = guide.tags.split(',');
+                            //Check if any of the tags from the guide exist in the current cluster of tags
+                            if(guide_tags.some(tag => tag_bucket[index].indexOf(tag) !== -1)) {
+                                //If the container we're working with only wants favorites, make sure the guide is a favorite.
+                                if(favorite_only[index]) {
+                                    if (guide.is_favorite)
+                                        guides_bucket[index].push(guide);
+                                }
+                                //Otherwise just put it in the appropriate spot in the collection of guides.
+                                else guides_bucket[index].push(guide);
+                            }
+                        }
+                    }
+                }
+                //Go through all the guide clusters and make new pages with them. Pages takes care of the html population.
+                for(let index = 0; index < guides_bucket.length; ++index)
+                    new Pages(guides_bucket[index], width, containers[index]);
+            },
+            error: function() {
+                console.log("get_guides ERROR");
+            }
+        });
     }
 };
