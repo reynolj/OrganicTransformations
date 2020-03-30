@@ -29,8 +29,7 @@ function get_exercise_fav() {
                     }
                 }
             }
-            paged_guides = new Pages(exercise, $("#exercise_favorites"));
-            paged_guides.update_html();
+            paged_guides = new Pages(exercise, 4, $('#exercise_favorites'));
         },
         error: function() {
             console.log("get_guides ERROR");

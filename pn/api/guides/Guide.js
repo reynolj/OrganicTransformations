@@ -12,8 +12,6 @@ export default class Guide {
         this.tags = json['tags'];
 
         $(document).on('click','#guide-fav-' + this.id, this ,function(event){
-            console.log('click triggered');
-            console.log(this);
             event.data.favorite($(this),on_favorite);
         });
 
@@ -21,7 +19,7 @@ export default class Guide {
 
     get card() {
         var html = '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
-            '<div class="small-box">' +
+            '<div class="guide-card small-box"  id="guide-card-'+this.id+'">' +
             '<div class="inner" style="position: relative;">' +
             '<svg class="overlay-button' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
             'id="guide-fav-' + this.id + '" viewBox="0 0 940.688 940.688">' +
@@ -43,27 +41,29 @@ export default class Guide {
     }
 
     date_str() {
-        const year_month_day = this.date_last_modified.split('-');
-        const date = new Date(year_month_day[0], year_month_day[1] - 1, year_month_day[2]);
-        const cur_date = new Date();
-        const milli_in_day = 24 * 60 * 60 * 1000;
-        const days_since = Math.floor(Math.abs(cur_date - date) / milli_in_day);
-        if(days_since >= 365) {
-            const years_since = cur_date.getFullYear() - date.getFullYear();
-            return years_since.toString() + ((years_since > 1) ? (' years ago') : (' year ago'));
-        }
-        if(days_since > 30) {
-            let months_since = cur_date.getMonth() - date.getMonth();
-            if(months_since < 0) months_since = months_since + 12;
-            return months_since.toString() + ((months_since > 1) ? (' months ago') : (' month ago'));
-        }
-        switch(days_since) {
-            case 0:
-                return 'today';
-            case 1:
-                return 'yesterday';
-            default:
-                return days_since.toString() + ' days ago';
+        if (this.date_last_modified !== undefined && this.date_last_modified !== null) {
+            const year_month_day = this.date_last_modified.split('-');
+            const date = new Date(year_month_day[0], year_month_day[1] - 1, year_month_day[2]);
+            const cur_date = new Date();
+            const milli_in_day = 24 * 60 * 60 * 1000;
+            const days_since = Math.floor(Math.abs(cur_date - date) / milli_in_day);
+            if (days_since >= 365) {
+                const years_since = cur_date.getFullYear() - date.getFullYear();
+                return years_since.toString() + ((years_since > 1) ? (' years ago') : (' year ago'));
+            }
+            if (days_since > 30) {
+                let months_since = cur_date.getMonth() - date.getMonth();
+                if (months_since < 0) months_since = months_since + 12;
+                return months_since.toString() + ((months_since > 1) ? (' months ago') : (' month ago'));
+            }
+            switch (days_since) {
+                case 0:
+                    return 'today';
+                case 1:
+                    return 'yesterday';
+                default:
+                    return days_since.toString() + ' days ago';
+            }
         }
     }
 
@@ -86,7 +86,6 @@ export default class Guide {
 
     //Sends favorite message to db AND executes'on_favorite' function that can perform a rebuild of some sort on your page
     favorite(wrapper, on_favorite_handler) {
-
         let classes = $(wrapper).attr('class').toString();
         const guide_id = $(wrapper).attr('id').slice('guide-fav-'.length);
         const favorited = classes.includes('favorite') ? 1 : 0;
@@ -128,11 +127,15 @@ export default class Guide {
     //These will use corresponding indices, like containers[0] uses tag_bucket[0] and favorite_only[0]
     //Width specifies how many guides are allowed per page.
     static get_guides(containers, tag_bucket, favorite_only, width) {
+        let tags = Array();
+        for(let i = 0; i < tag_bucket.length; ++i)
+            for(let j = 0; j < tag_bucket[i].length; ++j)
+                tags.push(tag_bucket[i][j]);
         $.ajax({
             type:'POST',
             url: '/pn/api/guides/get_guides_tag_filtered.php',
             data: {
-                tags: tag_bucket.join(",")
+                tags: tags
             },
             success: function(data) {
                 let guide;
@@ -145,7 +148,7 @@ export default class Guide {
                         //Create a Guide object using the JSON value, making sure to add the favorite listener.
                         //Favorites just calls for a get_guides again to get an updated set.
                         guide = new Guide(json[key], function() {
-                            get_guides(containers, tag_bucket, favorite_only, width);
+                            Guide.get_guides(containers, tag_bucket, favorite_only, width);
                         });
                         //Go through each cluster of tags, these clusters each correspond to a container.
                         for(let index = 0; index < tag_bucket.length; ++index) {

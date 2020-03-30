@@ -15,21 +15,20 @@ try {
 
     //Reference 1: https://stackoverflow.com/questions/16498640/pdo-prepare-with-question-marks-doesnt-work-with-numbers
 
-    //Setup of querry
+    //Setup of query
     $sql_query = "
         SELECT g.guide_id, g.guide_name, g.thumbnail, g.subscription_level, g.date_last_modified, CASE WHEN fav.guide_id IS NOT NULL THEN true ELSE false END AS fav, group_concat(t.tag) as tags
         FROM guides g
         LEFT JOIN favorites AS fav ON (g.guide_id = fav.guide_id AND fav.user_id = ?)
         LEFT JOIN tags AS t ON (g.guide_id = t.guide_id)
         WHERE
-            t.tag LIKE ? OR g.guide_name like ? 
+            t.tag LIKE ? OR g.guide_name LIKE ? 
         ";
 
-    //Adding search ('LIKE') statements for each search term
+    //Adding search ('LIKE') statements for each search term after the first
     for($i = 1; $i < sizeof($search_terms); ++$i)
-        $sql_query = $sql_query."
-                OR t.tag LIKE ? OR g.guide_name like ? 
-            ";
+        $sql_query = $sql_query.
+            "OR t.tag LIKE ? OR g.guide_name LIKE ? ";
 
 
     //Ending of query
@@ -44,14 +43,14 @@ try {
     //Bind user_id
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
     for($i = 0; $i < sizeof($search_terms); ++$i) {
-        $stmt->bindValue($i+1, "%{$search_terms[$i]}%", PDO::PARAM_STR);
         $stmt->bindValue($i+2, "%{$search_terms[$i]}%", PDO::PARAM_STR);
+        $stmt->bindValue($i+3, "%{$search_terms[$i]}%", PDO::PARAM_STR);
     }
     $stmt->execute();
-    $results_favorites = $stmt->fetchAll();
+    $results = $stmt->fetchAll();
 
-//    die(json_encode($sql_query));
-    die (json_encode($results_favorites));
+    die(json_encode($results));
+//    die (json_encode($results));
 } catch (PDOException $e) {
     die("Request failed");
 }
