@@ -35,17 +35,17 @@ require("structure/top.php"); //Include the sidebar HTML
 
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                        <input id="search-input" type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            <button id="search-submit" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover">
+                                <table id="counseling-table" class="table table-hover">
                                     <thead>
                                     <tr>
                                         <th>Date Requested</th>
@@ -55,6 +55,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <th>Goal</th>
                                         <th>Plan</th>
                                         <th>Billing Cycle Ends</th>
+                                        <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -66,6 +67,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <td>Lose 10 lb every 4 months</td>
                                         <td>Beginner</td>
                                         <td>04/27/2020</td>
+                                        <td><button type="submit" class="btn btn-default"><i class="fas fa-calendar-times"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>03/17/2020</td>
@@ -75,6 +77,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <td>Lose weight</td>
                                         <td>Intermediate</td>
                                         <td>04/17/2020</td>
+                                        <td><button type="submit" class="btn btn-default"><i class="fas fa-calendar-times"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>03/07/2020</td>
@@ -84,6 +87,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <td>Get more muscle</td>
                                         <td>Personal</td>
                                         <td>04/07/2020</td>
+                                        <td><button type="submit" class="btn btn-default"><i class="fas fa-calendar-times"></i></button></td>
                                     </tr>
                                     <tr>
                                         <td>03/01/2020</td>
@@ -93,6 +97,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <td>Bulk up for championship</td>
                                         <td>Advanced</td>
                                         <td>04/01/2020</td>
+                                        <td><button type="submit" class="btn btn-default"><i class="fas fa-calendar-times"></i></button></td>
                                     </tr>
                                     </tbody>
                                 </table>
