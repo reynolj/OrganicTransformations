@@ -5,7 +5,6 @@ require_once('../../variables.php');
 try {
     $user_id = intval($_SESSION['user_id']);
     $goal = $_POST['goal'];
-    $adding = $_POST['adding'];
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
