@@ -71,51 +71,51 @@ require("structure/top.php"); //Include the sidebar HTML
           <h3 class="card-title">My Body</h3>
         </div>
         <div class="card-body">
-              <div class="row">
-                <div class="col-2">
-                  <label for="blood_type">Blood Type:</label>
-                  <select id="blood_type" class="form-control">
-                    <option>I don't know my blood type</option>
-                    <option>A-</option>
-                    <option>A+</option>
-                    <option>B-</option>
-                    <option>B+</option>
-                    <option>AB-</option>
-                    <option>AB+</option>
-                    <option>O-</option>
-                    <option>O+</option>
-                  </select>
-                </div>
-                <div class="col-3">
-                  <label for="body_type">Body Type:</label>
-                  <select id="body_type" class="form-control">
-                    <option>Ectomorph</option>
-                    <option>Mesomorph</option>
-                    <option>Endomorph</option>
-                  </select>
-                </div>
-                <div class="col-2">
-                  <label for="weight">Weight:</label>
-                  <input id="weight" class="form-control" type="number">
-                </div>
-                <div class="col-3">
-                  <label for="activity_level">Activity Level:</label>
-                  <select id="activity_level" class="form-control">
-                    <option value="0">No exercise</option>
-                    <option value="1">1-2 days/wk of exercise</option>
-                    <option value="2">3+ days/wk of exercise</option>
-                  </select>
-                </div>
-                <div class="col-2">
-                  <button
-                    class="btn btn-primary text-right align-text-bottom"
-                    id="save_body_btn"
-                    onclick="save_body()"
-                    style="background-color:green;border-color:green;">
-                      Save
-                  </button>
-                </div>
-              </div>
+          <div class="row">
+            <div class="col-2">
+              <label for="blood_type">Blood Type:</label>
+              <select id="blood_type" class="form-control">
+                <option>I don't know my blood type</option>
+                <option>A-</option>
+                <option>A+</option>
+                <option>B-</option>
+                <option>B+</option>
+                <option>AB-</option>
+                <option>AB+</option>
+                <option>O-</option>
+                <option>O+</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label for="body_type">Body Type:</label>
+              <select id="body_type" class="form-control">
+                <option>Ectomorph</option>
+                <option>Mesomorph</option>
+                <option>Endomorph</option>
+              </select>
+            </div>
+            <div class="col-2">
+              <label for="weight">Weight</label>
+              <input id="weight" class="form-control" type="number">
+            </div>
+            <div class="col-3">
+              <label for="activity_level">Activity Level</label>
+              <select id="activity_level" class="form-control">
+                <option value="0">No exercise</option>
+                <option value="1">1-2 days/wk of exercise</option>
+                <option value="2">3+ days/wk of exercise</option>
+              </select>
+            </div>
+            <div class="col-2 mt-auto p-2">
+              <button
+                class="btn btn-primary float-right"
+                id="save_body_btn"
+                onclick="save_body()"
+                style="background-color:green;border-color:green;">
+                  Save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

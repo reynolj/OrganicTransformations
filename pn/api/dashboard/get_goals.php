@@ -12,7 +12,7 @@ try {
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
     $stmt = $con->prepare("
-        SELECT goal FROM goals
+        SELECT goal_id, goal FROM goals
         WHERE user_id = ?
     ");
     $stmt->execute([$user_id]);
