@@ -43,7 +43,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Free!</button>
+                                        <button type="button" class="btn btn-block plan-welcome-bg elevation-1 font-weight-bold">Welcome</button>
                                         </br><center><h5><b>$0/month</b></h5></center>
                                         <hr noshade></hr noshade>
                                         <ul>
@@ -59,11 +59,11 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Beginner</button>
+                                        <button type="button" class="btn btn-block plan-beginner-bg elevation-1 font-weight-bold">Beginner</button>
                                         </br><center><h5><b>$4/month</b></h5></center>
                                         <hr noshade></hr noshade>
                                         <ul>
-                                            <li><b><i>Free</i></b> plan +</li>
+                                            <li><b><i>Welcome</i></b> plan +</li>
                                             <li>Beginner muscle training videos</li>
                                             <li>Beginner nutritional training videos</li>
                                             <li>Beginner level guides</li>
@@ -75,7 +75,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Intermediate</button>
+                                        <button type="button" class="btn btn-block plan-intermediate-bg elevation-1 font-weight-bold">Intermediate</button>
                                         </br><center><h5><b>$8/month</b></h5></center>
                                         <hr noshade></hr noshade>
                                         <ul>
@@ -91,7 +91,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Advanced</button>
+                                        <button type="button" class="btn btn-block plan-advanced-bg elevation-1 font-weight-bold">Advanced</button>
                                         </br><center><h5><b>$12/month</b></h5></center>
                                         <hr noshade></hr noshade>
                                         <ul>
@@ -107,7 +107,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Personal</button>
+                                        <button type="button" class="btn btn-block plan-personal-bg elevation-1 font-weight-bold">Personal</button>
                                         </br><center><h5><b>$15/month</b></h5></center>
                                         <hr noshade></hr noshade>
                                         <ul>

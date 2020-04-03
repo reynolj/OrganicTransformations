@@ -21,7 +21,7 @@ export default class Guide {
         var html = '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
             '<div class="guide-card small-box"  id="guide-card-'+this.id+'">' +
             '<div class="inner" style="position: relative;">' +
-            '<svg class="overlay-button' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
+            '<svg class="overlay-button ' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
             'id="guide-fav-' + this.id + '" viewBox="0 0 940.688 940.688">' +
             '<path d="M885.344,319.071l-258-3.8l-102.7-264.399c-19.8-48.801-88.899-48.801-108.6,0l-102.7,264.399l-258,3.8\n' +
             'c-53.4,3.101-75.1,70.2-33.7,103.9l209.2,181.4l-71.3,247.7c-14,50.899,41.1,92.899,86.5,65.899l224.3-122.7l224.3,122.601' +
@@ -70,10 +70,10 @@ export default class Guide {
     get_ribbon() {
         if(this.subscription_level === "WELCOME") return "";
         let color_levels = {
-            "BEGINNER" : '<div class="ribbon bg-white">',
-            "INTERMEDIATE" : '<div class="ribbon bg-yellow">',
-            "ADVANCED" : '<div class="ribbon bg-red">',
-            "PERSONAL" : '<div class="ribbon bg-black">'
+            "BEGINNER" : '<div class="ribbon plan-beginner-bg">',
+            "INTERMEDIATE" : '<div class="ribbon plan-intermediate-bg">',
+            "ADVANCED" : '<div class="ribbon plan-advanced-bg">',
+            "PERSONAL" : '<div class="ribbon plan-personal-bg">'
         };
         return (
             '<div class="ribbon-wrapper ribbon-lg" style="right:5px">' +

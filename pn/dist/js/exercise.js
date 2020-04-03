@@ -11,7 +11,7 @@ function get_exercise_fav() {
     let exercise = Array();
     $.ajax({
         type:'POST',
-        url: '/pn/api/guides/get_guides_tag_filtered.php',
+        url: './api/guides/get_guides_tag_filtered.php',
         data: {
             tags: ['exercise']
         },

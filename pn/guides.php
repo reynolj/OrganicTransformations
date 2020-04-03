@@ -8,47 +8,7 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
     <html>
     <head>
-        <script type="module">
-            import Guide from "./api/guides/Guide.js";
-
-            $(document).ready(function() {
-                //Perform search on search click
-                $('#search-submit').on('click', function(){
-                    var search = $('#search-input').val();  //Gettingsearch  from search input
-                    perform_search(search); //Performing search
-                    $('#results-title').html('Results for "' +  search + '"') //Renaming title of results card
-                });
-                //Get all guides (search)
-                perform_search();
-            });
-
-            function perform_search(search_terms){
-                    $.ajax({
-                        type: "POST",
-                        data: {
-                            search_terms: search_terms
-                        },
-                        url: './api/guides/get_guides_term_search.php',
-                        success: function (data) {
-                            const searchResults = JSON.parse(data);
-                            let guide;
-                            console.log(searchResults)
-                            $('#search-results').html('');
-                            for(let key in searchResults) {
-                                if(searchResults.hasOwnProperty(key)) {
-                                    //Creating a new guide object
-                                    guide = new Guide(searchResults[key]);
-                                    $('#search-results').append(guide.card);
-                                }
-                            }
-                        },
-                        error: function () {
-                            console.log('Error Retrieving search results')
-                        }
-
-                    });
-                }
-        </script>
+        <script type="module" src="./dist/js/guides_page.js"></script>
     </head>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -80,13 +40,18 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-9">
-                                <input id="search-input" class="form-control" type="text" placeholder="Search for...">
-                            </div>
-                            <div class="col-3">
-                                <button id="search-submit" class="form-control btn btn-primary">
-                                    Search
-                                </button>
+                            <div class="input-group col-12">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                                <input id="search-input" type="text" class="form-control" placeholder="Search for...">
+                                <div class="input-group-append">
+                                    <button id="search-submit" class="form-control btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

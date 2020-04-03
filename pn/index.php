@@ -95,11 +95,11 @@ require("structure/top.php"); //Include the sidebar HTML
                   </select>
                 </div>
                 <div class="col-2">
-                  <label for="weight">Weight</label>
+                  <label for="weight">Weight:</label>
                   <input id="weight" class="form-control" type="number">
                 </div>
                 <div class="col-3">
-                  <label for="activity_level">Activity Level</label>
+                  <label for="activity_level">Activity Level:</label>
                   <select id="activity_level" class="form-control">
                     <option value="0">No exercise</option>
                     <option value="1">1-2 days/wk of exercise</option>

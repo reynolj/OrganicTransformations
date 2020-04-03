@@ -30,6 +30,59 @@ session_start();
   <link rel="stylesheet" href="dist/css/organic-transformations.css">
   <!-- jQuery -->
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          //TODO This needs to be replaced once we update sessions via value
+          var plan_type = 2;
+
+          var plan_button = $('#plan-user-button');
+          var plan_text = "";
+
+          //TODO in the future replace this with a php variable directly inserted into the html so it does not have to reload per page
+          switch (plan_type) {
+              case 0:
+                  plan_button.addClass('plan-welcome-bg');
+                  plan_text = "Welcome";
+                  break;
+              case 1:
+                  plan_button.addClass('plan-beginner-bg');
+                  plan_text = "Beginner";
+                  break;
+              case 2:
+                  plan_button.addClass('plan-intermediate-bg');
+                  plan_text = "Intermediate";
+                  break;
+              case 3:
+                  plan_button.addClass('plan-advanced-bg');
+                  plan_text = "Advanced";
+                  break;
+              case 4:
+                  plan_button.addClass('plan-personal-bg');
+                  plan_text = "Personal";
+                  break;
+          }
+          plan_button.html(plan_text);
+
+          var menu_expanded = true;
+          $(document).on('collapsed.lte.pushmenu', function () {
+              plan_button.html('Plan');
+              menu_expanded = false;
+          });
+          $(document).on('shown.lte.pushmenu', function () {
+              plan_button.html(plan_text);
+              menu_expanded = true;
+          });
+          //Hover behavior when collapsed
+          $(document).on('mouseenter', '.main-sidebar', function () {
+              plan_button.html(plan_text);
+          });
+          $(document).on('mouseleave', '.main-sidebar', function () {
+              if (!menu_expanded) {
+                  plan_button.html('Plan');
+              }
+          });
+      });
+  </script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -75,6 +128,12 @@ session_start();
           <a href="account_settings.php" class="d-block">First Last</a>
         </div>
       </div>
+
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <a id="plan-user-button" class="button form-control btn" href="my_plan.php" style="font-weight: bold">
+                Plan
+            </a>
+        </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
