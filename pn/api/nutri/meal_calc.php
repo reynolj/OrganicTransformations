@@ -12,7 +12,7 @@ try {
 
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
     $stmt = $con->prepare("
-        SELECT blood_type, body_type, target_fat, plan_weight, sex, desired_outcome, current_fat , activity_lvl
+        SELECT blood_type, body_type, target_fat, plan_weight, sex, desired_outcome, current_fat , activity_lvl, timeline
         FROM users
         WHERE user_id = ?;
     ");
@@ -31,6 +31,8 @@ try {
     $desired_outcome = $data[0][5];
     $current_fat = $data[0][6];
     $activity_lvl = $data[0][7];
+    $timeline = $data[0][8];
+
 
 
     $protein = (int)(($plan_weight - ($plan_weight * ($current_fat / 100))) /2)/ 5;

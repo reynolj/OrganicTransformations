@@ -126,7 +126,6 @@ require("structure/top.php"); //Include the sidebar HTML
             type: 'POST',
             url: 'api/nutri/blood.php',
             success: function(data){
-            console.log(data);
                 document.getElementById("blood").innerHTML = data;
             }
         });
@@ -134,22 +133,7 @@ require("structure/top.php"); //Include the sidebar HTML
 
     function change_plan(){
         $('#change_btn').prop('disabled', true);
-        const has_meal_plan = 0;
-        $.ajax({
-            type: "POST",
-            url: 'api/nutri/plan_attribs.php',
-            data: {
-                has_meal_plan: has_meal_plan
-            },
-            success: function() {
-                $('#change_btn').prop('disabled', false);
-            },
-            error: function() {
-                $('#change_btn').prop('disabled', false);
-                console.log("ERROR");
-            }
-        });
-        window.location.replace("get_nutrition.php");
+        window.location.replace("change_plan.php");
     }
 
     function get_guides(container, tags, favorites) {
