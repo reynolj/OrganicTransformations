@@ -5,6 +5,31 @@ if($title == ""){
 
 session_start();
 
+
+//Get the users information from the database
+require_once("variables.php");
+try {
+    //Create connection
+    $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
+
+    //Authenticate user
+    $stmt = $con->prepare("SELECT user_id, first_name, last_name, premium_state FROM users WHERE user_id = ?");
+    $stmt->execute([ $_SESSION['user_id'] ]);
+    $user_data = $stmt->fetch();
+    if(!$user_data){
+        //Something went wrong.. Kill the session and send the user go the login page
+        die("Something went wrong");
+        session_unset();
+        session_destroy();
+        header("Location: login.php");
+        exit();
+    }
+
+} catch(PDOException $e) {
+    die("Sorry, something went wrong. Try again later.");
+    // die( "Failed to add break - " . $e->getMessage());
+}
+
 ?>
 
 
@@ -125,7 +150,7 @@ session_start();
           <img src="AdminLTE/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="account_settings.php" class="d-block">First Last</a>
+          <a href="account_settings.php" class="d-block"><?php echo $user_data['first_name'] . ' ' . $user_data['last_name']; ?></a>
         </div>
       </div>
 
