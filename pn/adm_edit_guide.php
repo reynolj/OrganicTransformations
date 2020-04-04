@@ -133,6 +133,47 @@ require("structure/top.php"); //Include the sidebar HTML
             });
         });
 
+        //Delete Guide Btn
+        $('#deleteGuideBtn').click(function(){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    //Delete the guide
+                    $.ajax({
+                        type: "POST",
+                        url: 'api/admin/guides/delete_guide.php',
+                        data: {
+                            guide_id: guide_id
+                        },
+                        dataType: 'JSON',
+                        success: function(data) {
+                            if (data.result == "SUCCESS") {
+                                Swal.fire({
+                                    title: "Success",
+                                    html: data.message
+                                });
+                                setTimeout( function(){
+                                    window.location.replace("guides.php");
+                                }  , 1000 );
+                            }else{
+                                Swal.fire({
+                                    title: "Error",
+                                    html: data.message
+                                });
+                            }
+                        }
+                    });
+                }
+            })
+        });
+
      });
 
 
@@ -199,12 +240,7 @@ require("structure/top.php"); //Include the sidebar HTML
                   <textarea class="textarea" id="summernote" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                   </textarea>
                 </div>
-
                 <button type="button" id="saveBtn" class="btn btn-block bg-gradient-info">Save Guide Content</button>
-
-
-
-
               </div>
             </div>
 
@@ -231,6 +267,17 @@ require("structure/top.php"); //Include the sidebar HTML
                       </div>
                   </div>
                   <button type="button" id="saveTagsBtn" class="btn btn-block bg-gradient-info">Save Tags</button>
+              </div>
+          </div>
+
+
+          <div class="card card-danger card-outline">
+              <div class="card-header">
+                  <h5 class="m-0">Delete Guide</h5>
+              </div>
+              <div class="card-body">
+                  <label>WARNING: THIS CANNOT BE UNDONE!</label>
+                  <button type="button" id="deleteGuideBtn" class="btn btn-block bg-gradient-danger"><i class="fas fa-trash"></i> Delete Guide</button>
               </div>
           </div>
 

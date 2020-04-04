@@ -11,11 +11,15 @@ if(!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1){
 try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+    //Delete the guide
     $stmt = $con->prepare("DELETE FROM guides WHERE guide_id = ?");
+    $stmt->execute([$_POST['guide_id']]);
+    //Delete the tags assocaited with that guide
+    $stmt = $con->prepare("DELETE FROM tags WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);
 
     $status->result = "SUCCESS";
-    $status->message = "Deleted.";
+    $status->message = "The guide has been deleted.";
     die(json_encode($status));
 
 }catch(PDOException $e) {
