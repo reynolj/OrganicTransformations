@@ -79,8 +79,15 @@ require("structure/top.php"); //Include the sidebar HTML
                     console.log("ERROR");
                 }
             });
-            window.location.replace("nutrition_plan.php");
+            if (plan_weight >= 300){
+                window.location.replace("nutrition_planw.php");
+            }
+            else {
+                window.location.replace("nutrition_plan.php");
+            }
         }
+
+
 
         function get_body() {
             $.ajax({

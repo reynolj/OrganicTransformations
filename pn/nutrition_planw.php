@@ -205,10 +205,12 @@ require("structure/top.php"); //Include the sidebar HTML
                         </div>
                     </div>
                 </div>
+                <h3><p style="color:red">**Warning** While we have generated a meal plan for you, we at Organic Transformations care about your health and safety and we recommend that
+                        anyone over 300lbs consult a physician before beginning any new fitness or diet plan.</p></h3>
                 <h3><p>Below is your daily meal plan. Your goal is to eat every three hours while consuming the suggested nutrient levels for each meal. Every nutrient has a corresponding tab
-                        with a breakdown of the food to nutrient ratios to help make meal planning easier (except vegetables, just weigh them out on a scale ounce to ounce). Also, you don't have to
-                        worry about nutrients crossing over. For example, if you have your target grams of protein from a meat, you don't need to worry about the few grams of protein coming from the nuts
-                        you are eating to get your fats: the crossovers have already been accounted for when calculating your meal plan.</p></h3>
+                with a breakdown of the food to nutrient ratios to help make meal planning easier (except vegetables, just weigh them out on a scale ounce to ounce). Also, you don't have to
+                worry about nutrients crossing over. For example, if you have your target grams of protein from a meat, you don't need to worry about the few grams of protein coming from the nuts
+                you are eating to get your fats: the crossovers have already been accounted for when calculating your meal plan.</p></h3>
                 <div class="card card-primary card-outline card-tabs">
                     <div class="card-header p-0 pt-1 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
