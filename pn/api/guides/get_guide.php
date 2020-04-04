@@ -6,7 +6,7 @@ require_once('../../../variables.php');
 try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
-    $stmt = $con->prepare("SELECT * FROM guides WHERE guide_id = ?");
+    $stmt = $con->prepare("SELECT guide_id, thumbnail, date_created, date_last_modified, guide_name, subscription_level, content FROM guides WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);
 
     $data = $stmt->fetch();
@@ -20,7 +20,6 @@ try {
         $status->guide_data = $data;
         die(json_encode($status));
     }
-
 
 } catch (PDOException $e) {
     $status->result = "ERROR";
