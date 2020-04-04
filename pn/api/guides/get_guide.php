@@ -1,8 +1,7 @@
 <?php
 
-require("../../auth/login_check.php"); //Make sure the users is logged in
-require_once('../../../variables.php');
-
+require("../auth/login_check.php"); //Make sure the users is logged in
+require_once('../../variables.php');
 try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
@@ -26,3 +25,4 @@ try {
     $status->message = "Something went wrong. Please try again later.";
     die(json_encode($status));
 }
+?>
