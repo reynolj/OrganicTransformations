@@ -18,7 +18,7 @@ try {
 
     if(!$updated){
         $status->result = "ERROR";
-        $status->message = 'Guide failed to update.';
+        $status->message = 'Guide was not updated. Maybe nothing was changed?';
         die(json_encode($status));
     }else{
         $status->result = "SUCCESS";
