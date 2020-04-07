@@ -42,7 +42,8 @@ try {
     $imageTemp = $_FILES["file"]["tmp_name"];
 
     //New Name Path
-    $newPath = $uploadPath . generateRandomString() . "." . $fileType;
+    $newFileName = generateRandomString() . "." . $fileType;
+    $newPath = $uploadPath . $newFileName;
 
     // Compress size and upload image
     $compressedImage = compressImage($imageTemp, $newPath, 75);
@@ -50,7 +51,7 @@ try {
     if($compressedImage){
         $status->result = "SUCCESS";
         $status->message = "Image uploaded.";
-        $status->path = $newPath;
+        $status->file_name = $newFileName;
         die(json_encode($status));
     }else{
         $status->result = "ERROR";

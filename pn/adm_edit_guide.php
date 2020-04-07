@@ -25,6 +25,8 @@ require("structure/top.php"); //Include the sidebar HTML
           $('#summernote').summernote(
             'code', data.guide_data.content
           );
+          $('#thumbnail').val(data.guide_data.thumbnail);
+          $('#thumnailPreview').attr("src", "res/imgs/" + data.guide_data.thumbnail);
         }else{
             Swal.fire({
               title: "Error",
@@ -89,7 +91,8 @@ require("structure/top.php"); //Include the sidebar HTML
                   guide_id: guide_id,
                   guide_name: $('#guide_name').val(),
                   subscription_level: $('#subscription_level').val(),
-                  content: $('#summernote').summernote('code')
+                  content: $('#summernote').summernote('code'),
+                  thumbnail: $('#thumbnail').val()
               },
               dataType: 'JSON',
               success: function(data) {
@@ -190,12 +193,27 @@ require("structure/top.php"); //Include the sidebar HTML
                 data: form_data,
                 type: "POST",
                 success: function(data) {
-                    Swal.fire({
-                        title: "Success",
-                        html: data.message
-                    });
+                    if(data.result == "SUCCESS"){
+                        $('#thumbnail').val(data.file_name);
+                        $('#thumnailPreview').attr("src", "res/imgs/" + data.file_name);
+                        Swal.fire({
+                            title: "Success",
+                            html: data.message + "</br>" + "Don't forget to hit save."
+                        });
+                    }else{
+                        Swal.fire({
+                            title: "Error",
+                            html: data.message
+                        });
+                    }
                 }
             });
+        });
+
+        // Update the file label on change
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
 
      });
@@ -259,18 +277,31 @@ require("structure/top.php"); //Include the sidebar HTML
                   </select>
                 </div>
 
+<!--                  Hidden input to save thumbanil path on server-->
+                  <div class="form-group">
+                      <input id="thumbnail" type="hidden">
+                  </div>
+
                   <div class="form-group">
                       <label for="fileInput">Thumbnail Image</label>
                       <div class="input-group">
                           <div class="custom-file">
                               <input type="file" class="custom-file-input" id="thumbnailFile">
-                              <label class="custom-file-label" for="fileInput">Choose file</label>
+                              <label class="custom-file-label" for="thumbnailFile">Choose file</label>
                           </div>
                           <div class="input-group-append">
                               <span class="input-group-text" id="uploadThumbnailBtn">Upload</span>
                           </div>
                       </div>
                   </div>
+                  <div class="form-group">
+                      <label>Thumbnail Preview</label>
+                      <div class="product-image-thumb"><img id="thumnailPreview" src="" alt="Thumbnail Image"></div>
+                  </div>
+
+
+
+
 
                 <label>Guide Content</label>
                 <div class="mb-3">
