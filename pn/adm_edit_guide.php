@@ -174,6 +174,30 @@ require("structure/top.php"); //Include the sidebar HTML
             })
         });
 
+        //Upload Thumbnail Btn
+        $('#uploadThumbnailBtn').on('click', function(){
+
+            var file_data = $('#thumbnailFile').prop('files')[0];
+            var form_data = new FormData();
+            form_data.append('file', file_data);
+
+            $.ajax({
+                url: 'api/admin/guides/upload_img.php',
+                dataType: 'JSON',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: "POST",
+                success: function(data) {
+                    Swal.fire({
+                        title: "Success",
+                        html: data.message
+                    });
+                }
+            });
+        });
+
      });
 
 
@@ -225,7 +249,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 </div>
 
                   <div class="form-group">
-                  <label>Select</label>
+                  <label>Plan Visibility</label>
                   <select id="subscription_level" class="form-control">
                     <option value="WELCOME">WELCOME</option>
                     <option value="BEGINNER">BEGINNER</option>
@@ -234,6 +258,19 @@ require("structure/top.php"); //Include the sidebar HTML
                     <option value="ADVANCED">ADVANCED</option>
                   </select>
                 </div>
+
+                  <div class="form-group">
+                      <label for="fileInput">Thumbnail Image</label>
+                      <div class="input-group">
+                          <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="thumbnailFile">
+                              <label class="custom-file-label" for="fileInput">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                              <span class="input-group-text" id="uploadThumbnailBtn">Upload</span>
+                          </div>
+                      </div>
+                  </div>
 
                 <label>Guide Content</label>
                 <div class="mb-3">
