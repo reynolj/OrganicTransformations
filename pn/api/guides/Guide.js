@@ -8,13 +8,14 @@ export default class Guide {
         this.date_last_modified = json['date_last_modified'];
         this.name = json['guide_name'];
         this.subscription_level = json['subscription_level'];
+        this.plan_name = json['plan_name'];
         this.is_favorite = json['fav'];
         this.tags = json['tags'];
 
         $(document).on('click','#guide-fav-' + this.id, this ,function(event){
             event.data.favorite($(this),on_favorite);
         });
-
+        console.log(json);
     }
 
     get card() {
@@ -68,17 +69,17 @@ export default class Guide {
     }
 
     get_ribbon() {
-        if(this.subscription_level === "WELCOME") return "";
+        if(this.subscription_level === 0) return "";
         let color_levels = {
-            "BEGINNER" : '<div class="ribbon plan-beginner-bg">',
-            "INTERMEDIATE" : '<div class="ribbon plan-intermediate-bg">',
-            "ADVANCED" : '<div class="ribbon plan-advanced-bg">',
-            "PERSONAL" : '<div class="ribbon plan-personal-bg">'
+            // "BEGINNER" : '<div class="ribbon plan-beginner-bg">',
+            // "INTERMEDIATE" : '<div class="ribbon plan-intermediate-bg">',
+            1 : '<div class="ribbon plan-advanced-bg">', //"ADVANCED"
+            2 : '<div class="ribbon plan-personal-bg">' //"PERSONAL"
         };
         return (
             '<div class="ribbon-wrapper ribbon-lg" style="right:5px">' +
             color_levels[this.subscription_level] +
-            this.subscription_level +
+            this.plan_name +
             '</div>' +
             '</div>'
         );
