@@ -13,7 +13,7 @@ try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
     //Authenticate user
-    $stmt = $con->prepare("SELECT user_id, first_name, last_name, premium_state FROM users WHERE user_id = ?");
+    $stmt = $con->prepare("SELECT user_id, first_name, last_name, premium_state, email, phone_number FROM users WHERE user_id = ?");
     $stmt->execute([ $_SESSION['user_id'] ]);
     $user_data = $stmt->fetch();
     if(!$user_data){

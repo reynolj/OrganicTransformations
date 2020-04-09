@@ -62,7 +62,7 @@ require("structure/top.php"); //Include the sidebar HTML
         '<button id = "submit_btn" ' +
         'class = btn-lg ' +
         'style="text-align: center; color: white; background-color:Black" ' +
-        'onclick="coach_request()">' +
+        'onclick="check_request_duplicate()">' +
         'Done! Request my session with Doug/Dan!' +
         '</button>' +
         '</div>' +
@@ -72,7 +72,24 @@ require("structure/top.php"); //Include the sidebar HTML
         document.getElementById("date").innerHTML = date_range;
     }
 
-    function after_request(){
+    function duplicate_found(){
+        document.getElementById("coaching_box").innerHTML =
+            '<!-- Thank You-->' +
+            '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
+            '<p class = "coach_white">But, you have already requested a session this month</b>.</p>' +
+            '<!-- Plan Cycle -->' +
+            '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
+            '<p class = "coach_black"><b id = "date"></b></p>' +
+            '<br><br>' +
+            '<p class = "coach_white">Please wait at least <b>1-7 business days</b> for us to get in touch with you*.</p>' +
+            '<p class = "coach_white">If we are not able to reach you this month, we apologize profusely.</p>' +
+            '<p class = "coach_white">We are private trainers with busy schedule and <b>do our best to set aside some time</b></p>' +
+            '<p class = "coach_white">to meet one-on-one with <b>dedicated individuals</b> such as <b>yourself</b>.</p>' +
+            '<p class = "coach_white" style ="font-size: medium"><b><br><br>*Meetings every month are not guaranteed and depend on our demand as private trainers</b>';
+        document.getElementById("date").innerHTML = date_range;
+    }
+
+    function request_success(){
       document.getElementById("coaching_box").innerHTML =
       '<!-- Thank You-->' +
       '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
@@ -110,21 +127,45 @@ require("structure/top.php"); //Include the sidebar HTML
     }
 
     function get_contact_info(){
+        document.getElementById("email_btn").innerHTML = "<?php echo $user_data['email'] ?>";
+        document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber("<?php echo $user_data['phone_number'] ?>");
+        // $.ajax({
+        //     type: 'POST',
+        //     url: 'api/coaching/contactInfo.php',
+        //     success: function(data) {
+        //         let json = JSON.parse(data);
+        //         for(let key in json) {
+        //             if(json.hasOwnProperty(key)) {
+        //                 document.getElementById("email_btn").innerHTML = json[key]['email'];
+        //                 document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber(json[key]['phone_number']);
+        //                 break;
+        //             }
+        //         }
+        //     },
+        //     error: function() {
+        //         console.log("Get_Contact_Info ERROR");
+        //     }
+        // });
+    }
+
+    function check_request_duplicate(){
         $.ajax({
             type: 'POST',
-            url: 'api/coaching/contactInfo.php',
+            url: 'api/coaching/duplicateRequestCheck.php',
+            data: {},
             success: function(data) {
                 let json = JSON.parse(data);
-                for(let key in json) {
-                    if(json.hasOwnProperty(key)) {
-                        document.getElementById("email_btn").innerHTML = json[key]['email'];
-                        document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber(json[key]['phone_number']);
-                        break;
-                    }
+                if (json.length > 0){
+                    console.log("Duplicate found");
+                    duplicate_found();
+                }
+                else {
+                    console.log("No duplicate");
+                    coach_request();
                 }
             },
             error: function() {
-                console.log("Get_Contact_Info ERROR");
+                console.log("Something went wrong in duplicate check");
             }
         });
     }
@@ -137,7 +178,7 @@ require("structure/top.php"); //Include the sidebar HTML
             url: 'api/coaching/coachingRequest.php',
             data:{ topic: topic_text, contact: preferred_contact },
             success: function() {
-                after_request();
+                request_success();
             },
             error: function() {
                 console.log("Coach_request ERROR");
