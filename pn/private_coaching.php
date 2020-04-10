@@ -2,7 +2,6 @@
 require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Home"; //Set the browser title
 $highlight = "index"; //Select which tab in the navigation to highlight
-require("structure/top.php"); //Include the sidebar HTML
 require("premium_plan.php"); //Gets premium plan
 
 if ($user_data['premium_state'] < $premium_data['plan_id']){
@@ -42,7 +41,7 @@ else{
     function init_box(){
       document.getElementById("coaching_box").innerHTML =
         '<!-- Thank You-->' +
-        '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Personal tier</i> member! </p>' +
+        '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
         '<p class = "coach_white">Every month you can request counseling with either one of us, <b>Doug</b> or <b>Dan</b>.</p>' +
         '<!-- Plan Cycle -->' +
         '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
@@ -89,7 +88,7 @@ else{
     function duplicate_found(){
       document.getElementById("coaching_box").innerHTML =
         '<!-- Thank You-->' +
-        '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Personal tier</i> member! </p>' +
+        '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
         '<p class = "coach_white">But, you have already requested a session this month</b>.</p>' +
         '<!-- Plan Cycle -->' +
         '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
@@ -106,7 +105,7 @@ else{
     function request_success(){
       document.getElementById("coaching_box").innerHTML =
       '<!-- Thank You-->' +
-      '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Personal tier</i> member! </p>' +
+      '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
       '<p class = "coach_white">You have <b id = "request_status">successfully requested a session this month</b>.</p>' +
       '<!-- Plan Cycle -->' +
       '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
