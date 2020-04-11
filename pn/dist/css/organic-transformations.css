@@ -91,6 +91,15 @@
     font-weight:bold;
 }
 
+.testimonial {
+    height:20em;
+}
+
+.testimonials {
+    height:100%;
+    overflow:auto;
+}
+
 #plan-user-button {
     white-space: nowrap;
 }
