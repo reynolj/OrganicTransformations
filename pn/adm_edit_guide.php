@@ -23,7 +23,12 @@ require("structure/top.php"); //Include the sidebar HTML
           $('#guide_name').val(data.guide_data.guide_name);
           $('#subscription_level').val(data.guide_data.subscription_level);
           $('#summernote').summernote(
-            'code', data.guide_data.content
+            'code', data.guide_data.content,
+              { callbacks: {
+                onImageUpload: function(files, editor, welEditable) {
+                    sendFile(files[0], editor, welEditable);
+                }
+            }}
           );
           $('#thumbnail').val(data.guide_data.thumbnail);
           $('#thumnailPreview').attr("src", "res/imgs/" + data.guide_data.thumbnail);
@@ -215,6 +220,23 @@ require("structure/top.php"); //Include the sidebar HTML
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
+
+        //Summernote File Upload
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "api/admin/guides/upload_img.php",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    editor.insertImage(welEditable, "res/imgs/" + data.file_name);
+                }
+            });
+        }
 
      });
 
