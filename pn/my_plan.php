@@ -10,6 +10,25 @@ require("structure/top.php"); //Include the sidebar HTML
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
+        <!-- User redirected to my_plan -->
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                //console.log("got to onload");
+                let required_plan = '<?php echo($_GET['required_plan']); ?>';
+                //console.log(required_plan);
+                if ( required_plan != ""){
+                    console.log("Got in if");
+                    Swal.fire({
+                        title: "Cannot access content",
+                        html: "Upgrade your plan to " + required_plan + " to access that content."
+                    });
+                }
+            });
+        </script>
+        <!-- SweetAlert -->
+        <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+        <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+
         <!--PayPal Source-->
         <script src="https://www.paypal.com/sdk/js?client-id=AWeTuCaNHd2YsixQdR9sRiBy9KvtMo-9jrvH_u-JQeT_X-DgiCARacl-J0WE4lSBBRdFX9uNMAu62B55&vault=true&disable-funding=credit"></script>
 

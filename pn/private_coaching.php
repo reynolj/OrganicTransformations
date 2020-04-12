@@ -1,41 +1,29 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Home"; //Set the browser title
-$highlight = "index"; //Select which tab in the navigation to highlight
-require("premium_plan.php"); //Gets premium plan
 
-if ($user_data['premium_state'] < $premium_data['plan_id']){
-  $redirect = intval(1);
-}
-else{
-  $redirect = intval(0);
-  echo '<script type="text/javascript"> hideModal(); </script>';
-}
+//tier and plan_check.php are used for potentially redirecting the user to my_plan
+$tier = "PERSONAL";
+require("plan_check.php");
 
+$title = "OT | Private Coaching"; //Set the browser title
+$highlight = "private_coaching"; //Select which tab in the navigation to highlight
+require("structure/top.php"); //Include the sidebar HTML
 ?>
 <html>
 <head>
   <script type="text/javascript">
     let date_range = null;
     $(window).on('load', function() {
-      let redirect = "<?php echo $redirect; ?>"
-        if ( redirect == 1 ){
-            console.log("In do not load");
-            // Do not load
-        }
-        else {
-            console.log("In load");
-            let f_date = new Date();
-            let l_date;
-            let yyyy = f_date.getFullYear();
-            let mm = String(f_date.getMonth() + 1).padStart(2, '0'); //Gets month and pads with 0 if needed
-            let fd = String(1).padStart(2, '0'); //Creates string 01 which is first day of month
-            let ld = String(new Date(yyyy, mm, 0).getDate()); // Creates string of last day of month
-            f_date = mm + '/' + fd + '/' + yyyy; //First date
-            l_date = mm + '/' + ld + '/' + yyyy; //Last date
-            date_range = f_date + " - " + l_date;
-            init_box();
-        }
+      let f_date = new Date();
+      let l_date;
+      let yyyy = f_date.getFullYear();
+      let mm = String(f_date.getMonth() + 1).padStart(2, '0'); //Gets month and pads with 0 if needed
+      let fd = String(1).padStart(2, '0'); //Creates string 01 which is first day of month
+      let ld = String(new Date(yyyy, mm, 0).getDate()); // Creates string of last day of month
+      f_date = mm + '/' + fd + '/' + yyyy; //First date
+      l_date = mm + '/' + ld + '/' + yyyy; //Last date
+      date_range = f_date + " - " + l_date;
+      init_box();
     });
 
     function init_box(){
