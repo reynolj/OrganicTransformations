@@ -13,14 +13,15 @@ require("structure/top.php"); //Include the sidebar HTML
         <!-- User redirected to my_plan -->
         <script type="text/javascript">
             $( document ).ready(function() {
-                //console.log("got to onload");
                 let required_plan = '<?php echo($_GET['required_plan']); ?>';
-                //console.log(required_plan);
+                console.log(required_plan);
                 if ( required_plan != ""){
-                    console.log("Got in if");
+                    required_plan  = required_plan.split(' ');
+                    let prem_plan  = required_plan[0];
+                    let user_plan  = required_plan[1];
                     Swal.fire({
-                        title: "Cannot access content",
-                        html: "Upgrade your plan to " + required_plan + " to access that content."
+                        title: "You cannot access this content",
+                        html: `<p>Your current plan is <b>${user_plan}</b>. <br> <br> Upgrade your plan to <b>${prem_plan}</b> to access this content.<p>`
                     });
                 }
             });
