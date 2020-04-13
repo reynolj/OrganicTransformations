@@ -38,7 +38,7 @@ require("structure/top.php"); //Include the sidebar HTML
             //Advanced Plan
             paypal.Buttons({
                 //On click
-                createSubscription: function(data, actions) {
+                createSubscription: function (data, actions) {
 
                     return actions.subscription.create({
 
@@ -49,15 +49,16 @@ require("structure/top.php"); //Include the sidebar HTML
                 },
 
                 //On approval
-                onApprove: function(data, actions) {
+                onApprove: function (data, actions) {
                     alert('You have successfully created a ADVANCED subscription ' + data.subscriptionID);
                     console.log('You have successfully created a ADVANCED subscription ' + data.subscriptionID)
                 }
             }).render('#paypal-button-container-advanced');
 
+            //Personal Plan
             paypal.Buttons({
                 //On click
-                createSubscription: function(data, actions) {
+                createSubscription: function (data, actions) {
 
                     return actions.subscription.create({
 
@@ -68,7 +69,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 },
 
                 //On approval
-                onApprove: function(data, actions) {
+                onApprove: function (data, actions) {
                     alert('You have successfully created a PERSONAL subscription ' + data.subscriptionID);
                     console.log('You have successfully created a PERSONAL subscription ' + data.subscriptionID)
                 }
@@ -175,7 +176,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                             <li>Access to premium content</li>
                                             <li>Monthly private coaching with trainers!</li>
                                         </ul>
-                                        <div id="paypal-button-container-personal"></div>
+                                        <div id="paypal-button-container-personal" ></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->

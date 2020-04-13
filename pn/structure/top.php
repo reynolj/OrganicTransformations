@@ -30,6 +30,21 @@ try {
     // die( "Failed to add break - " . $e->getMessage());
 }
 
+//Updates Top.php variables for user plan button of the sidebar
+switch ($user_data["premium_state"]){
+    case 0:
+        $plan_class = "plan-welcome-bg";
+        $plan_text = "Welcome";
+        break;
+    case 1:
+        $plan_class = "plan-advanced-bg";
+        $plan_text = "Advanced";
+        break;
+    case 2:
+        $plan_class = "plan-personal-bg";
+        $plan_text = "Personal";
+        break;
+}
 ?>
 
 
@@ -57,35 +72,28 @@ try {
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
   <script>
       $(document).ready(function() {
-          //TODO This needs to be replaced once we update sessions via value
-          var plan_type = 2;
-
           var plan_button = $('#plan-user-button');
-          var plan_text = "";
+          var plan_text = "<?php echo $plan_text?>";
 
-          //TODO in the future replace this with a php variable directly inserted into the html so it does not have to reload per page
-          switch (plan_type) {
-              case 0:
-                  plan_button.addClass('plan-welcome-bg');
-                  plan_text = "Welcome";
-                  break;
-              case 1:
-                  plan_button.addClass('plan-beginner-bg');
-                  plan_text = "Beginner";
-                  break;
-              case 2:
-                  plan_button.addClass('plan-intermediate-bg');
-                  plan_text = "Intermediate";
-                  break;
-              case 3:
-                  plan_button.addClass('plan-advanced-bg');
-                  plan_text = "Advanced";
-                  break;
-              case 4:
-                  plan_button.addClass('plan-personal-bg');
-                  plan_text = "Personal";
-                  break;
-          }
+          // switch (plan_type) {
+          //     case 0:
+          //         plan_text = "Welcome";
+          //         break;
+          //     // case 1:
+          //     //     plan_button.addClass('plan-beginner-bg');
+          //     //     plan_text = "Beginner";
+          //     //     break;
+          //     // case 2:
+          //     //     plan_button.addClass('plan-intermediate-bg');
+          //     //     plan_text = "Intermediate";
+          //     //     break;
+          //     case 1:
+          //         plan_text = "Advanced";
+          //         break;
+          //     case 2:
+          //         plan_text = "Personal";
+          //         break;
+          // }
           plan_button.html(plan_text);
 
           var menu_expanded = true;
@@ -155,8 +163,8 @@ try {
       </div>
 
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <a id="plan-user-button" class="button form-control btn" href="my_plan.php" style="font-weight: bold">
-                Plan
+            <a id="plan-user-button" class="button form-control btn <?php echo $plan_class ?>" href="my_plan.php" style="font-weight: bold">
+                <?php echo $plan_text ?>
             </a>
         </div>
 

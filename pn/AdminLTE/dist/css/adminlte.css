@@ -6810,7 +6810,7 @@ button.bg-dark:focus {
   display: table-cell !important;
 }
 
-.d-flex {
+d-flex {
   display: -ms-flexbox !important;
   display: flex !important;
 }
