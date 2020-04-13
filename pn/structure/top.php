@@ -13,11 +13,13 @@ try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
     //Authenticate user
-    $stmt = $con->prepare("SELECT user_id, first_name, last_name, premium_state, email, phone_number FROM users WHERE user_id = ?");
+    $stmt = $con->prepare("SELECT user_id, first_name, last_name, premium_state, email, phone_number, is_admin FROM users WHERE user_id = ?");
     $stmt->execute([ $_SESSION['user_id'] ]);
-    $user_data = $stmt->fetch();
+    $user_data = $stmt->fetch(); //TODO @JASON Why arent we simply adding this to the _SESSION variable? So that all API calls can access this stuff?
+    $_SESSION['is_admin'] = $user_data['is_admin']; //Updates SESSION variable
     if(!$user_data){
         //Something went wrong.. Kill the session and send the user go the login page
+        //TODO @JASON, wouldn't die() end the statement here? My IDE says session_unset is unreachable -DH
         die("Something went wrong");
         session_unset();
         session_destroy();
@@ -72,28 +74,11 @@ switch ($user_data["premium_state"]){
   <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
   <script>
       $(document).ready(function() {
+
+          //Behavior for collapsed sidebar to still fit the text of the user-plan-button
           var plan_button = $('#plan-user-button');
           var plan_text = "<?php echo $plan_text?>";
 
-          // switch (plan_type) {
-          //     case 0:
-          //         plan_text = "Welcome";
-          //         break;
-          //     // case 1:
-          //     //     plan_button.addClass('plan-beginner-bg');
-          //     //     plan_text = "Beginner";
-          //     //     break;
-          //     // case 2:
-          //     //     plan_button.addClass('plan-intermediate-bg');
-          //     //     plan_text = "Intermediate";
-          //     //     break;
-          //     case 1:
-          //         plan_text = "Advanced";
-          //         break;
-          //     case 2:
-          //         plan_text = "Personal";
-          //         break;
-          // }
           plan_button.html(plan_text);
 
           var menu_expanded = true;
@@ -246,7 +231,7 @@ switch ($user_data["premium_state"]){
           </li>
 
             <!-- Owner Panel-->
-          <?php if($_SESSION['is_admin'] == 1 ){ ?>
+          <?php if($user_data['is_admin'] == 1 ){ ?>
             <li class="nav-header">
                OWNER PANELS
             </li>
@@ -278,7 +263,6 @@ switch ($user_data["premium_state"]){
                 </a>
             </li>
               <?php }; ?>
-            <div id="owner-panels"></div>
 
         </ul>
       </nav>
