@@ -12,13 +12,13 @@ require("structure/top.php"); //Include the sidebar HTML
 
         <!-- User redirected to my_plan -->
         <script type="text/javascript">
-            $( document ).ready(function() {
+            $(document).ready(function () {
                 let required_plan = '<?php echo($_GET['required_plan']); ?>';
                 console.log(required_plan);
-                if ( required_plan != ""){
-                    required_plan  = required_plan.split(' ');
-                    let prem_plan  = required_plan[0];
-                    let user_plan  = required_plan[1];
+                if (required_plan != "") {
+                    required_plan = required_plan.split(' ');
+                    let prem_plan = required_plan[0];
+                    let user_plan = required_plan[1];
                     Swal.fire({
                         title: "You cannot access this content",
                         html: `<p>Your current plan is <b>${user_plan}</b>. <br> <br> Upgrade your plan to <b>${prem_plan}</b> to access this content.<p>`
@@ -39,19 +39,12 @@ require("structure/top.php"); //Include the sidebar HTML
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
-
-                    return actions.subscription.create({
-
-                        'plan_id': 'P-5AL450891J419652VL2IEBYQ'
-
-                    });
-
+                    return createSubscription('P-5AL450891J419652VL2IEBYQ', actions);
                 },
 
                 //On approval
                 onApprove: function (data, actions) {
-                    alert('You have successfully created a ADVANCED subscription ' + data.subscriptionID);
-                    console.log('You have successfully created a ADVANCED subscription ' + data.subscriptionID)
+                    onApprove('Advanced', data);
                 }
             }).render('#paypal-button-container-advanced');
 
@@ -59,21 +52,54 @@ require("structure/top.php"); //Include the sidebar HTML
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
-
-                    return actions.subscription.create({
-
-                        'plan_id': 'P-90906277YJ992482DL2IEDWA'
-
-                    });
-
+                    return createSubscription('P-90906277YJ992482DL2IEDWA', actions);
                 },
 
                 //On approval
                 onApprove: function (data, actions) {
-                    alert('You have successfully created a PERSONAL subscription ' + data.subscriptionID);
-                    console.log('You have successfully created a PERSONAL subscription ' + data.subscriptionID)
+                    onApprove('Personal', data);
                 }
             }).render('#paypal-button-container-personal');
+
+            //On Approval
+            function onApprove(plan_name, data) {
+                //Notify the user
+                Swal.fire({
+                    title: 'Thank You!',
+                    html: '<p>You have successfully created a <b>' + plan_name + '</b> plan subscription</p>' +
+                        '<p>Your subscription-id is <b>' + data.subscriptionID + '</b></p>'
+                });
+                //TODO Send an email to client with a thank you, subscription confirmation, upgrade/unsubscribe link, and sub-id
+                console.log('You have successfully created a ' + plan_name + ' subscription ' + data.subscriptionID);
+                send_subscription(data.subscriptionID);
+            }
+
+            //On CreateSubscription
+            function createSubscription(plan_id, actions) {
+                return actions.subscription.create({
+                    'plan_id': plan_id
+                });
+            }
+
+            //send subscription to db
+            function send_subscription(subscription_id) {
+                console.log('Executing send_subscription');
+                $.ajax({
+                    type: 'POST',
+                    url: 'api/plans/send_subscription.php',
+                    data: {
+                        subscription_id: subscription_id,
+                    },
+                    success: function (data) {
+                        console.log("command sent and returned");
+                        console.log(data);
+                    },
+                    error: function () {
+                        console.log("ERROR")
+                    }
+                })
+            }
+
 
         </script>
     </head>
@@ -176,7 +202,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                             <li>Access to premium content</li>
                                             <li>Monthly private coaching with trainers!</li>
                                         </ul>
-                                        <div id="paypal-button-container-personal" ></div>
+                                        <div id="paypal-button-container-personal"></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
