@@ -98,6 +98,43 @@
     font-weight:bold;
 }
 
+.page-box {
+    padding-bottom: 0;
+}
+
+.guide-card {
+}
+
+.guide-card .inner {
+    position: relative;
+    height: 100%;
+}
+
+.guide-thumbnail {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.iframe-container {
+    overflow: hidden;
+    padding-top: 45.25%;
+    margin-top: 92px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    position: relative;
+}
+
+.iframe-container iframe {
+    border: 0;
+    height: 95%;
+    left: 2.5%;
+    resize: both;
+    position: absolute;
+    top: 2.5%;
+    width: 95%;
+}
+
 .testimonial {
     height:20em;
 }

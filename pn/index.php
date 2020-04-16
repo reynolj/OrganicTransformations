@@ -72,7 +72,7 @@ require("structure/top.php"); //Include the sidebar HTML
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-6">
               <label for="blood_type">Blood Type:</label>
               <select id="blood_type" class="form-control">
                 <option>I don't know my blood type</option>
@@ -86,7 +86,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 <option>O+</option>
               </select>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-sm-6">
               <label for="body_type">Body Type:</label>
               <select id="body_type" class="form-control">
                 <option>Ectomorph</option>
@@ -94,11 +94,11 @@ require("structure/top.php"); //Include the sidebar HTML
                 <option>Endomorph</option>
               </select>
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-6">
               <label for="weight">Weight</label>
               <input id="weight" class="form-control" type="number">
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-sm-6">
               <label for="activity_level">Activity Level</label>
               <select id="activity_level" class="form-control">
                 <option value="0">No exercise</option>
@@ -106,7 +106,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 <option value="2">3+ days/wk of exercise</option>
               </select>
             </div>
-            <div class="col-2 mt-auto p-2">
+            <div class="col-lg-2 col-sm-12 mt-auto p-2">
               <button
                 class="btn btn-primary float-right"
                 id="save_body_btn"
@@ -122,9 +122,9 @@ require("structure/top.php"); //Include the sidebar HTML
       <!-- Highlighted For You -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Highlighted For You</h3>
+          <h3 class="card-title">Highlighted</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body page-box">
           <div id="highlighted_guides">
             <!-- This is populated by get_guides in the header -->
           </div>
@@ -136,7 +136,7 @@ require("structure/top.php"); //Include the sidebar HTML
         <div class="card-header">
           <h3 class="card-title">Nutrition Favorites</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body page-box">
           <div id="nutrition_favorites">
             <!-- This is populated by get_guides in the header -->
           </div>
@@ -148,7 +148,7 @@ require("structure/top.php"); //Include the sidebar HTML
         <div class="card-header">
           <h3 class="card-title">Exercise Favorites</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body page-box">
           <div id="exercise_favorites">
             <!-- This is populated by get_guides in the header -->
           </div>
