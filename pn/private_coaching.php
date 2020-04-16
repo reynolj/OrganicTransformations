@@ -1,18 +1,19 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Home"; //Set the browser title
-$highlight = "index"; //Select which tab in the navigation to highlight
+
+//tier and plan_check.php are used for potentially redirecting the user to my_plan
+$tier = "PERSONAL";
+require("plan_check.php");
+
+$title = "OT | Private Coaching"; //Set the browser title
+$highlight = "private_coaching"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 <html>
 <head>
   <script type="text/javascript">
     let date_range = null;
-
-    $( window ).on( "load", function() {
-      // load session range
-      // load email
-      // load phone number
+    $(window).on('load', function() {
       let f_date = new Date();
       let l_date;
       let yyyy = f_date.getFullYear();
@@ -28,7 +29,7 @@ require("structure/top.php"); //Include the sidebar HTML
     function init_box(){
       document.getElementById("coaching_box").innerHTML =
         '<!-- Thank You-->' +
-        '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
+        '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
         '<p class = "coach_white">Every month you can request counseling with either one of us, <b>Doug</b> or <b>Dan</b>.</p>' +
         '<!-- Plan Cycle -->' +
         '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
@@ -62,7 +63,7 @@ require("structure/top.php"); //Include the sidebar HTML
         '<button id = "submit_btn" ' +
         'class = btn-lg ' +
         'style="text-align: center; color: white; background-color:Black" ' +
-        'onclick="coach_request()">' +
+        'onclick="check_request_duplicate()">' +
         'Done! Request my session with Doug/Dan!' +
         '</button>' +
         '</div>' +
@@ -72,10 +73,27 @@ require("structure/top.php"); //Include the sidebar HTML
         document.getElementById("date").innerHTML = date_range;
     }
 
-    function after_request(){
+    function duplicate_found(){
+      document.getElementById("coaching_box").innerHTML =
+        '<!-- Thank You-->' +
+        '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
+        '<p class = "coach_white">But, you have already requested a session this month</b>.</p>' +
+        '<!-- Plan Cycle -->' +
+        '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
+        '<p class = "coach_black"><b id = "date"></b></p>' +
+        '<br><br>' +
+        '<p class = "coach_white">Please wait at least <b>1-7 business days</b> for us to get in touch with you*.</p>' +
+        '<p class = "coach_white">If we are not able to reach you this month, we apologize profusely.</p>' +
+        '<p class = "coach_white">We are private trainers with busy schedule and <b>do our best to set aside some time</b></p>' +
+        '<p class = "coach_white">to meet one-on-one with <b>dedicated individuals</b> such as <b>yourself</b>.</p>' +
+        '<p class = "coach_white" style ="font-size: medium"><b><br><br>*Meetings every month are not guaranteed and depend on our demand as private trainers</b>';
+      document.getElementById("date").innerHTML = date_range;
+    }
+
+    function request_success(){
       document.getElementById("coaching_box").innerHTML =
       '<!-- Thank You-->' +
-      '<p class = "coach_white"><b><i>Thank You</i></b> for being an <i>Athlete</i> member! </p>' +
+      '<p class = "coach_white"><b><i>Thank You</i></b> for being a <i>Personal tier</i> member! </p>' +
       '<p class = "coach_white">You have <b id = "request_status">successfully requested a session this month</b>.</p>' +
       '<!-- Plan Cycle -->' +
       '<p class = "coach_black"><b> Session for plan cycle</b></p>' +
@@ -90,44 +108,51 @@ require("structure/top.php"); //Include the sidebar HTML
     }
 
     function formatPhoneNumber(phoneNumberString) {
-        let cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-        let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-        if (match) {
-            return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-        }
-        return null
+      let cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+      let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+      if (match) {
+          return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+      }
+      return null
     }
 
     function disable_button(button){
-        if (button.id === "email_btn"){
-            $('#email_btn').prop('disabled', true);
-            $('#phone_number_btn').prop('disabled', false);
-        }
-        else {
-            $('#phone_number_btn').prop('disabled', true);
-            $('#email_btn').prop('disabled', false);
-        }
+      if (button.id === "email_btn"){
+        $('#email_btn').prop('disabled', true);
+        $('#phone_number_btn').prop('disabled', false);
+      }
+      else {
+        $('#phone_number_btn').prop('disabled', true);
+        $('#email_btn').prop('disabled', false);
+      }
     }
 
     function get_contact_info(){
-        $.ajax({
-            type: 'POST',
-            url: 'api/coaching/contactInfo.php',
-            success: function(data) {
-                let json = JSON.parse(data);
-                for(let key in json) {
-                    if(json.hasOwnProperty(key)) {
-                        document.getElementById("email_btn").innerHTML = json[key]['email'];
-                        document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber(json[key]['phone_number']);
-                        break;
-                    }
-                }
-            },
-            error: function() {
-                console.log("Get_Contact_Info ERROR");
-            }
-        });
+      document.getElementById("email_btn").innerHTML = "<?php echo $user_data['email'] ?>";
+      document.getElementById("phone_number_btn").innerHTML = formatPhoneNumber("<?php echo $user_data['phone_number'] ?>");
     }
+
+    function check_request_duplicate(){
+      $.ajax({
+        type: 'POST',
+        url: 'api/coaching/duplicateRequestCheck.php',
+        data: {},
+        success: function(data) {
+          let json = JSON.parse(data);
+          if (json.length > 0){
+              console.log("Duplicate found");
+              duplicate_found();
+          }
+          else {
+              console.log("No duplicate");
+              coach_request();
+          }
+        },
+        error: function() {
+          console.log("Something went wrong in duplicate check");
+        }
+      });
+  }
 
     function coach_request() {
         let topic_text = document.getElementById("meeting_topic").value;
@@ -137,7 +162,7 @@ require("structure/top.php"); //Include the sidebar HTML
             url: 'api/coaching/coachingRequest.php',
             data:{ topic: topic_text, contact: preferred_contact },
             success: function() {
-                after_request();
+                request_success();
             },
             error: function() {
                 console.log("Coach_request ERROR");

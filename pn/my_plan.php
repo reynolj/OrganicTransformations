@@ -5,8 +5,81 @@ $highlight = "my_plan"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 
+    <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
+        <!-- User redirected to my_plan -->
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                let required_plan = '<?php echo($_GET['required_plan']); ?>';
+                console.log(required_plan);
+                if ( required_plan != ""){
+                    required_plan  = required_plan.split(' ');
+                    let prem_plan  = required_plan[0];
+                    let user_plan  = required_plan[1];
+                    Swal.fire({
+                        title: "You cannot access this content",
+                        html: `<p>Your current plan is <b>${user_plan}</b>. <br> <br> Upgrade your plan to <b>${prem_plan}</b> to access this content.<p>`
+                    });
+                }
+            });
+        </script>
+        <!-- SweetAlert -->
+        <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+        <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+        <!--PayPal Source-->
+        <script src="https://www.paypal.com/sdk/js?client-id=AWeTuCaNHd2YsixQdR9sRiBy9KvtMo-9jrvH_u-JQeT_X-DgiCARacl-J0WE4lSBBRdFX9uNMAu62B55&vault=true&disable-funding=credit"></script>
+
+        <!--PayPal Script-->
+        <script>
+            //Advanced Plan
+            paypal.Buttons({
+                //On click
+                createSubscription: function (data, actions) {
+
+                    return actions.subscription.create({
+
+                        'plan_id': 'P-5AL450891J419652VL2IEBYQ'
+
+                    });
+
+                },
+
+                //On approval
+                onApprove: function (data, actions) {
+                    alert('You have successfully created a ADVANCED subscription ' + data.subscriptionID);
+                    console.log('You have successfully created a ADVANCED subscription ' + data.subscriptionID)
+                }
+            }).render('#paypal-button-container-advanced');
+
+            //Personal Plan
+            paypal.Buttons({
+                //On click
+                createSubscription: function (data, actions) {
+
+                    return actions.subscription.create({
+
+                        'plan_id': 'P-90906277YJ992482DL2IEDWA'
+
+                    });
+
+                },
+
+                //On approval
+                onApprove: function (data, actions) {
+                    alert('You have successfully created a PERSONAL subscription ' + data.subscriptionID);
+                    console.log('You have successfully created a PERSONAL subscription ' + data.subscriptionID)
+                }
+            }).render('#paypal-button-container-personal');
+
+        </script>
+    </head>
+
+
+    <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -35,17 +108,26 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Place page content here -->
-                        <p>Note: Upgrades will take effect immediately, stopping any future recurring payments under the previous plan. Meanwhile, downgrades will take effect at the end of the billing cycle. Payments cannot be refunded.</p>
-                        <hr noshade></hr noshade>
-                        <p>If you would like to cancel your current plan, please <a href="#">click here</a> to confirm with email.</p>
+                        <p>Note: Upgrades will take effect immediately, stopping any future recurring payments under the
+                            previous plan. Meanwhile, downgrades will take effect at the end of the billing cycle.
+                            Payments cannot be refunded.</p>
+                        <hr noshade></hr
+                        noshade>
+                        <p>If you would like to cancel your current plan, please <a href="#">click here</a> to confirm
+                            with email.</p>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Free!</button>
-                                        </br><center><h5><b>$0/month</b></h5></center>
-                                        <hr noshade></hr noshade>
+                                        <button type="button"
+                                                class="btn btn-block plan-welcome-bg elevation-1 font-weight-bold">
+                                            Welcome
+                                        </button>
+                                        </br>
+                                        <center><h5><b>$0/month</b></h5></center>
+                                        <hr noshade></hr
+                                        noshade>
                                         <ul>
                                             <li>Access to our free content</li>
                                             <li>Free muscle training videos</li>
@@ -55,66 +137,46 @@ require("structure/top.php"); //Include the sidebar HTML
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Beginner</button>
-                                        </br><center><h5><b>$4/month</b></h5></center>
-                                        <hr noshade></hr noshade>
-                                        <ul>
-                                            <li><b><i>Free</i></b> plan +</li>
-                                            <li>Beginner muscle training videos</li>
-                                            <li>Beginner nutritional training videos</li>
-                                            <li>Beginner level guides</li>
-                                        </ul>
-                                    </div> <!-- /.card-body -->
-                                </div> <!-- /.card-primary -->
-                            </div> <!-- /.col -->
-                            <div class="col-md-2">
-                                <div class="card card-primary">
-                                    <div class="card-body">
-                                        <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Intermediate</button>
-                                        </br><center><h5><b>$8/month</b></h5></center>
-                                        <hr noshade></hr noshade>
-                                        <ul>
-                                            <li><b><i>Beginner</i></b> plan +</li>
-                                            <li>Intermediate muscle training videos</li>
-                                            <li>Intermediate nutritional training videos</li>
-                                            <li>Intermediate level guides</li>
-                                        </ul>
-                                    </div> <!-- /.card-body -->
-                                </div> <!-- /.card-primary -->
-                            </div> <!-- /.col -->
-                            <div class="col-md-2">
-                                <div class="card card-primary">
-                                    <div class="card-body">
-                                        <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Advanced</button>
-                                        </br><center><h5><b>$12/month</b></h5></center>
-                                        <hr noshade></hr noshade>
+                                        <button type="button"
+                                                class="btn btn-block plan-advanced-bg elevation-1 font-weight-bold">
+                                            Advanced
+                                        </button>
+                                        </br>
+                                        <center><h5><b>$19.99/month</b></h5></center>
+                                        <hr noshade></hr
+                                        noshade>
                                         <ul>
                                             <li><b><i>Intermediate</i></b> plan +</li>
                                             <li>Advanced muscle training videos</li>
                                             <li>Advanced nutritional training videos</li>
                                             <li>Advanced level guides</li>
                                         </ul>
+                                        <div id="paypal-button-container-advanced"></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button" class="btn btn-block bg-gradient-info">Personal</button>
-                                        </br><center><h5><b>$15/month</b></h5></center>
-                                        <hr noshade></hr noshade>
+                                        <button type="button"
+                                                class="btn btn-block plan-personal-bg elevation-1 font-weight-bold">
+                                            Personal
+                                        </button>
+                                        </br>
+                                        <center><h5><b>$39.99/month</b></h5></center>
+                                        <hr noshade></hr
+                                        noshade>
                                         <ul>
                                             <li><b><i>Advanced</i></b> plan +</li>
                                             <li>Access to premium content</li>
                                             <li>Monthly private coaching with trainers!</li>
                                         </ul>
+                                        <div id="paypal-button-container-personal" ></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
@@ -125,5 +187,8 @@ require("structure/top.php"); //Include the sidebar HTML
             </div> <!-- /.container-fluid -->
         </div> <!-- /.content -->
     </div> <!-- /.content-wrapper -->
+    </body>
+
+    </html>
 
 <?php include('structure/bottom.php'); ?>

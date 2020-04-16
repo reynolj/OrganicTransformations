@@ -7,44 +7,48 @@ require("structure/top.php"); //Include the sidebar HTML
 <HTML>
   <script type="text/javascript">
 
-      $( window ).on( "load", function() {
-
-          check_plan() ;
-
-      });
 
 
       function load_plan(){
           window.location.replace("nutrition_plan.php");
       }
+      /*
+      if( $('#username').val().length < 5 || $('#username').val().length > 50){
+          $('#statusMsg').html("That username is too short or too long.");
+          return;
+*/
+    function validate(){
+        let count = 0;
+        if ($('#plan_weight').val() < 1 || $('#plan_weight').val() > 1000 || $('#plan_weight').val() === '') {
+            $('#weightMsg').html("Please enter a valid weight.");
+            count ++;
+        }
 
+        if($('#target_fat').val() > $('#current_fat').val()){
+            $('#targetMsg').html("Please enter a target fat lower than your current fat");
+            count++;
+        }
 
+       if($('#current_fat').val() >= 40 || $('#current_fat').val() === '' ) {
+            $('#currentMsg').html("Please enter a number less than 40");
+            count++;
+        }
+        if($('#target_fat').val() < 4 || $('#target_fat').val() === '') {
+            $('#targetMsg').html("Please enter a number greater than 4");
+            count++;
+        }
+
+        if($('#target_fat').val() > 40) {
+            $('#targetMsg').html("Please enter a number lower than 40");
+            count++;
+        }
+        if (count > 0)return;
+
+        else calculate();
+    }
 
     function calculate(){
-    //Check if all the required fields are filled out
-         /* if(
-            $('#plan_weight').val() === "0"
-            ||$('#target_fat').val() === "0"
-            ||$('#current_fat').val() === "0"
-          ){
-            $('#statusMsg').html("Make sure to fill out every field.");
-            return;
-          }
-
-          if( $('#plan_weight').val() < 1 || $('#plan_weight').val() > 1000){
-            $('#statusMsg').html("PLease enter a valid weight");
-            return;
-          }
-
-          if(
-              ($('#target_fat').val() < 1 || $('#current_fat').val() > 100)
-            ||($('#target_fat').val() > $('#current_fat').val())
-          ){
-          $('#statusMsg').html("Please enter a valid target fat level");
-          return;
-          }
-*/
-          //Disable the login button
+//Disable the login button
           $('#calc_btn').prop('disabled', true);
              const blood_type = $('#blood_type').val();
              const body_type = $('#body_type').val();
@@ -54,6 +58,7 @@ require("structure/top.php"); //Include the sidebar HTML
              const desired_outcome = $('#desired_outcome').val();
              const current_fat = $('#current_fat').val();
              const activity_lvl = $('#activity_lvl').val();
+             const timeline = $('#timeline').val();
              const has_meal_plan = 1;
           //Send the form data
           $.ajax({
@@ -68,6 +73,7 @@ require("structure/top.php"); //Include the sidebar HTML
               desired_outcome: desired_outcome,
               current_fat: current_fat,
               activity_lvl: activity_lvl,
+              timeline: timeline,
               has_meal_plan: has_meal_plan
                   },
                   success: function() {
@@ -78,7 +84,12 @@ require("structure/top.php"); //Include the sidebar HTML
                      console.log("ERROR");
                   }
               });
-        window.location.replace("nutrition_plan.php");
+          if (plan_weight >= 300){
+              window.location.replace("nutrition_planw.php");
+              }
+          else {
+              window.location.replace("nutrition_plan.php");
+              }
             }
 
 
@@ -109,7 +120,7 @@ require("structure/top.php"); //Include the sidebar HTML
 
 
              <div class="card-body">
-                <!-- Place page content here -->
+              <form>  <!-- Place page content here -->
                 <h3><p>To determine a nutrition plan that will best work for you we need to gather some information about you</p></h3>
               <div class="row">
                 <div class="col-sm-4">
@@ -131,8 +142,9 @@ require("structure/top.php"); //Include the sidebar HTML
 
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label>My weigth(lbs):</label>
-                       <input id="plan_weight" type="number" class="form-control" placeholder="Enter your weight here">
+                    <label>My weigth(lbs): </label>
+                      <input id="plan_weight" type="number" class="form-control" placeholder="Enter your weight here">
+                      <p id="weightMsg" style="color:red"></p>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -291,17 +303,20 @@ require("structure/top.php"); //Include the sidebar HTML
                              <div class="form-group">
                                  <label>My body fat percentage:</label>
                                 <input id="current_fat" type="number" class="form-control" placeholder="Enter your body fat % here" required>
+                                 <p id="currentMsg" style="color:red"></p>
                              </div>
                            </div>
                              <div class="col-sm-4">
                                  <div class="form-group">
                                      <label>Target body fat:</label>
-                                     <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here">
+                                     <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here" required>
+                                     <p id="targetMsg" style="color:red"></p>
                                  </div>
                              </div>
                          </div>
+              </form>
                       <div class="col-sm-4">
-                            <button class="btn btn-block btn-primary" id="calc_btn" onclick="calculate()">Calculate my nutrition plan</button>
+                            <button class="btn btn-block btn-primary" id="calc_btn" onclick="validate()">Calculate my nutrition plan</button>
                       </div>
              </div>
       </div>

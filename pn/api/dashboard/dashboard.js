@@ -1,12 +1,19 @@
 import Guide from '../guides/Guide.js';
 import Pages from '../guides/Pages.js';
 
-let goal_len = 0;
-
 // TODO for Joel:  Goals ID should use goal id from database instead of goal text
 // TODO why is the Add a goal button added via script and not apart of the html
 
 $( window ).on( "load", function() {
+    $(document).on('click','#add_goal_btn', function (){
+        add_goal();
+    });
+    $(document).on('click','.delete-goal', function (){
+        delete_goal($(this));
+    });
+    $(document).on('click','#submit_goal_btn', function (){
+        submit_goal();
+    });
     Guide.get_guides(
         [$('#highlighted_guides'), $('#nutrition_favorites'), $('#exercise_favorites')],
         [['highlighted'], ['nutrition'], ['exercise']],
@@ -78,7 +85,7 @@ function get_goals() {
                         json[key]['goal'] +
                         '<button type="button" ' +
                         'class="delete-goal close text-right" ' +
-                        'id="' + json[key]['goal'] + '"">' +
+                        'id="' + json[key]['goal_id'] + '"">' +
                         '×' +
                         '</button>' +
                         '</li>');
@@ -91,13 +98,6 @@ function get_goals() {
                 '</button>' +
                 '</li>'
             );
-            $(document).on('click','#add_goal_btn', function (){
-                add_goal();
-            });
-            $(document).on('click','.delete-goal', function (){
-                console.log($(this));
-                delete_goal($(this));
-            });
             $('#goals').html(goal_str);
         },
         error: function() {
@@ -107,7 +107,6 @@ function get_goals() {
 }
 
 function add_goal() {
-    console.log('adding goal');
     $('#last_goal_line').before(
         '<li id="add_goal_line">' +
         '<div class="row">' +
@@ -118,9 +117,6 @@ function add_goal() {
         '</div>' +
         '</li>'
     );
-    $(document).on('click','#submit_goal_btn', function (){
-        submit_goal();
-    });
     $('#add_goal_btn').prop('disabled', true);
 }
 
@@ -136,22 +132,23 @@ function submit_goal() {
             goal: goal
         },
         success: function(data) {
-            const parent = document.getElementById('goals');
-            parent.removeChild(document.getElementById('add_goal_line'));
-            $('#last_goal_line').before(
-                '<li>' + data +
-                '<button type="button" ' +
-                'class="delete-goal close text-right" ' +
-                'id="' + data + '">' +
-                '×' +
-                '</button>' +
-                '</li>'
-            );
-            $(document).on('click','.delete-goal', function (){
-                delete_goal($(this));
-            });
-            ++goal_len;
-            $('#add_goal_btn').prop('disabled', false);
+            get_goals();
+            // const parent = document.getElementById('goals');
+            // parent.removeChild(document.getElementById('add_goal_line'));
+            // $('#last_goal_line').before(
+            //     '<li>' + data +
+            //     '<button type="button" ' +
+            //     'class="delete-goal close text-right" ' +
+            //     'id="' + data + '">' +
+            //     '×' +
+            //     '</button>' +
+            //     '</li>'
+            // );
+            // $(document).on('click','.delete-goal', function (){
+            //     delete_goal($(this));
+            // });
+            // ++goal_len;
+            // $('#add_goal_btn').prop('disabled', false);
         },
         error: function() {
             console.log("Submit_Goal ERROR");
@@ -160,25 +157,24 @@ function submit_goal() {
 }
 
 function delete_goal(button) {
-    console.log(button);
-    let goal = $(button).attr('id');
-    let list = document.querySelectorAll('#goals li');
+    let goal_id = $(button).attr('id');
     $.ajax({
         type: 'POST',
         url: '/pn/api/dashboard/remove_goal.php',
         data: {
-            goal: goal
+            goal_id: goal_id
         },
         success: function() {
-            for(let key in list) {
-                if(list.hasOwnProperty(key)) {
-                    if(list[key].childNodes[0].textContent === goal) {
-                        list[key].remove();
-                        break;
-                    }
-                }
-            }
-            --goal_len;
+            get_goals();
+            // for(let key in list) {
+            //     if(list.hasOwnProperty(key)) {
+            //         if(list[key].childNodes[0].textContent === goal) {
+            //             list[key].remove();
+            //             break;
+            //         }
+            //     }
+            // }
+            // --goal_len;
         },
         error: function() {
             console.log("ERROR");

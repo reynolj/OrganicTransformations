@@ -14,6 +14,7 @@ try {
     $desired_outcome = $_POST['desired_outcome'];
     $current_fat = intval($_POST['current_fat']);
     $activity_lvl = intval($_POST['activity_lvl']);
+    $timeline = $_POST['timeline'];
     $has_meal_plan = intval($_POST['has_meal_plan']);
 
 
@@ -33,25 +34,17 @@ try {
             desired_outcome = ?,
             current_fat = ?,
             activity_lvl = ?,
+            timeline = ?,
             has_meal_plan = ?
         WHERE user_id = ?;
     ");
-    $stmt->execute([$blood_type, $body_type, $target_fat, $plan_weight, $sex, $desired_outcome, $current_fat, $activity_lvl, $has_meal_plan, $user_id]);
+    $stmt->execute([$blood_type, $body_type, $target_fat, $plan_weight, $sex, $desired_outcome, $current_fat, $activity_lvl, $timeline, $has_meal_plan, $user_id]);
 } catch(PDOException $e) {
     die("Request failed");
 }
 
 
 
-/*
-if( $plan_weight > 300 ){
-    die("PLease consult a physician before using our site");
-}
-
-//Check their age requirement
-if (time() < strtotime('+18 years', strtotime($birthdate))) {
-    die('Sorry, you are not old enough to sign up.');
-}*/
 
 
 

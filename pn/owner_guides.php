@@ -1,6 +1,6 @@
 <?php
 require("api/auth/login_check.php"); //Make sure the users is logged in
-$title = "OT | Guides"; //Set the browser title
+$title = "OT | Owner Panel - Guides"; //Set the browser title
 $highlight = "owner_guides"; //Select which tab in the navigation to highlight
 require("structure/top.php"); //Include the sidebar HTML
 
@@ -8,23 +8,12 @@ require("structure/top.php"); //Include the sidebar HTML
 ?>
     <html>
     <head>
-        <script type="module">
-            import Guide from "./api/guides/Guide.js";
-
+        <script type="module" src="./dist/js/guides_page.js"></script>
+        <script type="text/javascript">
             $(document).ready(function () {
-                //Perform search on search click
-                $('#search-submit').on('click', function () {
-                    var search = $('#search-input').val();  //Gettingsearch  from search input
-                    perform_search(search); //Performing search
-                    $('#results-title').html('Results for "' + search + '"') //Renaming title of results card
-                });
-                //Get all guides (search)
-                perform_search();
-
-                //On hover
+                //On hover show edit-overlay
                 $(document).on('mouseenter', '.guide-card', function(){
                     console.log('hover triggered');
-                    $(this)
                     $(this).prepend('<div class="overlay dark"> <i class="fas fa-3x fa-pencil-alt"></i> </div>');
                 });
 
@@ -45,32 +34,6 @@ require("structure/top.php"); //Include the sidebar HTML
                 });
             });
 
-            function perform_search(search_terms) {
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        search_terms: search_terms
-                    },
-                    url: './api/guides/get_guides_term_search.php',
-                    success: function (data) {
-                        const searchResults = JSON.parse(data);
-                        let guide;
-                        $('#search-results').html('');
-                        for (let key in searchResults) {
-                            if (searchResults.hasOwnProperty(key)) {
-                                //Creating a new guide object
-                                guide = new Guide(searchResults[key]);
-                                $('#search-results').append(guide.card);
-                            }
-                        }
-                    },
-                    error: function () {
-                        console.log('Error Retrieving search results')
-                    }
-
-                });
-            }
-
             function create_a_guide() {
                 $.ajax({
                     type: "POST",
@@ -87,7 +50,7 @@ require("structure/top.php"); //Include the sidebar HTML
             }
 
             function edit_guide(guide_id){
-                window.location.replace('adm_edit_guide.php?guide_id=' + guide_id);
+                window.location.href = 'adm_edit_guide.php?guide_id=' + guide_id;
             }
         </script>
     </head>
@@ -121,13 +84,18 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-9">
-                                <input id="search-input" class="form-control" type="text" placeholder="Search for...">
-                            </div>
-                            <div class="col-3">
-                                <button id="search-submit" class="form-control btn btn-primary">
-                                    Search
-                                </button>
+                            <div class="input-group col-12">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                                <input id="search-input" type="text" class="form-control" placeholder="Search for...">
+                                <div class="input-group-append">
+                                    <button id="search-submit" class="form-control btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,8 +111,8 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <button id="create_guide" class="form-control btn btn-primary">
-                                    Create a new Guide
+                                <button id="create_guide" class="form-control btn btn-primary" style="text">
+                                    New Guide
                                 </button>
                             </div>
                         </div>

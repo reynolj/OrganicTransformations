@@ -3,8 +3,7 @@ require("../auth/login_check.php"); //Make sure the users is logged in
 require_once('../../variables.php');
 
 try {
-    $user_id = intval($_SESSION['user_id']);
-    $goal = $_POST['goal'];
+    $goal_id = intval($_POST['goal_id']);
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 
@@ -14,11 +13,10 @@ try {
     $stmt = $con->prepare("
         DELETE FROM goals
         WHERE 
-            user_id = ? AND 
-            goal = ? 
+            goal_id = ?
         LIMIT 1;
     ");
-    $stmt->execute([$user_id, $goal]);
+    $stmt->execute([$goal_id]);
 }
 catch(PDOException $e) {
     die("Request failed");
