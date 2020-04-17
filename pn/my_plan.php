@@ -13,7 +13,7 @@ require("structure/top.php"); //Include the sidebar HTML
         <!-- User redirected to my_plan -->
         <script type="text/javascript">
             $(document).ready(function () {
-                let required_plan = '<?php echo($_GET['required_plan']); ?>';
+                let required_plan = '<?php if (isset($_GET['required_plan'])) { echo($_GET['required_plan']);} ?>';
                 console.log(required_plan);
                 if (required_plan != "") {
                     required_plan = required_plan.split(' ');
@@ -24,6 +24,21 @@ require("structure/top.php"); //Include the sidebar HTML
                         html: `<p>Your current plan is <b>${user_plan}</b>. <br> <br> Upgrade your plan to <b>${prem_plan}</b> to access this content.<p>`
                     });
                 }
+
+                //Temporary Debug
+                $('#testing-btn').on('click', function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'api/plans/get_subscription_details.php',
+                        success: function (data) {
+                            console.log("command sent and returned");
+                            console.log(data);
+                        },
+                        error: function () {
+                            console.log("ERROR")
+                        }
+                    })
+                })
             });
         </script>
         <!-- SweetAlert -->
@@ -99,8 +114,6 @@ require("structure/top.php"); //Include the sidebar HTML
                     }
                 })
             }
-
-
         </script>
     </head>
 
@@ -146,7 +159,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button type="button"
+                                        <button id="welcome-banner" type="button"
                                                 class="btn btn-block plan-welcome-bg elevation-1 font-weight-bold">
                                             Welcome
                                         </button>
@@ -207,6 +220,9 @@ require("structure/top.php"); //Include the sidebar HTML
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
                         </div> <!-- /.row -->
+                        <!--TODO Debug Button, rmv later-->
+                        <button class="btn btn-block btn-primary" id="testing-btn"> TESTING BUTTON</button>
+
                     </div> <!-- /.card-body -->
                 </div> <!-- /.card-primary -->
 
