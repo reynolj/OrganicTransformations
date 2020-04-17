@@ -92,7 +92,10 @@
 							<!-- Label -->
 							<label class="col-sm-0 col-form-label-fluid" for="confirm">You are attempting to
 							delete your account. Your plan and future recurring payments will be cancelled.
-							All data will be deleted immediately and this specific account will be lost. Are you for sure?</label>
+							All data will be permanently deleted immediately and this specific account will be lost. Are you for sure?
+
+							</label>
+
 							<!-- Input box -->
 
 							<!--<div class="col-sm-4">
@@ -100,9 +103,12 @@
 							</div>-->
 
 							<div class="col-sm-4-fluid">
+							    <white-space>
+                                <break>
 								<input class="form-control" id="pass_word" placeholder="Current Password"/>
 							</div>
-							<break>
+                        <break>
+
 					    <button type="button" class="btn btn-block btn-danger disabled">Delete</button></button>
 					</div>
 				</div>
