@@ -158,15 +158,6 @@ switch ($user_data["premium_state"]){
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
-              <a href="my_plan.php" class="nav-link <?php if($highlight == "my_plan"){ echo "active";} ?>">
-                  <i class="nav-icon fas fa-dollar-sign"></i>
-                  <p>
-                      My Plan
-                  </p>
-              </a>
-          </li>
-
-          <li class="nav-item">
             <a href="index.php" class="nav-link <?php if($highlight == "index"){ echo "active";} ?>">
               <i class="nav-icon fas fa-home"></i>
               <p>
