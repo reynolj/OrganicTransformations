@@ -20,6 +20,53 @@ require("structure/top.php"); //Include the sidebar HTML
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+    <script type="text/javascript">
+        function deleteRequest($apt_id){
+            Swal.fire({
+                title: 'Delete Request',
+                text: "Are you sure you want to delete this counseling request?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            apt_id: $apt_id
+                        },
+                        url: 'api/coaching/delete_counseling_request.php',
+                        success: function(data, status){
+                            if(data == "success"){
+
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: data
+                                });
+                            }
+                        }
+                    });
+
+                    var table = $('#counseling').DataTable();
+                    table.row('#'+$apt_id.toString()).remove().draw();
+
+                    Swal.fire(
+                        'Deleted!',
+                        'The request has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 <div class="wrapper">
@@ -50,7 +97,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-hover">
+                            <table id="counseling" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>Date Requested</th>
@@ -72,6 +119,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <tbody>
                                 <?php while($row = $stmt->fetch()) {
                                     $user_id = $row["user_id"];
+                                    $apt_id = $row["appointment_id"];
                                     $sql = $con->prepare("SELECT * FROM users WHERE user_id = ?");
                                     $sql->setFetchMode(PDO::FETCH_ASSOC);
                                     $sql->execute([$user_id]);
@@ -86,15 +134,14 @@ require("structure/top.php"); //Include the sidebar HTML
                                             break;
                                     }
 
-                                    echo "<tr>
+                                    echo "<tr id=$apt_id>
                                             <td>" . $row["request_date"] . "</td>
                                             <td>" . $result["first_name"] . " " . $result["last_name"]. "</td>
                                             <td>" . $result["sex"] . "</td>
                                             <td>" . $result["desired_outcome"] . "</td>
                                             <td>" . $row["meeting_topic"] . "</td>
                                             <td>" . $contact . "</td>
-                                            <td><button type=\"submit\" class=\"btn btn-default\"><i class=\"fas fa-calendar-times\"></i></button></td>
-
+                                            <td><button type=\"submit\" class=\"btn btn-default\"><i onclick=\"deleteRequest($apt_id)\" class=\"fas fa-calendar-times\"></i></button></td>
                                           </tr>";
                                 };
                                 ?>
@@ -133,17 +180,9 @@ require("structure/top.php"); //Include the sidebar HTML
 <!-- page script -->
 <script>
     $(function () {
-        $("#example1").DataTable({
+        $("#counseling").DataTable({
             "lengthChange": false,
             "paging": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
         });
     });
 </script>

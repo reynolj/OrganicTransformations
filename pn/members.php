@@ -50,7 +50,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-hover">
+                            <table id="members" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
@@ -96,6 +96,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                           </tr>";
                                 };
                                 ?>
+                                </tbody>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -131,17 +132,9 @@ require("structure/top.php"); //Include the sidebar HTML
 <!-- page script -->
 <script>
     $(function () {
-        $("#example1").DataTable({
+        $("#members").DataTable({
             "lengthChange": false,
             "paging": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
         });
     });
 </script>
