@@ -204,6 +204,15 @@ switch ($user_data["premium_state"]){
           </li>
 
           <li class="nav-item">
+              <a href="my_plan.php" class="nav-link <?php if($highlight == "my_plan"){ echo "active";} ?>">
+                  <i class="nav-icon fas fa-dollar-sign"></i>
+                  <p>
+                      My Plan
+                  </p>
+              </a>
+          </li>
+
+          <li class="nav-item">
             <a href="help.php" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
               <i class="nav-icon fas fa-question-circle"></i>
               <p>
