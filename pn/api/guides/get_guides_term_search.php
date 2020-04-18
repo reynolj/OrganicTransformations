@@ -4,8 +4,10 @@ require_once('../../variables.php');
 
 try {
     $user_id = intval($_SESSION['user_id']);
-    $search_terms = $_POST['search_terms']; //Retrieve param, a singular string with search terms (sample: "apple car")
-    $search_terms = explode(" ",$search_terms); //Turn the search string into a list by spaces
+    if(isset($_POST['search_terms'])) {
+        $search_terms = $_POST['search_terms']; //Retrieve param, a singular string with search terms (sample: "apple car")
+    } else $search_terms = "";
+    $search_terms = explode(" ", $search_terms); //Turn the search string into a list by spaces
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
 

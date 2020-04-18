@@ -3,7 +3,9 @@ if($title == ""){
 	$title = "Organic Transformations";
 }
 
-session_start();
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
 
 
 //Get the users information from the database
