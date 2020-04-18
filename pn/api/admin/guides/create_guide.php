@@ -16,8 +16,6 @@ try {
 
     $guide_id = $con->lastInsertId();
 
-    var_dump($guide_id);
-
     $status->result = "SUCCESS";
     $status->guide_id = $guide_id;
     die(json_encode($status));
