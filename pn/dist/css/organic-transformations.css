@@ -116,10 +116,42 @@
     width: 100%;
 }
 
+.header {
+    padding: 10px 16px;
+    background: #555;
+    color: #f1f1f1;
+}
+
+.content {
+    padding: 16px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
+.sticky + .content {
+    padding-top: 102px;
+}
+
+.header.big-text {
+    font-size: 36px;
+    margin: -4px 0 0 0;
+    padding: 0;
+    line-height: 1;
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
 .iframe-container {
     overflow: hidden;
     padding-top: 45.25%;
-    margin-top: 92px;
+    margin-top: 70px;
     margin-left: 2.5%;
     margin-right: 2.5%;
     position: relative;
