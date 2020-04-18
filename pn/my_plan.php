@@ -12,16 +12,14 @@ require("structure/top.php"); //Include the sidebar HTML
 
         <!-- User redirected to my_plan -->
         <script type="text/javascript">
-            $(document).ready(function () {
-                let required_plan = '<?php if (isset($_GET['required_plan'])) { echo($_GET['required_plan']);} ?>';
+            $( document ).ready(function() {
+                let required_plan = '<?php echo isset($_GET['required_plan']) ? $_GET['required_plan'] : ""; ?>';
+                let current_plan  = '<?php echo isset($_GET['user_plan']) ? $_GET['user_plan'] : ""; ?>';
                 console.log(required_plan);
-                if (required_plan != "") {
-                    required_plan = required_plan.split(' ');
-                    let prem_plan = required_plan[0];
-                    let user_plan = required_plan[1];
+                if ( required_plan != "" && current_plan!=""){
                     Swal.fire({
                         title: "You cannot access this content",
-                        html: `<p>Your current plan is <b>${user_plan}</b>. <br> <br> Upgrade your plan to <b>${prem_plan}</b> to access this content.<p>`
+                        html: `<p>Your current plan is <b>${current_plan}</b>. <br> <br> Upgrade your plan to <b>${required_plan}</b> to access this content.<p>`
                     });
                 }
 
