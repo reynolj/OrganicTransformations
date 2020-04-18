@@ -23,7 +23,7 @@
   }
 
   if ( !$_SESSION['is_admin'] && $data['premium_state'] < $data['plan_id'] ){
-    header("Location: my_plan.php?required_plan=" . $data['plan_name'] . " " . $data['user_plan_name'] );
+    header("Location: my_plan.php?required_plan=" . $data['plan_name'] . "&user_plan=" . $data['user_plan_name'] );
     exit();
   }
 ?>

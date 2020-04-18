@@ -17,44 +17,7 @@
   <link rel="stylesheet" href="AdminLTE/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <script type="text/javascript">
-    function process(){
-      //Check if all the required fields are filled out
-      if( $('#username').val().length < 5 || $('#username').val().length > 50){
-        $('#statusMsg').html("That username is invalid.");
-        return;
-      }
-      
-      //Check the password length
-      if( $('#password').val().length < 5 || $('#password').val().length > 50){
-        $('#statusMsg').html("That password is too short or too long.");
-        return;
-      }
 
-      //Disable the login button
-      $('#loginBtn').prop('disabled', true);
-
-      //Send the form data
-      $.ajax({
-        type: "POST",
-        dataType: 'text',
-        url: 'api/auth/login.php',
-        data: {
-          username: $('#username').val(),
-          password: $('#password').val()
-        },
-        success: function(data, status){
-          if(data == "success"){
-            window.location.replace("index.php");
-          }else{
-            $('#statusMsg').html(data);
-            $('#loginBtn').prop('disabled', false);
-          }
-        }
-      });
-    }
-
-  </script>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -104,6 +67,52 @@
 
 <!-- jQuery -->
 <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#password').keyup(function (event) {
+            if ($(this).is(":focus") && event.key === "Enter") {
+                process();
+            }
+        });
+    });
+
+    function process(){
+        //Check if all the required fields are filled out
+        if( $('#username').val().length < 5 || $('#username').val().length > 50){
+            $('#statusMsg').html("That username is invalid.");
+            return;
+        }
+
+        //Check the password length
+        if( $('#password').val().length < 5 || $('#password').val().length > 50){
+            $('#statusMsg').html("That password is too short or too long.");
+            return;
+        }
+
+        //Disable the login button
+        $('#loginBtn').prop('disabled', true);
+
+        //Send the form data
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: 'api/auth/login.php',
+            data: {
+                username: $('#username').val(),
+                password: $('#password').val()
+            },
+            success: function(data, status){
+                if(data == "success"){
+                    window.location.replace("index.php");
+                }else{
+                    $('#statusMsg').html(data);
+                    $('#loginBtn').prop('disabled', false);
+                }
+            }
+        });
+    }
+</script>
 <!-- Bootstrap 4 -->
 <script src="AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
