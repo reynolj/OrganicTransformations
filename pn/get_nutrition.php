@@ -17,35 +17,36 @@ require("structure/top.php"); //Include the sidebar HTML
           $('#statusMsg').html("That username is too short or too long.");
           return;
 */
-    function validate(){
-        let count = 0;
-        if ($('#plan_weight').val() < 1 || $('#plan_weight').val() > 1000 || $('#plan_weight').val() === '') {
-            $('#weightMsg').html("Please enter a valid weight.");
-            count ++;
-        }
+      function validate(){
+          let count = 0;
+          let weight = parseInt($('#plan_weight').val());
+          let target = parseInt($('#target_fat').val());
+          let current = parseInt($('#current_fat').val());
 
-        if($('#target_fat').val() > $('#current_fat').val()){
-            $('#targetMsg').html("Please enter a target fat lower than your current fat");
-            count++;
-        }
+          if (weight  < 75 || weight > 1000 || weight === '') {
+              $('#weightMsg').html("Please enter a valid weight.");
+              count ++;
+          }
 
-       if($('#current_fat').val() >= 40 || $('#current_fat').val() === '' ) {
-            $('#currentMsg').html("Please enter a number less than 40");
-            count++;
-        }
-        if($('#target_fat').val() < 4 || $('#target_fat').val() === '') {
-            $('#targetMsg').html("Please enter a number greater than 4");
-            count++;
-        }
+          if(target > current){
+              $('#targetMsg').html("Please enter a target fat lower than your current fat");
+              count++;
+          }
 
-        if($('#target_fat').val() > 40) {
-            $('#targetMsg').html("Please enter a number lower than 40");
-            count++;
-        }
-        if (count > 0)return;
+          if(current >= 40 || current < 4  || isNaN(current)) {
+              $('#currentMsg').html("Please enter a number between 4 and 40");
+              count++;
+          }
+          if(target < 4 || target > 40 || isNaN(target)) {
+              $('#targetMsg').html("Please enter a number greater than 4");
+              count++;
+          }
 
-        else calculate();
-    }
+
+          if (count > 0)return;
+
+          else calculate();
+      }
 
     function calculate(){
 //Disable the login button

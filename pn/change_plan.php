@@ -13,29 +13,30 @@ require("structure/top.php"); //Include the sidebar HTML
 
         function validate(){
             let count = 0;
-            if ($('#plan_weight').val() < 1 || $('#plan_weight').val() > 1000 || $('#plan_weight').val() === '') {
+            let weight = parseInt($('#plan_weight').val());
+            let target = parseInt($('#target_fat').val());
+            let current = parseInt($('#current_fat').val());
+
+            if (weight  < 75 || weight > 1000 || weight === '') {
                 $('#weightMsg').html("Please enter a valid weight.");
                 count ++;
             }
 
-            if($('#target_fat').val() > $('#current_fat').val()){
+            if(target > current){
                 $('#targetMsg').html("Please enter a target fat lower than your current fat");
                 count++;
             }
 
-            if($('#current_fat').val() >= 40 || $('#current_fat').val() === '' ) {
-                $('#currentMsg').html("Please enter a number less than 40");
+            if(current >= 40 || current < 4  || isNaN(current)) {
+                $('#currentMsg').html("Please enter a number between 4 and 40");
                 count++;
             }
-            if($('#target_fat').val() < 4 || $('#target_fat').val() === '') {
+            if(target < 4 || target > 40 || isNaN(target)) {
                 $('#targetMsg').html("Please enter a number greater than 4");
                 count++;
             }
 
-            if($('#target_fat').val() > 40) {
-                $('#targetMsg').html("Please enter a number lower than 40");
-                count++;
-            }
+
             if (count > 0)return;
 
             else calculate();
@@ -333,7 +334,7 @@ require("structure/top.php"); //Include the sidebar HTML
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Target body fat:</label>
-                                <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here">
+                                <input id="target_fat" type="number" class="form-control" placeholder="Enter your target body fat percentage here" required>
                                 <p id="targetMsg" style="color:red"></p>
                             </div>
                         </div>
