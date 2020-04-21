@@ -28,35 +28,34 @@ try {
 
 
         case "A+":
-            $out = "If you are A+ you should drink large amounts of beer";
+        case "A-":
+            $out = "Type A's should choose fruit, vegetables, tofu, seafood, turkey, and whole grains but avoid meat. 
+            For weight loss, seafood, vegetables, 
+            pineapple, olive oil, and soy are best; dairy, wheat, corn, and kidney beans should be avoided.";
             break;
 
-        case "A-":
-            $out = "If you are A- you should consume large amounts of vodka";
-            break;
 
         case "B+":
-            $out = "B+ msg";
+        case "B-":
+            $out = "Type B's should pick a diverse diet including meat, fruit, dairy, 
+            seafood, and grains. To lose weight, type B individuals should choose green vegetables, eggs, liver, 
+            and licorice tea but avoid chicken, corn, peanuts, and wheat.";
             break;
 
-        case "B-":
-            $out = "B- msg";
-            break;
 
         case "AB+":
-            $out = "AB+ msg";
-            break;
-
         case "AB-":
-            $out = "AB- msg";
+            $out = "Type AB's should eat dairy, tofu, lamb, fish, grains, fruit, and vegetables. 
+            For weight loss, tofu, seafood, green vegetables, and kelp are best but chicken, corn, 
+            buckwheat, and kidney beans should be avoided.";
             break;
 
-        case "O+":
-            $out = "O+ msg";
-            break;
 
         case "O-":
-            $out = "O- msg";
+        case "O+":
+            $out = "Type O's should choose high-protein foods and eat lots of meat, vegetables, fish, and fruit but limit grains, beans, 
+                    and legumes. To lose weight, seafood, kelp, red meat, 
+                   broccoli, spinach, and olive oil are best; wheat, corn, and dairy are to be avoided.";
             break;
 
         default:

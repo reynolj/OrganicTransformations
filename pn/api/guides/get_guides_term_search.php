@@ -19,10 +19,11 @@ try {
 
     //Setup of query
     $sql_query = "
-        SELECT g.guide_id, g.guide_name, g.thumbnail, g.subscription_level, g.date_last_modified, CASE WHEN fav.guide_id IS NOT NULL THEN true ELSE false END AS fav, group_concat(t.tag) as tags
+        SELECT g.guide_id, g.guide_name, g.thumbnail, g.subscription_level, g.date_last_modified, p.plan_name, CASE WHEN fav.guide_id IS NOT NULL THEN true ELSE false END AS fav, group_concat(t.tag) as tags
         FROM guides g
         LEFT JOIN favorites AS fav ON (g.guide_id = fav.guide_id AND fav.user_id = ?)
         LEFT JOIN tags AS t ON (g.guide_id = t.guide_id)
+        LEFT JOIN plans AS p ON (g.subscription_level = p.premium_state_id)
         WHERE
             t.tag LIKE ? OR g.guide_name LIKE ? 
         ";

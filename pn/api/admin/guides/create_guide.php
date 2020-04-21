@@ -11,7 +11,7 @@ if(!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1){
 try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
-    $stmt = $con->prepare("INSERT INTO guides (date_created, content) values (now(), ?)");
+    $stmt = $con->prepare("INSERT INTO guides (date_created, date_last_modified, content) values (now(), now(), ?)");
     $stmt->execute(["Type something here..."]);
 
     $guide_id = $con->lastInsertId();

@@ -36,7 +36,11 @@ try {
 
 
     $protein = (int)(($plan_weight - ($plan_weight * ($current_fat / 100))) /2)/ 5;
-    $starch = 0;
+    $starch1 = 0;
+    $starch2 = 0;
+    $starch3 = 0;
+    $starch4 = 0;
+    $starch5 = 0;
     $veg = 3;
     $fruit1 = 10;
     $fruit2 = 0;
@@ -68,12 +72,50 @@ try {
         }
     }
 
+    else if($desired_outcome = "Build muscle/bulk up"){
+        if($activity_lvl == 0){
+            $fat = 15;
+            $fruit2 = 5;
+            $fruit5 = 5;
+            $starch1 = 20;
+            $starch2 = 20;
+            $starch3 = 10;
+            $starch4 = 10;
+            $starch5 = 10;
+        }
+        elseif($activity_lvl == 1){
+            $fat = 15;
+            $fruit2 = 5;
+            $fruit5 = 10;
+            $starch1 = 25;
+            $starch2 = 25;
+            $starch3 = 15;
+            $starch4 = 15;
+            $starch5 = 15;
+        }
+        else{$fat = 15;
+            $fruit2 = 10;
+            $fruit4 =5;
+            $fruit5 = 5;
+            $starch1 = 30;
+            $starch2 = 30;
+            $starch3 = 15;
+            $starch4 = 15;
+            $starch5 = 15;
+        }
+
+        if($body_type == "Ectomorph" && $sex == "Male" && $plan_weight < 160){
+            $veg = 2;
+        }
+
+    }
+
     $meals = [
-        ["Meal"=>"1", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
-        ["Meal"=>"2", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
-        ["Meal"=>"3", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
-        ["Meal"=>"4", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
-        ["Meal"=>"5", "Protein"=>$protein, "Starch"=>$starch, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
+        ["Meal"=>"1", "Protein"=>$protein, "Starch"=>$starch1, "Vegetables"=>$veg, "Fruits"=>$fruit1, "Fats"=>$fat],
+        ["Meal"=>"2", "Protein"=>$protein, "Starch"=>$starch2, "Vegetables"=>$veg, "Fruits"=>$fruit2, "Fats"=>$fat],
+        ["Meal"=>"3", "Protein"=>$protein, "Starch"=>$starch3, "Vegetables"=>$veg, "Fruits"=>$fruit3, "Fats"=>$fat],
+        ["Meal"=>"4", "Protein"=>$protein, "Starch"=>$starch4, "Vegetables"=>$veg, "Fruits"=>$fruit4, "Fats"=>$fat],
+        ["Meal"=>"5", "Protein"=>$protein, "Starch"=>$starch5, "Vegetables"=>$veg, "Fruits"=>$fruit5, "Fats"=>$fat]
     ];
 
 
