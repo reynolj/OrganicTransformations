@@ -37,8 +37,8 @@ try {
 //Updates Top.php variables for user plan button of the sidebar
 switch ($user_data["premium_state"]){
     case 0:
-        $plan_class = "plan-welcome-bg";
-        $plan_text = "Welcome";
+        $plan_class = "plan-free-bg";
+        $plan_text = "Free";
         break;
     case 1:
         $plan_class = "plan-advanced-bg";
