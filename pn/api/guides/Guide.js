@@ -14,6 +14,7 @@ export default class Guide {
         this.tags = json['tags'];
 
         $(document).on('click','#guide-fav-' + this.id, this ,function(event){
+			event.stopPropagation();
             event.data.favorite($(this),on_favorite);
         });
         if(!window.location.href.includes("owner_guides.php")) {
@@ -21,7 +22,6 @@ export default class Guide {
                 window.location.href = "/pn/guide.php?id=" + event.data.id;
             });
         }
-        console.log(json);
     }
 
     get card() {
