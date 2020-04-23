@@ -11,6 +11,11 @@ if(!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1){
 try {
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+    //Find and delete the thumbnail
+    $stmt = $con->prepare("SELECT thumbnail FROM guides WHERE guide_id = ?");
+    $stmt->execute([$_POST['guide_id']]);
+    $thumbnail = $stmt->fetch();
+    unlink("../../../res/imgs/" . $thumbnail['thumbnail']);
     //Delete the guide
     $stmt = $con->prepare("DELETE FROM guides WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);

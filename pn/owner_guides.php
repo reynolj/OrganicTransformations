@@ -30,23 +30,12 @@ require("structure/top.php"); //Include the sidebar HTML
 
                 //Create guide button
                 $('#create_guide').on('click', function () {
-                    create_a_guide()
+                    window.location.href = 'adm_edit_guide.php';
                 });
             });
 
             function create_a_guide() {
-                $.ajax({
-                    type: "POST",
-                    url: './api/admin/guides/create_guide.php',
-                    success: function (data) {
-                        const creation_result = JSON.parse(data);
-                        edit_guide(creation_result['guide_id']);
-                    },
-                    error: function () {
-                        console.log('Error Creating a guide');
-                    }
-
-                });
+                window.location.href = 'adm_edit_guide.php';
             }
 
             function edit_guide(guide_id){

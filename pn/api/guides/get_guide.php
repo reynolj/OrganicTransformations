@@ -3,27 +3,27 @@
 require("../auth/login_check.php"); //Make sure the users is logged in
 require_once('../../variables.php');
 try {
+    class status_container {
+        public $message;
+        public $result;
+        public $guide_data;
+    }
 
     $con = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_pass);
     $con->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
 
 
     //Get the users subscription level
-    $stmt = $con->prepare("SELECT is_active, is_admin, premium_state FROM users WHERE user_id = ?");
-    $stmt->execute([ $_SESSION['user_id'] ]);
-    $user_data = $stmt->fetch();
-
-    if(!$user_data || $user_data['is_active'] != 1){
-        //Bad user
-        $status->result = "ERROR";
-        $status->message = "Sorry, you must be an active user to view that.";
-        die(json_encode($status));
-    }
+//    $stmt = $con->prepare("SELECT is_admin, premium_state FROM users WHERE user_id = ?");
+//    $stmt->execute([ $_SESSION['user_id'] ]);
+//    $user_data = $stmt->fetch();
 
     $stmt = $con->prepare("SELECT guide_id, thumbnail, date_created, date_last_modified, guide_name, subscription_level, content FROM guides WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);
 
     $data = $stmt->fetch();
+
+    $status = new status_container();
 
     //Make sure the guide was found
     if (!$data) {
@@ -33,11 +33,11 @@ try {
     }
 
     //Make sure the user is allowed to view that guide
-    if( $data['subscription_level'] > $user_data['premium_state'] ){
-        $status->result = "ERROR";
-        $status->message = "Sorry! You don't have permission to view this guide. Please upgrade your account.";
-        die(json_encode($status));
-    }
+//    if( $data['subscription_level'] > $user_data['premium_state'] ){
+//        $status->result = "ERROR";
+//        $status->message = "Sorry! You don't have permission to view this guide. Please upgrade your account.";
+//        die(json_encode($status));
+//    }
 
     $status->result = "SUCCESS";
     $status->guide_data = $data;

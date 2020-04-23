@@ -11,38 +11,41 @@ require("structure/top.php"); //Include the sidebar HTML
 
         $( document ).ready(function() {
             //Load the guide content
-            $.ajax({
-                type: "POST",
-                url: 'api/admin/guides/get_guide.php',
-                data: {
-                    guide_id: guide_id
-                },
-                dataType: 'JSON',
-                success: function(data) {
-                    if (data.result == "SUCCESS") {
-                        $('#guide_name').val(data.guide_data.guide_name);
-                        $('#subscription_level').val(data.guide_data.subscription_level);
-                        //Summernote onImageUpload Callback
-                        $('#summernote').summernote({
-                            callbacks: {
-                                onImageUpload: function(files) {
-                                    sendFile(files[0]);
+            if(guide_id != null) {
+                $.ajax({
+                    type: "POST",
+                    url: 'api/admin/guides/get_guide.php',
+                    data: {
+                        guide_id: guide_id
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.result == "SUCCESS") {
+                            $('#guide_name').val(data.guide_data.guide_name);
+                            $('#subscription_level').val(data.guide_data.subscription_level);
+                            //Summernote onImageUpload Callback
+                            $('#summernote').summernote({
+                                callbacks: {
+                                    onImageUpload: function (files) {
+                                        sendFile(files[0]);
+                                    }
                                 }
-                            }
-                        });
-                        //Initialize Summernote Content
-                        $('#summernote').summernote('code', data.guide_data.content);
-                        $('#thumbnail').val(data.guide_data.thumbnail);
-                        $('#thumnailPreview').attr("src", "res/imgs/" + data.guide_data.thumbnail);
-                    }else{
-                        Swal.fire({
-                            title: "Error",
-                            html: data.message
-                        });
-                        return;
+                            });
+                            //Initialize Summernote Content
+                            //$('#summernote').summernote('code', data.guide_data.content);
+                            $('#thumbnail').val(data.guide_data.thumbnail);
+                            $('#thumnailPreview').attr("src", "res/imgs/" + data.guide_data.thumbnail);
+                        } else {
+                            Swal.fire({
+                                title: "Error",
+                                html: data.message
+                            });
+                            return;
+                        }
                     }
-                }
-            });
+                });
+            }
+            $('#summernote').summernote('code');
 
             //Get a list of all possible tags
             $.ajax({
@@ -91,31 +94,60 @@ require("structure/top.php"); //Include the sidebar HTML
             //Save guide content
             $( "#saveBtn" ).click(function() {
                 //Save guide content
-                $.ajax({
-                    type: "POST",
-                    url: 'api/admin/guides/edit_guide.php',
-                    data: {
-                        guide_id: guide_id,
-                        guide_name: $('#guide_name').val(),
-                        subscription_level: $('#subscription_level').val(),
-                        content: $('#summernote').summernote('code'),
-                        thumbnail: $('#thumbnail').val()
-                    },
-                    dataType: 'JSON',
-                    success: function(data) {
-                        if (data.result == "SUCCESS") {
-                            Swal.fire({
-                                title: "Success",
-                                html: data.message
-                            });
-                        }else{
-                            Swal.fire({
-                                title: "Error",
-                                html: data.message
-                            });
+                if(guide_id != null) {
+                    $.ajax({
+                        type: "POST",
+                        url: 'api/admin/guides/edit_guide.php',
+                        data: {
+                            guide_id: guide_id,
+                            guide_name: $('#guide_name').val(),
+                            subscription_level: $('#subscription_level').val(),
+                            content: $('#summernote').summernote('code'),
+                            thumbnail: $('#thumbnail').val()
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.result == "SUCCESS") {
+                                Swal.fire({
+                                    title: "Success",
+                                    html: data.message
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Error",
+                                    html: data.message
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else {
+                    $.ajax({
+                        type: "POST",
+                        url: 'api/admin/guides/create_guide.php',
+                        data: {
+                            guide_name: $('#guide_name').val(),
+                            subscription_level: $('#subscription_level').val(),
+                            content: $('#summernote').summernote('code'),
+                            thumbnail: $('#thumbnail').val()
+                        },
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.result == "SUCCESS") {
+                                Swal.fire({
+                                    title: "Success",
+                                    html: data.message
+                                });
+                                guide_id = data.guide_id;
+                            } else {
+                                Swal.fire({
+                                    title: "Error",
+                                    html: data.message
+                                });
+                            }
+                        }
+                    });
+                }
             });
 
             //Add tag button
@@ -126,63 +158,80 @@ require("structure/top.php"); //Include the sidebar HTML
             //Save Tags Btn
             $('#saveTagsBtn').click(function(){
                 //Save tag list
-                $.ajax({
-                    type: "POST",
-                    url: 'api/admin/guides/set_tags.php',
-                    data: {
-                        guide_id: guide_id,
-                        tags: $("#tags").tagsinput('items')
-                    },
-                    dataType: 'JSON',
-                    success: function(data) {
-                        Swal.fire({
-                            title: "Success",
-                            html: data.message
-                        });
-                    }
-                });
+                if(guide_id != null) {
+                    $.ajax({
+                        type: "POST",
+                        url: 'api/admin/guides/set_tags.php',
+                        data: {
+                            guide_id: guide_id,
+                            tags: $("#tags").tagsinput('items')
+                        },
+                        dataType: 'JSON',
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Success",
+                                html: data.message
+                            });
+                        }
+                    });
+                }
+                else {
+                    Swal.fire({
+                        title: "Guide does not exist",
+                        html: "The guide does not exist, so it cannot have tags added."
+                    });
+                }
             });
 
             //Delete Guide Btn
             $('#deleteGuideBtn').click(function(){
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        //Delete the guide
-                        $.ajax({
-                            type: "POST",
-                            url: 'api/admin/guides/delete_guide.php',
-                            data: {
-                                guide_id: guide_id
-                            },
-                            dataType: 'JSON',
-                            success: function(data) {
-                                if (data.result == "SUCCESS") {
-                                    Swal.fire({
-                                        title: "Success",
-                                        html: data.message
-                                    });
-                                    setTimeout( function(){
-                                        window.location.replace("guides.php");
-                                    }  , 1000 );
-                                }else{
-                                    Swal.fire({
-                                        title: "Error",
-                                        html: data.message
-                                    });
+                if(guide_id != null) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            //Delete the guide
+                            $.ajax({
+                                type: "POST",
+                                url: 'api/admin/guides/delete_guide.php',
+                                data: {
+                                    guide_id: guide_id
+                                },
+                                dataType: 'JSON',
+                                success: function (data) {
+                                    if (data.result == "SUCCESS") {
+                                        Swal.fire({
+                                            title: "Success",
+                                            html: data.message
+                                        });
+                                        setTimeout(function () {
+                                            window.location.replace("owner_guides.php");
+                                        }, 1000);
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error",
+                                            html: data.message
+                                        });
+                                    }
                                 }
-                            }
-                        });
-                    }
-                })
+                            });
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+                        title: "Guide does not exist",
+                        html: "The guide does not exist, so it cannot be deleted."
+                    });
+                }
             });
+
 
             //Upload Thumbnail Btn
             $('#uploadThumbnailBtn').on('click', function(){

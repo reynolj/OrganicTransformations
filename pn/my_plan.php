@@ -15,7 +15,7 @@ require("structure/top.php"); //Include the sidebar HTML
             $(document).ready(function () {
                 let required_plan = '<?php echo isset($_GET['required_plan']) ? $_GET['required_plan'] : ""; ?>';
                 let current_plan = '<?php echo isset($_GET['user_plan']) ? $_GET['user_plan'] : ""; ?>';
-                console.log(required_plan);
+                // console.log(required_plan);
                 if (required_plan != "" && current_plan != "") {
                     Swal.fire({
                         title: "You cannot access this content",

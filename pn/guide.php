@@ -2,6 +2,8 @@
 require("api/auth/login_check.php"); //Make sure the users is logged in
 $title = "OT | Guide"; //Set the browser title
 $highlight = "guide"; //Select which tab in the navigation to highlight
+$guide_id = $_GET['id'];
+require("guide_plan_check.php");
 require("structure/top.php"); //Include the sidebar HTML
 ?>
 
@@ -18,7 +20,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 },
                 dataType: 'JSON',
                 success: function (data) {
-                    if (data.result == "SUCCESS") {
+                    if (data.result === "SUCCESS") {
                         $("#page_title").text(data.guide_data.guide_name);
                         $("#guide_content").html(data.guide_data.content);
                     } else {
