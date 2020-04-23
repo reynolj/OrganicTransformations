@@ -9,6 +9,8 @@ require("structure/top.php"); //Include the sidebar HTML
 <head>
   <script type="module" src='./api/dashboard/dashboard.js'>
   </script>
+  <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
 </head>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

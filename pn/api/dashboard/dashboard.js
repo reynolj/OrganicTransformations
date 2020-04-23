@@ -5,6 +5,12 @@ import Pages from '../guides/Pages.js';
 // TODO why is the Add a goal button added via script and not apart of the html
 
 $( window ).on( "load", function() {
+    if(window.location.href.includes("invalid")) {
+        Swal.fire({
+            title: "Guide not available",
+            html: "Unfortunately, the guide you requested is not available, please contact site administrators if you believe this is an error."
+        });
+    }
     $(document).on('click','#add_goal_btn', function (){
         add_goal();
     });

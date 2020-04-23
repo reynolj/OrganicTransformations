@@ -16,4 +16,5 @@ catch(PDOException $e) {
     die("Guide check error");
 }
 $tier = $data['plan_name'];
+if($tier == null) header("Location: index.php?invalid_guide=1");
 require("plan_check.php");
