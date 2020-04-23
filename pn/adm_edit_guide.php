@@ -32,7 +32,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 }
                             });
                             //Initialize Summernote Content
-                            //$('#summernote').summernote('code', data.guide_data.content);
+                            $('#summernote').summernote('code', data.guide_data.content);
                             $('#thumbnail').val(data.guide_data.thumbnail);
                             $('#thumnailPreview').attr("src", "res/imgs/" + data.guide_data.thumbnail);
                         } else {
@@ -45,7 +45,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     }
                 });
             }
-            $('#summernote').summernote('code');
+            else { $('#summernote').summernote('code'); }
 
             //Get a list of all possible tags
             $.ajax({
