@@ -15,7 +15,8 @@ try {
     $stmt = $con->prepare("SELECT thumbnail FROM guides WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);
     $thumbnail = $stmt->fetch();
-    unlink("../../../res/imgs/" . $thumbnail['thumbnail']);
+    if($thumbnail['thumbnail'] != "default_thumb.png")
+        unlink("../../../res/imgs/" . $thumbnail['thumbnail']);
     //Delete the guide
     $stmt = $con->prepare("DELETE FROM guides WHERE guide_id = ?");
     $stmt->execute([$_POST['guide_id']]);

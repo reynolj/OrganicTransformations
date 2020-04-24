@@ -122,6 +122,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     });
                 }
                 else {
+                    const thumbnail = ($('#thumbnail').val() === "") ? "default_thumb.png" : $('#thumbnail').val();
                     $.ajax({
                         type: "POST",
                         url: 'api/admin/guides/create_guide.php',
@@ -129,7 +130,7 @@ require("structure/top.php"); //Include the sidebar HTML
                             guide_name: $('#guide_name').val(),
                             subscription_level: $('#subscription_level').val(),
                             content: $('#summernote').summernote('code'),
-                            thumbnail: $('#thumbnail').val()
+                            thumbnail: thumbnail
                         },
                         dataType: 'JSON',
                         success: function (data) {
