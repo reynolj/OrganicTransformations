@@ -195,6 +195,14 @@ function update_subscription_info_db($subscriptions_from_db){
 
 /**
  * Gets subscription details using sub_id and a PayPal access_token
+ * status:
+ * APPROVAL_PENDING. The subscription is created but not yet approved by the buyer.
+ * APPROVED. The buyer has approved the subscription.
+ * ACTIVE. The subscription is active.
+ * SUSPENDED. The subscription is suspended.
+ * CANCELLED. The subscription is cancelled.
+ * EXPIRED. The subscription is expired.
+ *
  * @param $sub_id
  * @param $access_token
  * @return bool|mixed false, if failed; returns array with details otherwise

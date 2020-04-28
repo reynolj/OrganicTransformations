@@ -78,8 +78,19 @@ require("structure/top.php"); //Include the sidebar HTML
             function display_subscriptions(subscriptions) {
                 let $html_sub_section = $('#my-subscription');
                 $html_sub_section.html("");
-                console.log($html_sub_section);
-
+                //Display warning if there is more than one subscription
+                let num_of_subs = Object.keys(subscriptions).length;
+                console.log(num_of_subs);
+                if(num_of_subs >= 1){
+                    Swal.fire({
+                        title: 'Warning!\nMultiple Subscriptions',
+                        type: 'warning',
+                        html: '<p>You are signed up for <b>'+num_of_subs+'</b> subscriptions.</p>' +
+                            '<p>You should only have <b>one</b> premium subscription at a time.</p>' +
+                            '<p>Please <b>cancel</b> the subscription(s) you do not wish to keep on this page or through your PayPal dashboard.</p>' +
+                            '<p>Unfortunately we are not able to offer refunds. If you have any questions please see the Help page.</p>'
+                    });
+                }
                 subscriptions.forEach(function (sub) {
                     let $subscriptionRow;
                     $.ajax({
@@ -100,6 +111,8 @@ require("structure/top.php"); //Include the sidebar HTML
             }
 
             function subscription_row(container,sub) {
+                //Debug
+                console.log(sub);
                 let $card = $('<div>').addClass("card card-primary card-outline elevation-2");
                 //Header
                 let $card_header = $('<div>').addClass("card-header");
@@ -151,13 +164,13 @@ require("structure/top.php"); //Include the sidebar HTML
 
                 $cancellation_btn.on('click', function () {
                     console.log("clicked");
-                    createAlert(sub['id'])
+                    cancellationAlert(sub['id'])
                 });
 
                 return $card;
             }
 
-            async function createAlert(id) {
+            async function cancellationAlert(id) {
                 try{
                     const { value: text } = await Swal.fire({
                         title: 'Cancellation Confirmation',
