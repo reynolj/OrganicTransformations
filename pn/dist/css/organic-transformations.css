@@ -184,6 +184,11 @@
     white-space: nowrap;
 }
 
+.plan-disabled{
+    background-color: #D3D3D3;
+    color: #000 !important;
+}
+
 /*Plans - Background*/
 
 .plan-free-bg{
