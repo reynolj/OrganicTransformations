@@ -17,11 +17,14 @@ require("structure/top.php"); //Include the sidebar HTML
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- SweetAlert -->
     <link rel="stylesheet" href="AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
     <script src="AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+
 
     <script type="text/javascript">
         function deleteRequest($apt_id){
@@ -172,14 +175,39 @@ require("structure/top.php"); //Include the sidebar HTML
 <!-- DataTables -->
 <script src="AdminLTE/plugins/datatables/jquery.dataTables.js"></script>
 <script src="AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="AdminLTE/plugins/datatables-responsive/js/datatables.responsive.js"></script>
+<script src="AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+
 <!-- page script -->
 <script>
-    $(function () {
-        $("#counseling").DataTable({
+        $(document).ready(function() {
+            $('#counseling').DataTable( {
+                "lengthChange": false,
+                "paging": false,
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal( {
+                            header: function ( row ) {
+                                var data = row.data();
+                                return 'Details for '+data[0]+' '+data[1];
+                            }
+                        } ),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                            tableClass: 'table'
+                        } )
+                    }
+                }
+            } );
+        } );
+
+        /*var table = $("#counseling").DataTable({
             "lengthChange": false,
             "paging": false,
-        });
-    });
+        });*/
+        //$('#counseling tbody').on('click', 'tr', function () {
+        //    var data = table.row( this ).data();
+        //    alert( 'You clicked on '+data[0]+'\'s row' );
+        //} );
 </script>
 </body>
 </html>
