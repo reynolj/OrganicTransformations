@@ -78,8 +78,19 @@ require("structure/top.php"); //Include the sidebar HTML
             function display_subscriptions(subscriptions) {
                 let $html_sub_section = $('#my-subscription');
                 $html_sub_section.html("");
-                console.log($html_sub_section);
-
+                //Display warning if there is more than one subscription
+                let num_of_subs = Object.keys(subscriptions).length;
+                console.log(num_of_subs);
+                if(num_of_subs >= 1){
+                    Swal.fire({
+                        title: 'Warning!\nMultiple Subscriptions',
+                        type: 'warning',
+                        html: '<p>You are signed up for <b>'+num_of_subs+'</b> subscriptions.</p>' +
+                            '<p>You should only have <b>one</b> premium subscription at a time.</p>' +
+                            '<p>Please <b>cancel</b> the subscription(s) you do not wish to keep on this page or through your PayPal dashboard.</p>' +
+                            '<p>Unfortunately we are not able to offer refunds. If you have any questions please see the Help page.</p>'
+                    });
+                }
                 subscriptions.forEach(function (sub) {
                     let $subscriptionRow;
                     $.ajax({
@@ -100,6 +111,8 @@ require("structure/top.php"); //Include the sidebar HTML
             }
 
             function subscription_row(container,sub) {
+                //Debug
+                console.log(sub);
                 let $card = $('<div>').addClass("card card-primary card-outline elevation-2");
                 //Header
                 let $card_header = $('<div>').addClass("card-header");
@@ -107,32 +120,32 @@ require("structure/top.php"); //Include the sidebar HTML
 
                 //Body
                 let $card_body = $('<div>').addClass("card-body row margin");
-                //Col 1
-                let $col1 = $('<div>').addClass("col-md-3");
+                //Col sub_id
+                let $sub_id_col = $('<div>').addClass("col-md-3");
                 let $sub_id_header = $('<p>').html('Subscription ID:');
                 let $sub_id = $('<p>').html('<b>'+sub['id'] +'</b>');
-                $col1.append($sub_id_header);
-                $col1.append($sub_id);
+                $sub_id_col.append($sub_id_header);
+                $sub_id_col.append($sub_id);
                 //Col 2
-                let $col2 = $('<div>').addClass("col-md-3");
+                let $name_col = $('<div>').addClass("col-md-3");
                 let $name_header = $('<p>').html('Name:');
                 let name = sub['subscriber']['name'];
                 console.log(name);
                 let $name = $('<p>').html('<b>'+ name['given_name'] +' '+ name['surname'] +'</b>');
-                $col2.append($name_header);
-                $col2.append($name);
+                $name_col.append($name_header);
+                $name_col.append($name);
                 //Col 3
-                let $col3 = $('<div>').addClass("col-md-3");
+                let $created_col = $('<div>').addClass("col-md-3");
                 let $created_header = $('<p>').html('Created on:');
                 let $created = $('<p>').html('<b>'+sub['create_time'] +'</b>');
-                $col3.append($created_header);
-                $col3.append($created);
+                $created_col.append($created_header);
+                $created_col.append($created);
                 //Col4
-                let $col4 = $('<div>').addClass("col-md-3");
+                let $next_billing_col = $('<div>').addClass("col-md-3");
                 let $next_billing_header = $('<p>').html('Next Billing Time:');
                 let $next_billing = $('<p>').html('<b>'+sub['billing_info']['next_billing_time'] +'</b>');
-                $col4.append($next_billing_header);
-                $col4.append($next_billing);
+                $next_billing_col.append($next_billing_header);
+                $next_billing_col.append($next_billing);
                 //Footer
                 let $card_footer = $('<div>').addClass("card-footer").append();
                 let $cancellation_btn = $('<button>').addClass("btn btn-warning float-right").html("Cancel Subscription");
@@ -141,23 +154,23 @@ require("structure/top.php"); //Include the sidebar HTML
                 //Construct
                 $card.append($card_header);
                 $card.append($card_body);
-                $card_body.append($col1);
-                $card_body.append($col2);
-                $card_body.append($col3);
-                $card_body.append($col4);
+                $card_body.append($sub_id_col);
+                $card_body.append($name_col);
+                $card_body.append($created_col);
+                $card_body.append($next_billing_col);
                 $card.append($card_footer);
 
                 container.append($card);
 
                 $cancellation_btn.on('click', function () {
                     console.log("clicked");
-                    createAlert(sub['id'])
+                    cancellationAlert(sub['id'])
                 });
 
                 return $card;
             }
 
-            async function createAlert(id) {
+            async function cancellationAlert(id) {
                 try{
                     const { value: text } = await Swal.fire({
                         title: 'Cancellation Confirmation',
@@ -236,7 +249,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card-body">
                         <!-- Place page content here -->
                         <p style="text-align: center;">Your current plan is
-                            <button class="btn elevation-2 font-weight-bold <?php echo $plan_class ?>"><?php echo $plan_text ?></button>
+                            <button class="btn elevation-2 font-weight-bold <?php if(isset($plan_class)) {echo $plan_class;} ?>"><?php if(isset($plan_text)) {echo $plan_text;} ?></button>
                         </p>
                         <hr noshade></hr
                         noshade>
@@ -272,7 +285,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <!-- Place page content here -->
-                                        <button id="welcome-banner" type="button"
+                                        <button id="free-banner" type="button"
                                                 class="btn btn-block plan-free-bg elevation-1 font-weight-bold">
                                             Welcome
                                         </button>
@@ -286,6 +299,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                             <li>Free nutritional training videos</li>
                                             <li>Free guides</li>
                                         </ul>
+                                        <div id="button-container-free"></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
@@ -307,7 +321,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                             <li>Advanced nutritional training videos</li>
                                             <li>Advanced level guides</li>
                                         </ul>
-                                        <div id="paypal-button-container-advanced"></div>
+                                        <div id="button-container-advanced"></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
@@ -325,10 +339,12 @@ require("structure/top.php"); //Include the sidebar HTML
                                         noshade>
                                         <ul>
                                             <li><b><i>Advanced</i></b> plan +</li>
-                                            <li>Access to premium content</li>
-                                            <li>Monthly private coaching with trainers!</li>
+                                            <li>Personal muscle training videos</li>
+                                            <li>Personal nutritional training videos</li>
+                                            <li>Personal level guides</li>
+                                            <li>Monthly <b>Private Coaching</b> with trainers!</li>
                                         </ul>
-                                        <div id="paypal-button-container-personal"></div>
+                                        <div id="button-container-personal"></div>
                                     </div> <!-- /.card-body -->
                                 </div> <!-- /.card-primary -->
                             </div> <!-- /.col -->
@@ -345,7 +361,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card-body">
                         <!-- Place page content here -->
                         <!--TODO Debug Button, rmv later-->
-                        <button class="btn btn-block btn-primary" id="test-details-btn"> SUBSCRIPTION DETAILS</button>
+                        <button class="btn btn-block btn-default" id="test-details-btn"> SUBSCRIPTION DETAILS</button>
                         <button class="btn btn-block btn-primary" id="test-cancel-btn"> CANCEL</button>
                         <button class="btn btn-block btn-primary" id="test-update-all-btn">UPDATE ALL</button>
                     </div> <!-- /.card-body -->
@@ -362,31 +378,47 @@ require("structure/top.php"); //Include the sidebar HTML
     <!--PayPal Script-->
     <script>
         //TODO Final touch, disable PayPal button depending on the plan you arleady have
-        //Advanced Plan
-        paypal.Buttons({
-            //On click
-            createSubscription: function (data, actions) {
-                return createSubscription('P-5AL450891J419652VL2IEBYQ', actions);
-            },
+        let premium_state = -1;
+        premium_state = <?php if(isset($user_data["premium_state"])) {echo $user_data["premium_state"];} ?>;
+        console.log("Premium State: " + premium_state);
 
-            //On approval
-            onApprove: function (data, actions) {
-                onApprove('Advanced', data);
-            }
-        }).render('#paypal-button-container-advanced');
+        /** FREE PLAN */
+        if(premium_state !== 0){
+            $('#button-container-free').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+        }
+        /** ADVANCED PLAN */
+        if(premium_state === 0) {
+            paypal.Buttons({
+                //On click
+                createSubscription: function (data, actions) {
+                    return createSubscription('P-5AL450891J419652VL2IEBYQ', actions);
+                },
 
-        //Personal Plan
-        paypal.Buttons({
-            //On click
-            createSubscription: function (data, actions) {
-                return createSubscription('P-90906277YJ992482DL2IEDWA', actions);
-            },
+                //On approval
+                onApprove: function (data, actions) {
+                    onApprove('Advanced', data);
+                }
+            }).render('#button-container-advanced');
+        } else {
+            $('#button-container-advanced').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+        }
 
-            //On approval
-            onApprove: function (data, actions) {
-                onApprove('Personal', data);
-            }
-        }).render('#paypal-button-container-personal');
+        /** PERSONAL PLAN */
+        if(premium_state === 0 || premium_state === 1) {
+            paypal.Buttons({
+                //On click
+                createSubscription: function (data, actions) {
+                    return createSubscription('P-90906277YJ992482DL2IEDWA', actions);
+                },
+
+                //On approval
+                onApprove: function (data, actions) {
+                    onApprove('Personal', data);
+                }
+            }).render('#button-container-personal');
+        } else {
+            $('#button-container-personal').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+        }
 
         //On Approval
         function onApprove(plan_name, data) {
