@@ -10,7 +10,7 @@ require_once("../../variables.php");
 
 // Make sure both parameters are specified
 if(!isset($_POST['username']) || !isset($_POST['password'])	|| $_POST['username'] == "" || $_POST['password'] == "" ){
-	die("Invalid Parameters");
+	die("Please fill in all textboxes");
 }
 
 $username = $_POST['username']; //or email
@@ -25,7 +25,7 @@ try {
   $stmt->execute([ strtolower($_POST['username']), strtolower($_POST['username']), $_POST['password'] ]);
   $data = $stmt->fetch();
   if(!$data){
-    die("Invalid username or password combination.");
+    die("Invalid username and password combination.");
   }
 
   //Check that the account is active

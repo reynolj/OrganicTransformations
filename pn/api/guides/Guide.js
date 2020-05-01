@@ -30,7 +30,7 @@ export default class Guide {
         console.log(this.name + " " + this.thumbnail);
         var html =
             '<div class="col-lg-3 col-md-6 col-sm-12">' + this.get_ribbon() +
-                '<div class="guide-card small-box elevation-2" id="guide-card-'+this.id+'" style="background-image: url('+ this.img_directory + this.thumbnail +'), url(/pn/res/imgs/default_thumb.png)">' +
+                '<div class="guide-card small-box" id="guide-card-'+this.id+'">' +
                     '<div class="inner">' +
                         '<svg class="overlay-button ' + (this.is_favorite === 1 ? " favorite" : "") + '" ' +
                         'id="guide-fav-' + this.id + '" viewBox="0 0 940.688 940.688">' +
