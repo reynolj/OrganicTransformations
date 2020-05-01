@@ -2,8 +2,7 @@
     cursor: pointer;
     position: absolute;
     z-index: 12;
-    fill: #666666;
-    opacity: 50%;
+    fill: rgba(255,255,255,.50);
     stroke: white;
     stroke-width: 20;
     display: block;
@@ -103,6 +102,25 @@
 }
 
 .guide-card {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+.guide-card:hover {
+    opacity: 90%;
+}
+
+.guide-card > .small-box-footer{
+    border-radius: 0 0 .25rem .25rem;
+    background: rgba(255,255,255,.8);
+}
+
+.guide-card > .small-box-footer:hover{
+    background: rgba(255,255,255,.95);
 }
 
 .guide-card :hover {
