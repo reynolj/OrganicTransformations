@@ -47,7 +47,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 let num_of_subs = Object.keys(subscriptions).length;
                 console.log(num_of_subs);
                 //Has multiple subscriptions
-                if(num_of_subs >= 1){
+                if(num_of_subs > 1){
                     Swal.fire({
                         title: 'Warning!\nMultiple Subscriptions',
                         type: 'warning',
@@ -157,7 +157,9 @@ require("structure/top.php"); //Include the sidebar HTML
                         showCancelButton: true
                     });
                     if (text) {
-                        cancel_subscription(id,text);
+                        cancel_subscription(id,text, function () {
+                            location.reload();
+                        });
                     }
                     else {
                         //No text given
@@ -173,7 +175,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 }
             }
 
-            function cancel_subscription(sub_id, reason) {
+            function cancel_subscription(sub_id, reason, onCancellationHandler) {
                 console.log('Cancelling subscription ' + sub_id + ' with reason "' + reason + '"');
                 $.ajax({
                     type: 'POST',
@@ -185,11 +187,10 @@ require("structure/top.php"); //Include the sidebar HTML
                     success: function (data) {
                         console.log("command sent and returned: Cancellation should have been executed");
                         console.log(data);
-                        location.reload();
+                        onCancellationHandler();
                     },
                     error: function () {
                         console.log("ERROR");
-                        location.reload();
                     }
                 });
             }
