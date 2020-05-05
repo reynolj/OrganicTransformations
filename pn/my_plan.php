@@ -38,6 +38,10 @@ require("structure/top.php"); //Include the sidebar HTML
                         }
                     });
                 });
+                //Debug only
+                $('#free-banner').on('click', function () {
+                    onSubPlanDoesntExist();
+                });
             });
 
             function display_subscriptions(subscriptions) {
@@ -161,14 +165,15 @@ require("structure/top.php"); //Include the sidebar HTML
                             location.reload();
                         });
                     }
-                    else {
-                        //No text given
-                        Swal.fire({
-                            title: 'No reason given!',
-                            type: 'warning',
-                            html: '<p>You must give a reason for the cancellation.</p>'
-                        })
-                    }
+                    //TODO replace this async swal with normal swal where ".then((result) => {" and "result.dismiss" are used
+                    // else {
+                    //     //No text given
+                    //     Swal.fire({
+                    //         title: 'No reason given!',
+                    //         type: 'warning',
+                    //         html: '<p>You must give a reason for the cancellation.</p>'
+                    //     })
+                    // }
                 }catch(e){
                     // Fail!
                     console.error(e);
@@ -258,9 +263,9 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card-body">
                         <!-- Place page content here -->
                         <p>Note: <b>Upgrades, downgrades, and cancellations will take effect immediately</b>, stopping any future recurring payments under the
-                                previous plan. Payments under previous plans cannot be refunded. Payments for new plans will be charged in full.
-                                Please see the <a href="help.php">Help page</a> if you have any questions or need support.
-                                Payments cannot be refunded.</p>
+                                previous plan. Previous payments cannot be refunded. Payments for new plans will be charged in full.
+                                Please see the <a href="help.php">Help page</a> if you have any questions or need support.</p>
+                        <p>To cancel a subscription your click the <b>"Show my subscription details"</b> button. Then, click "Cancel" on the subscription you would like to cancel.</p>
                         <hr noshade></hr
                         noshade>
                         <div class="row">
@@ -400,9 +405,33 @@ require("structure/top.php"); //Include the sidebar HTML
             }
         }
 
+        //TODO needs to be finished, would check one more time just in case that the plan doesn't exist when PayPal button pressed before opening dialog
         //checkExistingSubscription
-        function checkExistingSubscription(doesntExist){
+        function onSubPlanDoesntExist(plan_being_checked,when_plan_doesnt_exist_handler){
+            $.ajax({
+                type: 'POST',
+                url: 'api/plans/get_user_subscriptions.php',
+                success: function (data) {
+                    console.log("command sent and returned");
+                    console.log(data);
+                    const subscriptions = JSON.parse(data);
+                    console.log(subscriptions);
+                    let doesntExist = false;
+                    subscriptions.forEach(function (sub) {
+                        if(sub['plan_id'] === plan_being_checked && doesntExist === false) {
+                            doesntExist = true;
+                        }
+                    };
+                    //If it doesnt exist
+                    if (doesntExist){
+                        when_plan_doesnt_exist_handler()
+                    }
 
+                },
+                error: function () {
+                    console.log("ERROR");
+                }
+            });
         }
 
         //On Approval
