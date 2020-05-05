@@ -147,7 +147,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 try{
                     const { value: text } = await Swal.fire({
                         title: 'Cancellation Confirmation',
-                        text: "You won't be able to undo this action. PayPal requires a reason. Needs to be less than 255 characters.",
+                        text: "You will not be able to undo this action. Cancellation will take effect immediately and previous payment cannot be refunded. See the Help page if you have any questions. PayPal requires a reason. Needs to be less than 255 characters.",
                         type: 'warning',
                         input: 'textarea',
                         inputPlaceholder: 'Provide a reason for PayPal...',
@@ -156,9 +156,16 @@ require("structure/top.php"); //Include the sidebar HTML
                         },
                         showCancelButton: true
                     });
-
                     if (text) {
                         cancel_subscription(id,text);
+                    }
+                    else {
+                        //No text given
+                        Swal.fire({
+                            title: 'No reason given!',
+                            type: 'warning',
+                            html: '<p>You must give a reason for the cancellation.</p>'
+                        })
                     }
                 }catch(e){
                     // Fail!
@@ -167,6 +174,7 @@ require("structure/top.php"); //Include the sidebar HTML
             }
 
             function cancel_subscription(sub_id, reason) {
+                console.log('Cancelling subscription ' + sub_id + ' with reason "' + reason + '"');
                 $.ajax({
                     type: 'POST',
                     url: 'api/plans/cancel_subscription.php',
@@ -177,13 +185,15 @@ require("structure/top.php"); //Include the sidebar HTML
                     success: function (data) {
                         console.log("command sent and returned: Cancellation should have been executed");
                         console.log(data);
+                        location.reload();
                     },
                     error: function () {
-                        console.log("ERROR")
+                        console.log("ERROR");
+                        location.reload();
                     }
                 });
-                location.reload();
             }
+
 
 
         </script>
