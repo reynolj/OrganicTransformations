@@ -350,6 +350,7 @@ require("structure/top.php"); //Include the sidebar HTML
 
     <!--PayPal Script-->
     <script>
+        //TODO NOTE: Use commit "a93d40a2" to build off upgrade behavior, shortcut has been used for this commit by not giving a upgrade option (Task #335)
         //TODO Final touch, disable PayPal button depending on the plan you arleady have
         let users_prem_state = -1;
         users_prem_state = <?php if(isset($user_data["premium_state"])) {echo $user_data["premium_state"];} ?>;
@@ -361,7 +362,7 @@ require("structure/top.php"); //Include the sidebar HTML
         }
         /** ADVANCED PLAN */
         let adv_prem_state = 1;
-        if(users_prem_state < adv_prem_state) {
+        if(users_prem_state === 0) {
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
@@ -377,14 +378,14 @@ require("structure/top.php"); //Include the sidebar HTML
             let adv_btn = $('#button-container-advanced').addClass('btn btn-block plan-disabled');
             if(users_prem_state === adv_prem_state){
                 adv_btn.html('<b>Your Current Plan</b>')
-            } else if (users_prem_state > adv_prem_state) {
-                adv_btn.html('You already have a higher plan. To downgrade you must first cancel your subscription.')
+            } else {
+                adv_btn.html('You already have a plan. To downgrade/upgrade you must first cancel your subscription.')
             }
         }
 
         /** PERSONAL PLAN */
         let prsnl_prem_state = 2;
-        if(users_prem_state < prsnl_prem_state) {
+        if(users_prem_state === 0) {
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
@@ -400,39 +401,39 @@ require("structure/top.php"); //Include the sidebar HTML
             let adv_btn = $('#button-container-personal').addClass('btn btn-block plan-disabled');
             if(users_prem_state === prsnl_prem_state){
                 adv_btn.html('<b>Your Current Plan</b>')
-            } else if (users_prem_state > prsnl_prem_state) {
-                adv_btn.html('You already have a higher plan. To downgrade you must first cancel your subscription.')
+            } else {
+                adv_btn.html('You already have a plan. To downgrade/upgrade you must first cancel your subscription.')
             }
         }
 
         //TODO needs to be finished, would check one more time just in case that the plan doesn't exist when PayPal button pressed before opening dialog
         //checkExistingSubscription
-        function onSubPlanDoesntExist(plan_being_checked,when_plan_doesnt_exist_handler){
-            $.ajax({
-                type: 'POST',
-                url: 'api/plans/get_user_subscriptions.php',
-                success: function (data) {
-                    console.log("command sent and returned");
-                    console.log(data);
-                    const subscriptions = JSON.parse(data);
-                    console.log(subscriptions);
-                    let doesntExist = false;
-                    subscriptions.forEach(function (sub) {
-                        if(sub['plan_id'] === plan_being_checked && doesntExist === false) {
-                            doesntExist = true;
-                        }
-                    };
-                    //If it doesnt exist
-                    if (doesntExist){
-                        when_plan_doesnt_exist_handler()
-                    }
-
-                },
-                error: function () {
-                    console.log("ERROR");
-                }
-            });
-        }
+        // function onSubPlanDoesntExist(plan_being_checked,when_plan_doesnt_exist_handler){
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: 'api/plans/get_user_subscriptions.php',
+        //         success: function (data) {
+        //             console.log("command sent and returned");
+        //             console.log(data);
+        //             const subscriptions = JSON.parse(data);
+        //             console.log(subscriptions);
+        //             let doesntExist = false;
+        //             subscriptions.forEach(function (sub) {
+        //                 if(sub['plan_id'] === plan_being_checked && doesntExist === false) {
+        //                     doesntExist = true;
+        //                 }
+        //             };
+        //             //If it doesnt exist
+        //             if (doesntExist){
+        //                 when_plan_doesnt_exist_handler()
+        //             }
+        //
+        //         },
+        //         error: function () {
+        //             console.log("ERROR");
+        //         }
+        //     });
+        // }
 
         //On Approval
         function onApprove(plan_name, data) {
