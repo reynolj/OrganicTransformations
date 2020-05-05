@@ -23,41 +23,6 @@ require("structure/top.php"); //Include the sidebar HTML
                     });
                 }
 
-                //Temporary Debug
-                $('#test-details-btn').on('click', function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'api/plans/get_subscription_details.php',
-                        data: {
-                            subscription_id: 'I-D3J56HG28SUG',
-                        },
-                        success: function (data) {
-                            console.log("command sent and returned");
-                            console.log(data);
-                        },
-                        error: function () {
-                            console.log("ERROR")
-                        }
-                    })
-                });
-                $('#test-cancel-btn').on('click', function () {
-                    cancel_subscription('I-D3J56HG28SUG','no like');
-                });
-                $('#test-update-all-btn').on('click', function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: 'api/plans/update_all_premium_states_db.php',
-                        success: function (data) {
-                            console.log("command sent and returned");
-                            console.log(data);
-                        },
-                        error: function () {
-                            console.log("ERROR")
-                        }
-                    });
-                    //Reload the page
-                    location.reload();
-                });
                 $('#show-subscription-btn').on('click', function () {
                     $.ajax({
                         type: 'POST',
@@ -81,6 +46,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 //Display warning if there is more than one subscription
                 let num_of_subs = Object.keys(subscriptions).length;
                 console.log(num_of_subs);
+                //Has multiple subscriptions
                 if(num_of_subs >= 1){
                     Swal.fire({
                         title: 'Warning!\nMultiple Subscriptions',
@@ -89,6 +55,13 @@ require("structure/top.php"); //Include the sidebar HTML
                             '<p>You should only have <b>one</b> premium subscription at a time.</p>' +
                             '<p>Please <b>cancel</b> the subscription(s) you do not wish to keep on this page or through your PayPal dashboard.</p>' +
                             '<p>Unfortunately we are not able to offer refunds. If you have any questions please see the Help page.</p>'
+                    });
+                }
+                //Has no subscription
+                if(num_of_subs === 0){
+                    Swal.fire({
+                        title: 'No Paid Subscription',
+                        html: '<p>You are not subscribed to a paid premium subscription</p>',
                     });
                 }
                 subscriptions.forEach(function (sub) {
@@ -248,7 +221,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Place page content here -->
-                        <p style="text-align: center;">Your current plan is
+                        <p style="text-align: center; vertical-align:  center">Your current plan is
                             <button class="btn elevation-2 font-weight-bold <?php if(isset($plan_class)) {echo $plan_class;} ?>"><?php if(isset($plan_text)) {echo $plan_text;} ?></button>
                         </p>
                         <hr noshade></hr
@@ -273,13 +246,12 @@ require("structure/top.php"); //Include the sidebar HTML
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <!-- Place page content here -->
-                        <p>Note: Upgrades will take effect immediately, stopping any future recurring payments under the
-                            previous plan. Meanwhile, downgrades will take effect at the end of the billing cycle.
-                            Payments cannot be refunded.</p>
+                        <p>Note: <b>Upgrades, downgrades, and cancellations will take effect immediately</b>, stopping any future recurring payments under the
+                                previous plan. Payments under previous plans cannot be refunded. Payments for new plans will be charged in full.
+                                Please see the <a href="help.php">Help page</a> if you have any questions or need support.
+                                Payments cannot be refunded.</p>
                         <hr noshade></hr
                         noshade>
-                        <p>If you would like to cancel your current plan, please <a href="#">click here</a> to confirm
-                            with email.</p>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="card card-primary">
@@ -287,7 +259,7 @@ require("structure/top.php"); //Include the sidebar HTML
                                         <!-- Place page content here -->
                                         <button id="free-banner" type="button"
                                                 class="btn btn-block plan-free-bg elevation-1 font-weight-bold">
-                                            Welcome
+                                            Free
                                         </button>
                                         </br>
                                         <center><h5><b>$0/month</b></h5></center>
@@ -352,21 +324,6 @@ require("structure/top.php"); //Include the sidebar HTML
 
                     </div> <!-- /.card-body -->
                 </div> <!-- /.card-primary -->
-
-                <!--TODO DEBUG ONLY-->
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h5 class="m-0">Testing</h5>
-                    </div> <!-- /.card-header -->
-                    <div class="card-body">
-                        <!-- Place page content here -->
-                        <!--TODO Debug Button, rmv later-->
-                        <button class="btn btn-block btn-default" id="test-details-btn"> SUBSCRIPTION DETAILS</button>
-                        <button class="btn btn-block btn-primary" id="test-cancel-btn"> CANCEL</button>
-                        <button class="btn btn-block btn-primary" id="test-update-all-btn">UPDATE ALL</button>
-                    </div> <!-- /.card-body -->
-                </div> <!-- /.card-primary -->
-
             </div> <!-- /.container-fluid -->
         </div> <!-- /.content -->
     </div> <!-- /.content-wrapper -->
@@ -378,16 +335,17 @@ require("structure/top.php"); //Include the sidebar HTML
     <!--PayPal Script-->
     <script>
         //TODO Final touch, disable PayPal button depending on the plan you arleady have
-        let premium_state = -1;
-        premium_state = <?php if(isset($user_data["premium_state"])) {echo $user_data["premium_state"];} ?>;
-        console.log("Premium State: " + premium_state);
+        let users_prem_state = -1;
+        users_prem_state = <?php if(isset($user_data["premium_state"])) {echo $user_data["premium_state"];} ?>;
+        console.log("Premium State: " + users_prem_state);
 
         /** FREE PLAN */
-        if(premium_state !== 0){
-            $('#button-container-free').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+        if(users_prem_state > 0){
+            $('#button-container-free').addClass('btn btn-block plan-disabled').html('You already have a higher plan. To downgrade you must first cancel your current subscription.');
         }
         /** ADVANCED PLAN */
-        if(premium_state === 0) {
+        let adv_prem_state = 1;
+        if(users_prem_state < adv_prem_state) {
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
@@ -400,11 +358,17 @@ require("structure/top.php"); //Include the sidebar HTML
                 }
             }).render('#button-container-advanced');
         } else {
-            $('#button-container-advanced').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+            let adv_btn = $('#button-container-advanced').addClass('btn btn-block plan-disabled');
+            if(users_prem_state === adv_prem_state){
+                adv_btn.html('<b>Your Current Plan</b>')
+            } else if (users_prem_state > adv_prem_state) {
+                adv_btn.html('You already have a higher plan. To downgrade you must first cancel your subscription.')
+            }
         }
 
         /** PERSONAL PLAN */
-        if(premium_state === 0 || premium_state === 1) {
+        let prsnl_prem_state = 2;
+        if(users_prem_state < prsnl_prem_state) {
             paypal.Buttons({
                 //On click
                 createSubscription: function (data, actions) {
@@ -417,7 +381,17 @@ require("structure/top.php"); //Include the sidebar HTML
                 }
             }).render('#button-container-personal');
         } else {
-            $('#button-container-personal').addClass('btn btn-block plan-disabled').html('You already have this plan or a higher plan. To downgrade you must first cancel your plan.');
+            let adv_btn = $('#button-container-personal').addClass('btn btn-block plan-disabled');
+            if(users_prem_state === prsnl_prem_state){
+                adv_btn.html('<b>Your Current Plan</b>')
+            } else if (users_prem_state > prsnl_prem_state) {
+                adv_btn.html('You already have a higher plan. To downgrade you must first cancel your subscription.')
+            }
+        }
+
+        //checkExistingSubscription
+        function checkExistingSubscription(doesntExist){
+
         }
 
         //On Approval
@@ -430,7 +404,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     '<p>Your subscription-id is <b>' + data.subscriptionID + '</b></p>'
             }).then((result) => {location.reload()});
             //TODO Send an email to client with a thank you, subscription confirmation, upgrade/unsubscribe link, and sub-id
-            console.log('You have successfully created a ' + plan_name + ' subscription ' + data.subscriptionID);
+            console.log('You have successfully created a ' + plan_name + ' with Subscription-ID ' + data.subscriptionID);
             console.log(data);
         }
 
