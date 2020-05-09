@@ -26,14 +26,8 @@ require("structure/top.php"); //Include the sidebar HTML
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <h1 class="m-0 text-dark">Nutrition</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active">Nutrition</li>
-                        </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -48,11 +42,12 @@ require("structure/top.php"); //Include the sidebar HTML
                         <h3 class="card-title">Nutrition Guides</h3>
                     </div>
                     <div class="card-body">
-                        <div id="nutrition_favorites" class="row">
+                        <div id="nutrition_favorites">
                             <!-- This is populated by get_guides in the header -->
                         </div>
                     </div>
                 </div>
+
                 <h3><p>Below is your daily meal plan. Your goal is to eat every three hours while consuming the suggested nutrient levels for each meal. Every nutrient has a corresponding tab
                         with a breakdown of the food to nutrient ratios to help make meal planning easier (except vegetables, just weigh them out on a scale ounce to ounce). Also, you don't have to
                         worry about nutrients crossing over. For example, if you have your target grams of protein from a meat, you don't need to worry about the few grams of protein coming from the nuts

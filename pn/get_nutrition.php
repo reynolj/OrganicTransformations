@@ -102,14 +102,8 @@ require("structure/top.php"); //Include the sidebar HTML
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="index.php">Nutrition</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
+          <div class="col-sm-12">
+            <h1 class="m-0 text-dark">Nutrition</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -199,7 +193,7 @@ require("structure/top.php"); //Include the sidebar HTML
                       <div class="card">
                          <div class="card-header">
                               <h3 class="card-title">Ectomorph</h3>
-                         </div><!-- /.card-header -->
+                         </div>
                               <div class="card-body" style="text-align:center;">
                                 <div>
                                    <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/ectos.jpg">
@@ -216,11 +210,8 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Difficult to gain weight/muscle</li>
                                   </ul>
                               </div>
-                              <!-- /.card-body -->
                       </div>
-                       <!-- /.card -->
                    </div>
-                     <!-- ./col -->
                           <div class="col-md-4">
                             <div class="card">
                               <div class="card-header">
@@ -228,7 +219,6 @@ require("structure/top.php"); //Include the sidebar HTML
                                      Mesomorph
                                     </h3>
                               </div>
-                              <!-- /.card-header -->
                               <div class="card-body" style="text-align:center;">
                                  <div>
                                  <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/mesos.jpg">
@@ -245,11 +235,8 @@ require("structure/top.php"); //Include the sidebar HTML
                                   <li>Responds quickly to exercise</li>
                                   </ul>
                               </div>
-                              <!-- /.card-body -->
                             </div>
-                            <!-- /.card -->
                           </div>
-                          <!-- ./col -->
                           <div class="col-md-4">
                             <div class="card">
                               <div class="card-header">
@@ -257,7 +244,6 @@ require("structure/top.php"); //Include the sidebar HTML
                                   Endomorph
                                 </h3>
                               </div>
-                              <!-- /.card-header -->
                               <div class="card-body" style="text-align:center;">
                                 <div>
                                 <img style='height: 60%; width: 60%; object-fit: contain' src="dist/img/Endos.jpg">
@@ -274,7 +260,6 @@ require("structure/top.php"); //Include the sidebar HTML
                                 <li>Large appetite</li>
                                 </ul>
                               </div>
-                              <!-- /.card-body -->
                             </div>
 
                       <!-- /.card -->
