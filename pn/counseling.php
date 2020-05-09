@@ -93,7 +93,7 @@ require("structure/top.php"); //Include the sidebar HTML
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="counseling" class="table table-bordered table-hover">
+                            <table id="counseling" class="table table-bordered table-hover" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>Date Requested</th>
@@ -101,7 +101,10 @@ require("structure/top.php"); //Include the sidebar HTML
                                     <th>Sex</th>
                                     <th>Goal</th>
                                     <th>Meeting Topic</th>
-                                    <th>Contact Info</th>
+                                    <th>Primary Contact</th>
+                                    <th>Secondary Contact</th>
+                                    <th>Body Type</th>
+                                    <th>Blood Type</th>
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
@@ -124,20 +127,26 @@ require("structure/top.php"); //Include the sidebar HTML
                                     switch ($row["preferred_contact"]){
                                         case 'EMAIL':
                                             $contact = $result["email"];
+                                            $contact2 = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "($1) $2-$3", $result["phone_number"]);
                                             break;
                                         case 'PHONE':
-                                            $contact = $result["phone_number"];
+                                            $contact = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "($1) $2-$3", $result["phone_number"]);
+                                            $contact2 = $result["email"];
                                             break;
                                     }
 
                                     echo "<tr id=$apt_id>
-                                            <td>" . $row["request_date"] . "</td>
+                                            <td>" . (new DateTime($row["request_date"]))->format('M j, Y'). "</td>
                                             <td>" . $result["first_name"] . " " . $result["last_name"]. "</td>
                                             <td>" . $result["sex"] . "</td>
                                             <td>" . $result["desired_outcome"] . "</td>
                                             <td>" . $row["meeting_topic"] . "</td>
                                             <td>" . $contact . "</td>
+                                            <td>" . $contact2 . "</td>                                            
+                                            <td>" . $result["body_type"]. "</td>
+                                            <td>" . $result["blood_type"]. "</td>
                                             <td><button type=\"submit\" class=\"btn btn-default\"><i onclick=\"deleteRequest($apt_id)\" class=\"fas fa-calendar-times\"></i></button></td>
+
                                           </tr>";
                                 };
                                 ?>
@@ -176,14 +185,15 @@ require("structure/top.php"); //Include the sidebar HTML
 <script>
         $(document).ready(function() {
             $('#counseling').DataTable( {
-                "lengthChange": false,
+                "lengthChange": true,
                 "paging": false,
+                "autoWidth": true,
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal( {
                             header: function ( row ) {
                                 var data = row.data();
-                                return 'Details for '+data[0]+' '+data[1];
+                                return 'Details for '+data[1];
                             }
                         } ),
                         renderer: $.fn.dataTable.Responsive.renderer.tableAll( {

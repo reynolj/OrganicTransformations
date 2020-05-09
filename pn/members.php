@@ -80,12 +80,12 @@ require("structure/top.php"); //Include the sidebar HTML
                                     echo "<tr>
                                             <td>" . $row["first_name"] . " " . $row["last_name"]. "</td>
                                             <td>" . $row["sex"] . "</td>
-                                            <td>" . $row["join_date"] . "</td>
+                                            <td>" . (new DateTime($row["join_date"]))->format('M j, Y') . "</td>
                                             <td>" . $row["desired_outcome"] . "</td>
                                             <td>" . $plan_text . "</td>
                                             <td>" . $row["email"] . "</td>
-                                            <td>" . $row["phone_number"] . "</td>    
-                                            <td>" . $row["premium_expiration"] . "</td>                                                                                    
+                                            <td>" . preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "($1) $2-$3", $row["phone_number"]) . "</td>    
+                                            <td>" . (new DateTime($row["premium_expiration"]))->format('M j, Y') . "</td>                                                                                    
                                           </tr>";
                                 };
                                 ?>
@@ -122,7 +122,7 @@ require("structure/top.php"); //Include the sidebar HTML
 <script>
     $(function () {
         $("#members").DataTable({
-            "lengthChange": false,
+            "lengthChange": true,
             "paging": false,
         });
     });
