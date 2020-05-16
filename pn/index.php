@@ -106,7 +106,6 @@ require("structure/top.php"); //Include the sidebar HTML
               <button
                 class="btn btn-primary float-right"
                 id="save_body_btn"
-                onclick="save_body()"
                 style="background-color:green;border-color:green;">
                   Save
               </button>

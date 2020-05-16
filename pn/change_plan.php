@@ -32,7 +32,7 @@ require("structure/top.php"); //Include the sidebar HTML
                 count++;
             }
             if(target < 4 || target > 40 || isNaN(target)) {
-                $('#targetMsg').html("Please enter a number greater than 4");
+                $('#targetMsg').html("Please enter a number between 4 and 40");
                 count++;
             }
 

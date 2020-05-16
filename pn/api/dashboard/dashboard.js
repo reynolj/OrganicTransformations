@@ -20,6 +20,9 @@ $( window ).on( "load", function() {
     $(document).on('click','#submit_goal_btn', function (){
         submit_goal();
     });
+    $(document).on('click','#save_body_btn', function () {
+	save_body();
+    });
     Guide.get_guides(
         [$('#highlighted_guides'), $('#nutrition_favorites'), $('#exercise_favorites')],
         [['highlighted'], ['nutrition'], ['exercise']],
@@ -58,6 +61,12 @@ function save_body() {
     const body_type = $('#body_type').val();
     const weight = $('#weight').val();
     const activity_level = $('#activity_level').val();
+    if(weight < 10 || weight > 1000) {
+        Swal.fire({
+            title: "Invalid weight",
+            html: "Please enter a weight between 10 and 1000."
+        });
+    }
     $.ajax({
         type: 'POST',
         url: '/pn/api/nutri/save_nutrition.php',

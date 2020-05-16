@@ -213,7 +213,7 @@ switch ($user_data["premium_state"]){
                   </p>
               </a>
           </li>
-
+<!--
           <li class="nav-item">
             <a href="help.php" class="nav-link <?php if($highlight == "help"){ echo "active";} ?>">
               <i class="nav-icon fas fa-question-circle"></i>
@@ -221,7 +221,8 @@ switch ($user_data["premium_state"]){
                 Help
               </p>
             </a>
-          </li>
+	  </li>
+-->
 
           <li class="nav-item">
             <a href="logout.php" class="nav-link">
